@@ -1,0 +1,182 @@
+
+# PMX module for Keymetrics I/O
+
+<!-- [![NPM](https://nodei.co/npm-dl/pmx.png?months=3&height=2)](https://nodei.co/npm/pmx/) -->
+
+PMX is a module that allows you to create advanced interactions with Keymetrics I/O.
+
+With it you can:
+- Trigger remote actions / functions
+- Analyze custom metrics / variables (with utilities like Histogram/Counter/Metric/Meters)
+- Report errors (uncaught exceptions and custom errors)
+- Emit events
+- Analyze HTTP latency
+
+# Installation
+
+![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
+
+Install PMX and add it to your package.json via:
+
+```bash
+$ npm install pmx --save
+```
+
+Then to use the different systems in your code require it:
+
+```javascript
+var pmx = require('pmx');
+```
+
+## Emit Events
+
+Emit events and get historical and statistics:
+
+```javascript
+var pmx = require('pmx');
+
+pmx.emit('user:register', {
+  user : 'Alex registered',
+  email : 'thorustor@gmail.com'
+});
+```
+
+## Make function triggerable
+
+```javascript
+var pmx = require('pmx');
+
+pmx.action('db:clean', { comment : 'Description for this action' }, function(reply) {
+  clean.db(function() {
+    /**
+     * reply() must be called at the end of the action
+     */
+     reply({success : true});
+  });
+});
+```
+
+Note: in case of exceptions in the function, your app will not be affected
+
+## Errors
+
+Enable catch all errors.
+
+```javascript
+pmx.catchAll();
+```
+
+Notify a custom error
+
+```javascript
+pmx.notify({ success : false });
+
+pmx.notify('This is an error');
+
+pmx.notify(new Error('This is an error'));
+```
+
+## HTTP latency analysis
+
+```javascript
+pmx.http(); // You must do this BEFORE any require('http')
+```
+
+## Measure
+
+### Metric
+
+Values that can be read instantly.
+
+```javascript
+var probe = pmx.probe();
+
+var metric = probe.metric({
+  name  : 'Realtime user',
+  value : function() {
+    return Object.keys(users).length;
+  }
+});
+```
+
+### Counter
+
+Things that increment or decrement.
+
+```javascript
+var probe = pmx.probe();
+
+var counter = probe.counter({
+  name : 'Downloads'
+});
+
+http.createServer(function(req, res) {
+  counter.inc();
+  req.on('end', function() {
+    counter.dec();
+  });
+});
+```
+
+### Meter
+
+Things that are measured as events / interval.
+
+```javascript
+var probe = pmx.probe();
+
+var meter = probe.meter({
+  name    : 'req/min',
+  seconds : 60
+});
+
+http.createServer(function(req, res) {
+  meter.mark();
+  res.end({success:true});
+});
+```
+
+#### Options
+
+**seconds** option is the measurement rate of the meter, default is 1 seconds
+
+### Histogram
+
+Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
+
+```javascript
+var probe = pmx.probe();
+
+var histogram = probe.histogram({
+  name        : 'latency',
+  measurement : 'mean'
+});
+
+var latency = 0;
+
+setInterval(function() {
+  latency = Math.round(Math.random() * 100);
+  histogram.update(latency);
+}, 100);
+```
+
+#### Options
+
+**measurement** option can be:
+
+- min: The lowest observed value.
+- max: The highest observed value.
+- sum: The sum of all observed values.
+- variance: The variance of all observed values.
+- mean: The average of all observed values.
+- stddev: The stddev of all observed values.
+- count: The number of observed values.
+- median: 50% of all values in the resevoir are at or below this value.
+- p75: See median, 75% percentile.
+- p95: See median, 95% percentile.
+- p99: See median, 99% percentile.
+- p999: See median, 99.9% percentile.
+
+# License
+
+MIT

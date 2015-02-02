@@ -1,0 +1,24 @@
+{
+  "name": "axm",
+  "version": "0.2.26",
+  "description": "keymetrics I/O adapter",
+  "main": "index.js",
+  "dependencies" : {
+    "debug" : "*"
+  },
+  "devDependencies" : {
+    "express" : "*",
+    "request" : "*",
+    "should" : "*",
+    "mocha": "*"
+  },
+  "scripts" : {
+    "test" : "DEBUG='axm:*' mocha test/*.mocha.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keymetrics/axm.git"
+  },
+  "author": "Keymetrics I/O",
+  "license": "ISC"
+}
