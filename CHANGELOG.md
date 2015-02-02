@@ -1,4 +1,10 @@
 
+# 0.2.27
+
+- Remove debug message
+- Rename module
+- Auto instanciation
+
 # 0.2.25
 
 - Add ip address on each transaction

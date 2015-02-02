@@ -25,7 +25,11 @@ $ npm install pmx --save
 Then to use the different systems in your code require it:
 
 ```javascript
-var pmx = require('pmx');
+var pmx = require('pmx')({
+   http          : true,
+   errors        : true,
+   custom_probes : true
+});
 ```
 
 ## Emit Events
