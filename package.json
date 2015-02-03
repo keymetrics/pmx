@@ -1,6 +1,6 @@
 {
-  "name": "axm",
-  "version": "0.2.26",
+  "name": "pmx",
+  "version": "0.2.27",
   "description": "keymetrics I/O adapter",
   "main": "index.js",
   "dependencies" : {
