@@ -22,15 +22,13 @@ Install PMX and add it to your package.json via:
 $ npm install pmx --save
 ```
 
-Then to use the different systems in your code require it:
+Then init the module to monitor HTTP, Errors and diverse metrics.
 
 ```javascript
-var pmx = require('pmx')({
-   http          : true,
-   errors        : true,
-   custom_probes : true
-});
+var pmx = require('pmx').init();
 ```
+
+# Custom monitoring
 
 ## Emit Events
 
@@ -65,12 +63,13 @@ Note: in case of exceptions in the function, your app will not be affected
 ## Errors
 
 Enable catch all errors.
+**This module is enabled by default if you called pmx with the init() function.**
 
 ```javascript
 pmx.catchAll();
 ```
 
-Notify a custom error
+## Notify a custom error
 
 ```javascript
 pmx.notify({ success : false });
@@ -82,11 +81,26 @@ pmx.notify(new Error('This is an error'));
 
 ## HTTP latency analysis
 
+Monitor routes, latency and codes. REST complient.
+
 ```javascript
 pmx.http(); // You must do this BEFORE any require('http')
 ```
 
+**This module is enabled by default if you called pmx with the init() function.**
+
 ## Measure
+
+Measure critical segments of you code thanks to 4 kind of probes:
+
+- Simple metrics: Values that can be read instantly
+    - Monitor variable value
+- Counter: Things that increment or decrement
+    - Downloads being processed, user connected
+- Meter: Things that are measured as events / interval
+    - Request per minute for a http server
+- Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
+    - Monitor the mean of execution of a query into database
 
 ### Metric
 
