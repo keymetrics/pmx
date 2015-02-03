@@ -1,6 +1,6 @@
 {
   "name": "pmx",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "description": "keymetrics I/O adapter",
   "main": "index.js",
   "dependencies" : {
