@@ -4,6 +4,8 @@ var axm = require('..');
 var request = require('request');
 var should = require('should');
 
+var Plan = require('./helpers/plan');
+
 function fork() {
   return require('child_process').fork(__dirname + '/transaction/app.mock.auto.js', []);
 }
@@ -54,15 +56,19 @@ describe('Automatic transaction', function() {
   });
 
   it('should log slow http request', function(done) {
-    app.on('message', function(data) {
-      if (data.type == 'axm:option:configuration')
-        return false;
-      if (data.type == 'axm:monitor')
-        return false;
+    var plan = new Plan(3, done);
 
-      data.type.should.eql('http:transaction');
-      data.data.should.have.properties('ip', 'time', 'url', 'method');
-      return done();
+    app.on('message', function(data) {
+      if (data.type == 'axm:monitor') {
+        plan.ok(true);
+        if (Object.keys(data.data) < 3)
+          plan.ok(false);
+      }
+
+      if (data.type == 'http:transaction') {
+        data.data.should.have.properties('ip', 'time', 'url', 'method');
+        plan.ok(true);
+      }
     });
 
     setTimeout(function() {
