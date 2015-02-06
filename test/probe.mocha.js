@@ -31,7 +31,7 @@ describe('Probe', function() {
       pck.type.should.eql('axm:monitor');
       pck.data.should.have.properties('req/min', 'Realtime user', 'random', 'Cheerio');
 
-      console.log(pck);
+      //console.log(pck);
 
       if (pck.data.random &&
           pck.data.Cheerio == false &&
@@ -48,7 +48,7 @@ describe('Probe', function() {
     app.on('message', function(pck) {
       pck.type.should.eql('axm:monitor');
 
-      console.log(pck);
+      //console.log(pck);
 
       if (pck.data.mean &&
           pck.data.min &&

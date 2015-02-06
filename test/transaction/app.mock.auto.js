@@ -12,13 +12,11 @@ app.get('/nothing', function(req, res) {
   res.send('yes');
 });
 
-
 app.get('/slowly', function(req, res) {
   setTimeout(function() {
     res.send('yes');
   }, 100);
 });
-
 
 app.get('/nothing2', function(req, res) {
   setTimeout(function() {
