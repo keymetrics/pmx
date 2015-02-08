@@ -1,0 +1,18 @@
+{
+  "name": "pm2-probe",
+  "version": "1.0.1",
+  "description": "",
+  "main": "probe.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies" : {
+    "pmx" : "*",
+    "shelljs" : "*"
+  },
+  "author": "",
+  "license": "ISC",
+  "apps" : [{
+    "script" : "probe.js"
+  }]
+}
