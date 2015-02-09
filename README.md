@@ -23,9 +23,17 @@ $ npm install pmx --save
 ```
 
 Then init the module to monitor HTTP, Errors and diverse metrics.
-
 ```javascript
-var pmx = require('pmx').init();
+var pmx = require('pmx').init(); // By default everything is enabled and ignore_routes is empty
+```
+Or choose what to monitor.
+```javascript
+var pmx = require('pmx').init({
+  http          : true,
+  errors        : true,
+  custom_probes : true,
+  ignore_routes : [/socket\.io/, /notFound/]
+});
 ```
 
 # Custom monitoring
@@ -86,7 +94,17 @@ Monitor routes, latency and codes. REST complient.
 ```javascript
 pmx.http(); // You must do this BEFORE any require('http')
 ```
-
+Ignore some routes by passing a list of regular expressions.
+```javascript
+pmx.http([/socket\.io/, /notFound/]);
+```
+This can also be done via pmx.init() by passing the ignore_routes option.
+```javascript
+pmx.init({
+  http          : true,
+  ignore_routes : [/socket\.io/, /notFound/]
+});
+```
 **This module is enabled by default if you called pmx with the init() function.**
 
 ## Measure

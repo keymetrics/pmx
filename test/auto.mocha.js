@@ -55,6 +55,28 @@ describe('Automatic transaction', function() {
     }, 100);
   });
 
+  it('should not log ignored http request', function(done) {
+    var timer = setTimeout(function() {
+      app.removeListener('message', rcpt);
+      return done();
+    }, 1000);
+
+    var rcpt = function(data) {
+      if (data.type == 'axm:option:configuration')
+        return false;
+      if (data.type == 'axm:monitor')
+        return false;
+
+      return data.type.should.not.eql('http:transaction');
+    };
+
+    app.on('message', rcpt);
+
+    setTimeout(function() {
+      request('http://127.0.0.1:9007/socket.io/slow', function(req, res) {});
+    }, 100);
+  });
+
   it('should log slow http request', function(done) {
     var plan = new Plan(3, done);
 
