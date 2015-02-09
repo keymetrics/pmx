@@ -1,13 +1,13 @@
 {
   "name": "pm2-probe",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "",
   "main": "probe.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies" : {
-    "pmx" : "*",
+    "pmx" : "latest",
     "shelljs" : "*"
   },
   "author": "",

@@ -1,19 +1,17 @@
-var pmx     = require('../..');
+var pmx     = require('pmx');
 var fs      = require('fs');
 var path    = require('path');
 var shelljs = require('shelljs');
 
-// + merge package.json data
-
 var conf = pmx.loadConfig();
 
-setInterval(function() {
-  // Do something at configurable interval
-}, conf.pool_time);
-
-
-pmx.action('flush logs', { comment : 'Flush logs' } , function(reply) {
+pmx.action('flush pm2 logs', { comment : 'Flush logs' } , function(reply) {
   var child = shelljs.exec('pm2 flush');
+  return reply(child);
+});
+
+pmx.action('df', { comment : 'Flush logs' } , function(reply) {
+  var child = shelljs.exec('df');
   return reply(child);
 });
 
