@@ -23,9 +23,17 @@ $ npm install pmx --save
 ```
 
 Then init the module to monitor HTTP, Errors and diverse metrics.
-
 ```javascript
-var pmx = require('pmx').init();
+var pmx = require('pmx').init(); // By default everything is enabled
+```
+Or choose what to monitor.
+```javascript
+var pmx = require('pmx').init({
+  http          : true,
+  errors        : true,
+  custom_probes : true,
+  ignore_routes : []
+});
 ```
 
 # Custom monitoring
