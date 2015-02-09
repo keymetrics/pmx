@@ -32,7 +32,7 @@ var pmx = require('pmx').init({
   http          : true,
   errors        : true,
   custom_probes : true,
-  ignore_routes : []
+  ignore_routes : [/socket\.io/, /notFound/]
 });
 ```
 
