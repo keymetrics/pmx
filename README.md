@@ -86,7 +86,17 @@ Monitor routes, latency and codes. REST complient.
 ```javascript
 pmx.http(); // You must do this BEFORE any require('http')
 ```
-
+Ignore some routes by passing a list of regular expressions.
+```javascript
+pmx.http([/socket\.io/, /notFound/]);
+```
+This can also be done via pmx.init() by passing the ignore_routes option.
+```javascript
+pmx.init({
+  http          : true,
+  ignore_routes : [/socket\.io/, /notFound/]
+});
+```
 **This module is enabled by default if you called pmx with the init() function.**
 
 ## Measure
