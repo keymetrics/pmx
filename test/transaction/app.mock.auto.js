@@ -1,5 +1,7 @@
 
-require('../..').init();
+require('../..').init({
+  ignore_routes : [/\/socket\.io.*/]
+});
 
 var express = require('express');
 var app = express();
@@ -14,6 +16,12 @@ app.get('/nothing', function(req, res) {
 
 
 app.get('/slow', function(req, res) {
+  setTimeout(function() {
+    res.send('yes');
+  }, 700);
+});
+
+app.get('/socket.io/slow', function(req, res) {
   setTimeout(function() {
     res.send('yes');
   }, 700);
