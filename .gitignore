@@ -5,3 +5,4 @@ node_modules
 test/child
 *.iml
 .idea/**
+sample/pmx-server-stats

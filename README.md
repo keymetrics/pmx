@@ -51,7 +51,7 @@ pmx.emit('user:register', {
 });
 ```
 
-## Make function triggerable
+## Trigger function from remote
 
 ```javascript
 var pmx = require('pmx');
@@ -70,16 +70,25 @@ Note: in case of exceptions in the function, your app will not be affected
 
 ## Errors
 
-Enable catch all errors.
-**This module is enabled by default if you called pmx with the init() function.**
-
+Catch uncaught exceptions:
 ```javascript
-pmx.catchAll();
+var pmx = require('pmx').init();
 ```
 
-## Notify a custom error
-
+Attach more data from errors that happens in Express:
 ```javascript
+var pmx = require('pmx');
+
+app.get('/' ...);
+app.post(...);
+
+app.use(pmx.expressErrorHandler());
+```
+
+Trigger custom errors:
+```javascript
+var pmx = require('pmx');
+
 pmx.notify({ success : false });
 
 pmx.notify('This is an error');
@@ -212,6 +221,34 @@ setInterval(function() {
 - p95: See median, 95% percentile.
 - p99: See median, 99% percentile.
 - p999: See median, 99.9% percentile.
+
+## Modules
+
+### Simple app
+
+```
+process.env.MODULE_DEBUG = true;
+
+var pmx  = require('pmx');
+
+var conf = pmx.initModule();
+```
+
+### Module metadata
+
+In package.json you must at least indicates what is the script to start:
+- or with index attribute
+- or with bin attribute
+- or with the apps attribute + [pm2 capabilities](https://github.com/Unitech/PM2/blob/development/ADVANCED_README.md#a10)
+
+### Configuration
+
+```bash
+$ pm2 set <key> <value>
+$ pm2 restart <module_name>
+```
+
+Values set with `pm2 set` are available in the module environmnent via `process.env.<key>`
 
 # License
 
