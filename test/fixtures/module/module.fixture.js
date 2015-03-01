@@ -1,4 +1,4 @@
 
 var pmx = require('../../..');
 
-pmx.initModule();
+var conf = pmx.initModule();
