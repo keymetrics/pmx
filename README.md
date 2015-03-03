@@ -1,9 +1,9 @@
 
-# PMX module for Keymetrics I/O
+# Driver for Keymetrics
 
-<!-- [![NPM](https://nodei.co/npm-dl/pmx.png?months=3&height=2)](https://nodei.co/npm/pmx/) -->
+![Keymetrics](https://keymetrics.io/assets/images/application-demo.png)
 
-PMX is a module that allows you to create advanced interactions with Keymetrics I/O.
+PMX is a module that allows you to create advanced interactions with Keymetrics.
 
 With it you can:
 - Trigger remote actions / functions
@@ -233,22 +233,6 @@ var pmx  = require('pmx');
 
 var conf = pmx.initModule();
 ```
-
-### Module metadata
-
-In package.json you must at least indicates what is the script to start:
-- or with index attribute
-- or with bin attribute
-- or with the apps attribute + [pm2 capabilities](https://github.com/Unitech/PM2/blob/development/ADVANCED_README.md#a10)
-
-### Configuration
-
-```bash
-$ pm2 set <key> <value>
-$ pm2 restart <module_name>
-```
-
-Values set with `pm2 set` are available in the module environmnent via `process.env.<key>`
 
 # License
 
