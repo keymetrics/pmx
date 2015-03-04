@@ -31,11 +31,9 @@ describe('Probe', function() {
       pck.type.should.eql('axm:monitor');
       pck.data.should.have.properties('req/min', 'Realtime user', 'random', 'Cheerio');
 
-      //console.log(pck);
-
-      if (pck.data.random &&
-          pck.data.Cheerio == false &&
-          pck.data.Downloads > 1) {
+      if (pck.data.random.value           && pck.data.random.agg_type == 'sum' &&
+          pck.data.Cheerio.value == false && pck.data.Cheerio.agg_type == 'avg' &&
+          pck.data.Downloads.value > 1    && pck.data.Downloads.agg_type == 'max') {
         app.kill();
         done();
       }
@@ -48,11 +46,9 @@ describe('Probe', function() {
     app.on('message', function(pck) {
       pck.type.should.eql('axm:monitor');
 
-      //console.log(pck);
-
-      if (pck.data.mean &&
-          pck.data.min &&
-          pck.data.test) {
+      if (pck.data.mean && pck.data.mean.agg_type == 'avg' &&
+          pck.data.min  && pck.data.min.agg_type == 'min' &&
+          pck.data.test && pck.data.test.agg_type == 'sum') {
         app.kill();
         done();
       }
