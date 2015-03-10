@@ -6,7 +6,8 @@ var probe = axm.probe();
 
 var histogram = probe.histogram({
   name : 'test',
-  measurement : 'p95'
+  measurement : 'p95',
+  agg_type: 'sum'
 });
 
 var a = 0;
@@ -32,7 +33,8 @@ setInterval(function() {
 
 var h3 = probe.histogram({
   name : 'min',
-  measurement : 'min'
+  measurement : 'min',
+  agg_type: 'min'
 });
 
 var c = 0;

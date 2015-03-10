@@ -13,6 +13,7 @@ var users = {
  */
 var rt_users = probe.metric({
   name : 'Realtime user',
+  agg_type: 'max',
   value : function() {
     return Object.keys(users).length;
   }
@@ -31,6 +32,7 @@ var cheerio = probe.metric({
  */
 var meter = probe.meter({
   name    : 'req/min',
+  agg_type: 'min',
   seconds : 60
 });
 
@@ -48,6 +50,7 @@ http.createServer(function(req, res) {
 var meter2 = probe.meter({
   name    : 'random',
   unit    : 'rd',
+  agg_type: 'sum',
   seconds : 1
 });
 
@@ -66,7 +69,8 @@ setTimeout(function() {
  */
 
 var counter = probe.counter({
-  name : 'Downloads'
+  name : 'Downloads',
+  agg_type: 'max'
 });
 
 counter.inc();

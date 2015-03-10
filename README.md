@@ -129,6 +129,12 @@ Measure critical segments of you code thanks to 4 kind of probes:
 - Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
     - Monitor the mean of execution of a query into database
 
+#### Common options
+
+- `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
+- `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
+
+
 ### Metric
 
 Values that can be read instantly.
@@ -138,6 +144,7 @@ var probe = pmx.probe();
 
 var metric = probe.metric({
   name  : 'Realtime user',
+  agg_type: 'max',
   value : function() {
     return Object.keys(users).length;
   }
@@ -152,7 +159,8 @@ Things that increment or decrement.
 var probe = pmx.probe();
 
 var counter = probe.counter({
-  name : 'Downloads'
+  name : 'Downloads',
+  agg_type: 'sum'
 });
 
 http.createServer(function(req, res) {
@@ -172,6 +180,7 @@ var probe = pmx.probe();
 
 var meter = probe.meter({
   name    : 'req/min',
+  agg_type: 'avg'
   seconds : 60
 });
 
