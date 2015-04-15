@@ -29,10 +29,12 @@ var pmx = require('pmx').init(); // By default everything is enabled and ignore_
 Or choose what to monitor.
 ```javascript
 var pmx = require('pmx').init({
-  http          : true,
+  http          : true, // (Default: true)
+  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
+  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
+  ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (Default: [])
   errors        : true,
-  custom_probes : true,
-  ignore_routes : [/socket\.io/, /notFound/]
+  custom_probes : true
 });
 ```
 
@@ -98,22 +100,30 @@ pmx.notify(new Error('This is an error'));
 
 ## HTTP latency analysis
 
-Monitor routes, latency and codes. REST complient.
+Monitor routes, latency and codes. REST compliant.
 
 ```javascript
 pmx.http(); // You must do this BEFORE any require('http')
 ```
 Ignore some routes by passing a list of regular expressions.
 ```javascript
-pmx.http([/socket\.io/, /notFound/]);
-```
-This can also be done via pmx.init() by passing the ignore_routes option.
-```javascript
-pmx.init({
-  http          : true,
-  ignore_routes : [/socket\.io/, /notFound/]
+pmx.http({
+  http          : true, // (Default: true)
+  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
+  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
+  ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
 });
 ```
+This can also be done via pmx.init()
+```javascript
+pmx.init({
+  http          : true, // (Default: true)
+  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
+  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
+  ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
+});
+```
+
 **This module is enabled by default if you called pmx with the init() function.**
 
 ## Measure
