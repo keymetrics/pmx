@@ -30,8 +30,6 @@ Or choose what to monitor.
 ```javascript
 var pmx = require('pmx').init({
   http          : true, // (Default: true)
-  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
-  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (Default: [])
   errors        : true,
   custom_probes : true
@@ -109,8 +107,6 @@ Ignore some routes by passing a list of regular expressions.
 ```javascript
 pmx.http({
   http          : true, // (Default: true)
-  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
-  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
   ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
 });
 ```
@@ -118,8 +114,6 @@ This can also be done via pmx.init()
 ```javascript
 pmx.init({
   http          : true, // (Default: true)
-  http_latency  : 100, // Only logs routes with latency higher than 100ms (Default: 200ms)
-  http_code     : 200, // Only logs routes with response code higher than or equal to 200 (Default: 500)
   ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
 });
 ```
