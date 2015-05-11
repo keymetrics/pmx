@@ -32,7 +32,8 @@ var pmx = require('pmx').init({
   http          : true, // (Default: true)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (Default: [])
   errors        : true,
-  custom_probes : true
+  custom_probes : true,
+  network       : true
 });
 ```
 
@@ -95,6 +96,10 @@ pmx.notify('This is an error');
 
 pmx.notify(new Error('This is an error'));
 ```
+
+## TCP network usage monitoring
+
+If you enable the flag `network: true` when you init pmx it will show which ports your app is listening to as well as your per app network usage (download and upload) in realtime.
 
 ## HTTP latency analysis
 
