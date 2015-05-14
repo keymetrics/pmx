@@ -29,12 +29,12 @@ var pmx = require('pmx').init(); // By default everything is enabled and ignore_
 Or choose what to monitor.
 ```javascript
 var pmx = require('pmx').init({
-  http          : true, // (Default: true)
+  http          : true, // HTTP routes logging (default: true)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (Default: [])
-  errors        : true,
-  custom_probes : true,
-  network       : true, // Traffic usage monitoring
-  ports         : true  // Shows which ports your app is listening on
+  errors        : true, // Exceptions loggin (default: true)
+  custom_probes : true, // Custom probes (default: true)
+  network       : true, // Traffic usage monitoring (default: false)
+  ports         : true  // Shows which ports your app is listening on (default: false)
 });
 ```
 
