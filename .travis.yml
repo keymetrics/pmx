@@ -2,10 +2,9 @@ language: node_js
 branches:
   only:
     - master
+    - development
 node_js:
-   - "0.11.14"
-   - "0.11.13"
+   - "iojs"
+   - "0.12"
+   - "0.11"
    - "0.10"
-   - "0.10.31"
-   - "0.10.30"
-   - "0.10.29"
