@@ -10,7 +10,8 @@
     "express" : "*",
     "request" : "*",
     "should"  : "*",
-    "mocha"   : "*"
+    "mocha"   : "*",
+    "json-stringify-safe" : "*"
   },
   "scripts" : {
     "test" : "DEBUG='axm:*' mocha test/*.mocha.js"
