@@ -6,21 +6,33 @@ function fork() {
 }
 
 describe('Event', function() {
-  it('should have properties', function(done) {
+  it('should have right property', function(done) {
     axm.should.have.property('emit');
     done();
   });
 
-  it('should send event when called', function(done) {
-    var app = fork();
+  describe('Event scenario', function() {
+    var app;
 
-    app.once('message', function(data) {
-      data.type.should.eql('human:event');
-      console.log(app.pid);
-      console.log('killing process');
+    before(function() {
+      app = fork();
+    });
+
+    after(function() {
       process.kill(app.pid);
-      done();
+    });
+
+    it('should send right event data when called', function(done) {
+      app.once('message', function(data) {
+        data.type.should.eql('human:event');
+        data.data.user.should.eql('toto');
+        data.data.__name.should.eql('test');
+        data.data.subobj.subobj.a.should.eql('b');
+        done();
+      });
     });
   });
+
+
 
 });
