@@ -3,23 +3,24 @@
   "version": "0.3.14",
   "description": "Keymetrics++ and PM2 adapter",
   "main": "index.js",
-  "dependencies" : {
-    "debug" : "*"
+  "dependencies": {
+    "debug": "*"
   },
-  "devDependencies" : {
-    "express" : "*",
-    "request" : "*",
-    "should"  : "*",
-    "mocha"   : "*",
-    "json-stringify-safe" : "*"
+  "devDependencies": {
+    "express": "*",
+    "request": "*",
+    "should": "*",
+    "mocha": "*",
+    "shelljs": "*",
+    "json-stringify-safe": "*"
   },
-  "scripts" : {
-    "test" : "DEBUG='axm:*' mocha test/*.mocha.js"
+  "scripts": {
+    "test": "DEBUG='axm:*' mocha test/*.mocha.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/keymetrics/pmx.git"
   },
   "author": "Keymetrics I/O",
-  "license": "ISC"
+  "license": "MIT"
 }
