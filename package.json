@@ -1,6 +1,6 @@
 {
   "name": "pmx",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "description": "Keymetrics++ and PM2 adapter",
   "main": "index.js",
   "dependencies": {
