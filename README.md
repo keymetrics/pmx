@@ -205,6 +205,7 @@ http.createServer(function(req, res) {
 #### Options
 
 **samples** option is the rate unit. Defaults to **1** sec.
+
 **timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
 
 ### Histogram
