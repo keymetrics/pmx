@@ -194,7 +194,6 @@ var probe = pmx.probe();
 var meter = probe.meter({
   name    : 'req/sec',
   agg_type: 'avg'
-  seconds : 60
 });
 
 http.createServer(function(req, res) {
@@ -202,11 +201,6 @@ http.createServer(function(req, res) {
   res.end({success:true});
 });
 ```
-
-#### Options
-
-**seconds** option is the timeframe during which the data is evaluated, default is 60s.
-
 ### Histogram
 
 Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
