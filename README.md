@@ -186,13 +186,13 @@ http.createServer(function(req, res) {
 
 ### Meter
 
-Things that are measured as events / interval.
+Things that are measured over one second.
 
 ```javascript
 var probe = pmx.probe();
 
 var meter = probe.meter({
-  name    : 'req/min',
+  name    : 'req/sec',
   agg_type: 'avg'
   seconds : 60
 });
@@ -205,7 +205,7 @@ http.createServer(function(req, res) {
 
 #### Options
 
-**seconds** option is the measurement rate of the meter, default is 1 seconds
+**seconds** option is the timeframe during which the data is evaluated, default is 60s.
 
 ### Histogram
 
