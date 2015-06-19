@@ -186,14 +186,15 @@ http.createServer(function(req, res) {
 
 ### Meter
 
-Things that are measured over one second.
+Things that are measured as events / interval. 
 
 ```javascript
 var probe = pmx.probe();
 
 var meter = probe.meter({
-  name    : 'req/sec',
-  agg_type: 'avg'
+  name      : 'req/sec',
+  samples   : 1,
+  timeframe : 60
 });
 
 http.createServer(function(req, res) {
@@ -201,6 +202,11 @@ http.createServer(function(req, res) {
   res.end({success:true});
 });
 ```
+#### Options
+
+**samples** option is the rate unit. Defaults to **1** sec.
+**timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
+
 ### Histogram
 
 Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
