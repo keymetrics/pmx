@@ -1,5 +1,6 @@
 
 var pmx = require('..');
+var should = require('should');
 
 function fork() {
   var app = require('child_process').fork(__dirname + '/fixtures/module/module.fixture.js', [], {
@@ -47,12 +48,23 @@ describe('PMX module', function() {
       'asdasdsad',
       'asdasd',
       'lolilol',
-      __dirname + '/fixtures/file.pid'
+      process.cwd() + '/test/fixtures/file.pid'
     ]);
 
     content.should.eql(1456);
     done();
 
+  });
+
+  it('should return null', function(done) {
+    var content = pmx.resolvePidPaths([
+      'asdasdsad',
+      'asdasd',
+      'lolilol'
+    ]);
+
+    should(content).be.null;
+    done();
   });
 
 });
