@@ -48,7 +48,7 @@ describe('PMX module', function() {
       'asdasdsad',
       'asdasd',
       'lolilol',
-      process.cwd() + '/test/fixtures/file.pid'
+      'test/fixtures/file.pid'
     ]);
 
     content.should.eql(1456);
