@@ -51,9 +51,9 @@ describe('PMX module', function() {
       'test/fixtures/file.pid'
     ]);
 
+    console.log(process.cwd(), __dirname);
     content.should.eql(1456);
     done();
-
   });
 
   it('should return null', function(done) {
