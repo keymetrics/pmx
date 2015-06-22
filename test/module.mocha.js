@@ -42,4 +42,17 @@ describe('PMX module', function() {
     });
   });
 
+  it('should find existing file', function(done) {
+    var content = pmx.resolvePidPaths([
+      'asdasdsad',
+      'asdasd',
+      'lolilol',
+      __dirname + '/fixtures/file.pid'
+    ]);
+
+    content.should.eql(1456);
+    done();
+
+  });
+
 });
