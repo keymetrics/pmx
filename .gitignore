@@ -1,7 +1,6 @@
 node_modules
 *.log
 *.log
-*.pid
 test/child
 *.iml
 .idea/**
