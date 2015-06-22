@@ -51,7 +51,9 @@ describe('Smart Data Checker', function() {
       current_value++;
 
       if (current_value % 30 == 0)
-        current_value = 90000;
+        current_value += 500;
+      else if (current_value > 500)
+        current_value -= 500;
     }, 100);
 
 
@@ -79,9 +81,11 @@ describe('Smart Data Checker', function() {
 
     setInterval(function() {
       current_value++;
-
+      
       if (current_value % 30 == 0)
-        current_value = 90000;
+        current_value += 500;
+      else if (current_value > 500)
+        current_value -= 500;
     }, 100);
 
     setTimeout(function() {
