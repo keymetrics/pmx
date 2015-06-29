@@ -186,7 +186,7 @@ http.createServer(function(req, res) {
 
 ### Meter
 
-Things that are measured as events / interval. 
+Things that are measured as events / interval.
 
 ```javascript
 var probe = pmx.probe();
@@ -244,6 +244,19 @@ setInterval(function() {
 - p95: See median, 95% percentile.
 - p99: See median, 99% percentile.
 - p999: See median, 99.9% percentile.
+
+## Expose data (JSON object)
+
+```javascript
+pmx.transpose('variable name', function() { return my_data });
+
+// or
+
+pmx.tranpose({
+  name  : 'variable name',
+  value : function() { return my_data; }
+});
+```
 
 ## Modules
 

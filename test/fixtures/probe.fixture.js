@@ -22,10 +22,40 @@ var rt_users = probe.metric({
 /**
  * Monitor value
  */
+
+var config_example = {
+  val : 'hey',
+  test : {
+    a : 'good',
+    sign : 'healthy'
+  }
+}
+
 var cheerio = probe.metric({
   name : 'Cheerio',
-  value : true
+  value : function() {
+    return config_example;
+  }
 });
+
+/**
+ * Monitor value
+ */
+
+
+// probe.transpose('docker_config', config_example);
+
+probe.transpose({
+  name : 'style_2_docker_config',
+  data : function doSomething() {
+    return config_example;
+  }
+});
+
+probe.transpose('style_1_docker_config', function doSomething() {
+  return config_example;
+});
+
 
 /**
  * Meter for HTTP
@@ -60,8 +90,8 @@ setInterval(function() {
 
 
 setTimeout(function() {
-  cheerio.set(false);
   counter.inc();
+  config_example = { yes : true };
 }, 1100);
 
 /**
@@ -78,11 +108,11 @@ counter.dec();
 counter.inc();
 counter.inc();
 
-console.log(cheerio.val());
-setInterval(function() {
-  console.log(counter.val());
-  console.log(meter.val());
-  console.log(meter2.val());
-  console.log(rt_users.val());
-  console.log(cheerio.val());
-}, 1500);
+// console.log(cheerio.val());
+// setInterval(function() {
+//   console.log(counter.val());
+//   console.log(meter.val());
+//   console.log(meter2.val());
+//   console.log(rt_users.val());
+//   console.log(cheerio.val());
+// }, 1500);
