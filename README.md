@@ -53,7 +53,11 @@ pmx.emit('user:register', {
 });
 ```
 
-## Trigger function from remote
+## Custom Action
+
+Trigger function from Keymetrics
+
+### Long running
 
 ```javascript
 var pmx = require('pmx');
@@ -68,7 +72,27 @@ pmx.action('db:clean', { comment : 'Description for this action' }, function(rep
 });
 ```
 
-Note: in case of exceptions in the function, your app will not be affected
+### Long running with data emitter (scoped action)
+
+A scoped action is an action that can emit logs related to this action, via emitter (2nd arg).
+
+```javascript
+var pmx = require('pmx');
+
+pmx.scopedAction('scoped:action, function(options, emitter, reply) {
+  var i = setInterval(function() {
+    // Emit progress data
+    emitter('data random');
+  }, 100);
+
+  setTimeout(function() {
+    clearInterval(i);
+    return reply({success:true});
+  }, 800);
+});
+```
+
+
 
 ## Errors
 

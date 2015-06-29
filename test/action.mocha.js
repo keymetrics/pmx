@@ -2,8 +2,8 @@
 
 var pmx = require('..');
 
-function forkAppClassic() {
-  var app = require('child_process').fork(__dirname + '/proc.mock.js', []);
+function forkApp(script) {
+  var app = require('child_process').fork(__dirname + (script || '/proc.mock.js'), []);
   return app;
 }
 
@@ -23,7 +23,7 @@ describe('Action module', function() {
     });
 
     it('should notify PM2 of a new action available', function(done) {
-      app = forkAppClassic();
+      app = forkApp();
 
       app.once('message', function(dt) {
         dt.type.should.eql('axm:action');
@@ -122,5 +122,42 @@ describe('Action module', function() {
 
   });
 
+  describe('Scoped Action (option, emitter, callback)', function() {
+    var app;
+    var action_name;
+
+    after(function() {
+      process.kill(app.pid);
+    });
+
+    it('should notify PM2 of a new action available', function(done) {
+      app = forkApp('/fixtures/scoped-action.fixture.js');
+
+      app.once('message', function(dt) {
+        dt.type.should.eql('axm:action');
+        dt.data.action_name.should.eql('scoped:action');
+        action_name = dt.data.action_name;
+        done();
+      });
+    });
+
+    it('should stream data', function(done) {
+      app.once('message', function(dt) {
+        dt.type.should.eql('axm:action:stream');
+        dt.data.return.should.eql('data random');
+        done();
+      });
+
+      app.send(action_name);
+    });
+
+    it('should trigger the action', function(done) {
+      app.on('message', function(dt) {
+        if (dt.type == 'axm:reply')
+          done();
+      });
+    });
+
+  });
 
 });
