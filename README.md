@@ -79,7 +79,7 @@ A scoped action is an action that can emit logs related to this action, via emit
 ```javascript
 var pmx = require('pmx');
 
-pmx.scopedAction('scoped:action, function(options, emitter, reply) {
+pmx.scopedAction('scoped:action', function(options, emitter, reply) {
   var i = setInterval(function() {
     // Emit progress data
     emitter('data random');
