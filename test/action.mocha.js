@@ -136,6 +136,7 @@ describe('Action module', function() {
       app.once('message', function(dt) {
         dt.type.should.eql('axm:action');
         dt.data.action_name.should.eql('scoped:action');
+        dt.data.action_type.should.eql('scoped');
         action_name = dt.data.action_name;
         done();
       });
@@ -143,17 +144,17 @@ describe('Action module', function() {
 
     it('should stream data', function(done) {
       app.once('message', function(dt) {
-        dt.type.should.eql('axm:action:stream');
-        dt.data.return.should.eql('data random');
+        dt.type.should.eql('axm:scoped_action:stream');
+        dt.data.data.should.eql('data random');
         done();
       });
 
-      app.send(action_name);
+      app.send({ action_name : action_name, uuid : 'Random nb'});
     });
 
     it('should trigger the action', function(done) {
       app.on('message', function(dt) {
-        if (dt.type == 'axm:reply')
+        if (dt.type == 'axm:scoped_action:end')
           done();
       });
     });
