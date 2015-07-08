@@ -74,21 +74,24 @@ pmx.action('db:clean', { comment : 'Description for this action' }, function(rep
 
 ### Long running with data emitter (scoped action)
 
-A scoped action is an action that can emit logs related to this action, via emitter (2nd arg).
+A scoped action is an action that can emit logs related to this action.
 
 ```javascript
 var pmx = require('pmx');
 
-pmx.scopedAction('scoped:action', function(options, emitter, reply) {
+pmx.scopedAction('scoped:action', function(options, res) {
   var i = setInterval(function() {
     // Emit progress data
-    emitter('data random');
-  }, 100);
+    if (error)
+      res.error('oops');
+    else
+      res.send('this is a chunk of data');
+  }, 1000);
 
   setTimeout(function() {
     clearInterval(i);
-    return reply({success:true});
-  }, 800);
+    return res.end();
+  }, 8000);
 });
 ```
 
