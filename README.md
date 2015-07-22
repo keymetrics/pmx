@@ -72,31 +72,6 @@ pmx.action('db:clean', { comment : 'Description for this action' }, function(rep
 });
 ```
 
-### Long running with data emitter (scoped action)
-
-A scoped action is an action that can emit logs related to this action.
-
-```javascript
-var pmx = require('pmx');
-
-pmx.scopedAction('scoped:action', function(options, res) {
-  var i = setInterval(function() {
-    // Emit progress data
-    if (error)
-      res.error('oops');
-    else
-      res.send('this is a chunk of data');
-  }, 1000);
-
-  setTimeout(function() {
-    clearInterval(i);
-    return res.end();
-  }, 8000);
-});
-```
-
-
-
 ## Errors
 
 Catch uncaught exceptions:
@@ -296,6 +271,32 @@ var pmx  = require('pmx');
 
 var conf = pmx.initModule();
 ```
+
+# Beta
+
+### Long running with data emitter (scoped action)
+
+A scoped action is an action that can emit logs related to this action.
+
+```javascript
+var pmx = require('pmx');
+
+pmx.scopedAction('scoped:action', function(options, res) {
+  var i = setInterval(function() {
+    // Emit progress data
+    if (error)
+      res.error('oops');
+    else
+      res.send('this is a chunk of data');
+  }, 1000);
+
+  setTimeout(function() {
+    clearInterval(i);
+    return res.end();
+  }, 8000);
+});
+```
+
 
 # License
 
