@@ -59,3 +59,12 @@ pmx.scopedAction('long running lsof', function(data, res) {
   });
 
 });
+
+
+pmx.action('simple action', function(reply) {
+  return reply({success:true});
+});
+
+pmx.action('simple with arg', function(opts,reply) {
+  return reply(opts);
+});
