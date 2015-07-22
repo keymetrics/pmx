@@ -93,17 +93,20 @@ describe('Smart Data Checker', function() {
     }, 15000);
   });
 
- it('Scenario 1 - calculated with mean over 30s', function(done) {
+ it('Scenario 2 - calculated with mean over 30s', function(done) {
 
     var dtCheck = new dataChecker({
-      timer : 100,
-      dev   : 1,
       callback : function() {
         done(new Error('should not be called'));
       },
       refresh : function() {
         return current_value;
-      }
+      },
+      timer : 100,
+      launch: 30000,
+      dev   : 0.2,
+      ceil  : 1,
+      calcDev: 'mean'
     });
 
     var interval = setInterval(function() {
