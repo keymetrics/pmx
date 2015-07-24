@@ -106,7 +106,7 @@ describe('Smart Data Checker', function() {
       launch: 30000,
       dev   : 0.2,
       ceil  : 1,
-      calcDev: 'mean'
+      calcDev: 'ema'
     });
 
     var interval = setInterval(function() {
