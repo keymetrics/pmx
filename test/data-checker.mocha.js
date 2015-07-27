@@ -1,4 +1,4 @@
-
+/*
 process.env.DEBUG="axm:smart:checker";
 
 var dataChecker = require('../lib/utils/datachecker.js');
@@ -129,4 +129,4 @@ describe('Smart Data Checker', function() {
   });
 
 
-});
+});*/
