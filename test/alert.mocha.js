@@ -100,8 +100,6 @@ describe('Alert Probe Checker', function() {
     
     var interval = setInterval(function() {
       test5.tick(current_value);
-      //1% max deviation each step
-      current_value += (Math.random() - 0.5) * (0.01 * current_value);
     }, 10);
     
     //Error Plateau Timeout
