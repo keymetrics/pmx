@@ -13,7 +13,7 @@ describe('Profiling', function() {
     done();
   });
 
-  it('should return error as v8-profiler not present', function(done) {
+  it.skip('should return error as v8-profiler not present', function(done) {
     Profiling.detectV8Profiler(function(err, data) {
       err.should.not.be.null;
       should(data).be.undefined;
