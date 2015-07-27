@@ -59,7 +59,7 @@ describe('Alert Probe Checker', function() {
       done();
     }, 1000);
   });
-  it('should not detect (2 * value) spikes every 30 values', function(done){
+  it('should not detect (2 * value) spike every 30 values', function(done){
     var current_value = 100;
     var i = 0;
     var test4 = new Alert({
