@@ -1,4 +1,12 @@
 
+# 0.3.25
+
+- pmx.getConf() to get module configuration
+- add smart probes
+- fix null null null when passing length in error message
+- add field axm_monitor.module_conf (km hot display)
+- Scoped actions
+
 # 0.2.27
 
 - Remove debug message
