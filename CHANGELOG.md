@@ -1,4 +1,24 @@
 
+# 0.3.28
+
+- Allow not passing any value to Metric probe
+
+# 0.3.27
+
+- Declare var for Alert
+
+# 0.3.26
+
+- Fix uncaught exception fork (allow override)
+
+# 0.3.25
+
+- pmx.getConf() to get module configuration
+- add smart probes
+- fix null null null when passing length in error message
+- add field axm_monitor.module_conf (km hot display)
+- Scoped actions
+
 # 0.2.27
 
 - Remove debug message

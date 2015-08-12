@@ -31,14 +31,14 @@ var conf = pmx.initModule({
 });
 
 
-pmx.scopedAction('testo', function(data, emitter) {
+pmx.scopedAction('log streaming', function(data, emitter) {
   var i = setInterval(function() {
-    emitter.send('datard');
+    emitter.send('this-is-a-line');
   }, 100);
 
   setTimeout(function() {
 
-    emitter.end('end');
+    emitter.end({success:true});
     clearInterval(i);
   }, 3000);
 });
@@ -60,6 +60,18 @@ pmx.scopedAction('long running lsof', function(data, res) {
 
 });
 
+pmx.scopedAction('with opts', function(data, res) {
+  res.send(data);
+  res.end('done');
+});
+
+pmx.scopedAction('throw err', function(data, res) {
+  throw new Error('eroor!');
+});
+
+pmx.scopedAction('res.error', function(data, res) {
+  res.error('this is a res.error');
+});
 
 pmx.action('simple action', function(reply) {
   return reply({success:true});
@@ -67,4 +79,27 @@ pmx.action('simple action', function(reply) {
 
 pmx.action('simple with arg', function(opts,reply) {
   return reply(opts);
+});
+
+
+var Probe = pmx.probe();
+
+// if null metric probe does not work
+var slow_val = 0;
+
+setInterval(function() {
+  slow_val++;
+}, 500);
+
+var dt = Probe.metric({
+  name : 'test',
+  value : function() {
+    return slow_val;
+  },
+  alert : {
+    mode     : 'threshold',
+    val      : 30,
+    //interval : 60, // seconds
+    msg      : 'val too hight'
+  }
 });
