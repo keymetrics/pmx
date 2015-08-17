@@ -64,7 +64,7 @@ Two arguments are passed to the function, data (optionnal data sent from Keymetr
 
 Example:
 
-```
+```javascript
 pmx.scopedAction('long running lsof', function(data, res) {
   var child = spawn('lsof', []);
 
@@ -91,13 +91,13 @@ Keymetrics allows you to expose any metrics from you code to the Keymetrics Dash
 
 4 helpers are available:
 
-- Simple metrics: Values that can be read instantly
+- **Simple metrics**: Values that can be read instantly
     - eg. Monitor variable value
-- Counter: Things that increment or decrement
+- **Counter**: Things that increment or decrement
     - eg. Downloads being processed, user connected
-- Meter: Things that are measured as events / interval
+- **Meter**: Things that are measured as events / interval
     - eg. Request per minute for a http server
-- Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
+- **Histogram**: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
     - eg. Monitor the mean of execution of a query into database
 
 ### Metric: Simple value reporting
@@ -167,7 +167,6 @@ http.createServer(function(req, res) {
 #### Options
 
 **samples** option is the rate unit. Defaults to **1** sec.
-
 **timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
 
 ### Histogram
