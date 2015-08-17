@@ -1,68 +1,52 @@
-
-# Driver for Keymetrics
+# Keymetrics Driver
 
 ![Keymetrics](https://keymetrics.io/assets/images/application-demo.png)
+![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
 
 PMX is a module that allows you to create advanced interactions with Keymetrics.
 
-With it you can:
-- Trigger remote actions / functions
-- Analyze custom metrics / variables (with utilities like Histogram/Counter/Metric/Meters)
-- Report errors (uncaught exceptions and custom errors)
-- Emit events
+It allows you to:
+- **Expose Functions** remotely triggerable from Keymetrics
+- **Expose Metrics** displayed in realtime and tracked over the time
+- **Report Alerts** like exceptions or critical issues
+- **Report Events** to inform about anything
+
+- **Monitor network traffic** at the application level and display used ports
 - Analyze HTTP latency
 
 # Installation
 
-![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
-
-Install PMX and add it to your package.json via:
+Install PMX and add it to your package.json with:
 
 ```bash
 $ npm install pmx --save
 ```
 
-Then init the module to monitor HTTP, Errors and diverse metrics.
-```javascript
-var pmx = require('pmx').init(); // By default everything is enabled and ignore_routes is empty
-```
-Or choose what to monitor.
 ```javascript
 var pmx = require('pmx').init({
   http          : true, // HTTP routes logging (default: true)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (Default: [])
   errors        : true, // Exceptions loggin (default: true)
-  custom_probes : true, // Custom probes (default: true)
-  network       : true, // Traffic usage monitoring (default: false)
+  custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
+  network       : true, // Network monitoring at the application level
   ports         : true  // Shows which ports your app is listening on (default: false)
 });
 ```
 
-# Custom monitoring
+# Expose Functions: Trigger Functions remotely
 
-## Emit Events
+Remotely trigger functions from Keymetrics. These metrics takes place in the main Keymetrics Dashboard page under the Custom Action section.
 
-Emit events and get historical and statistics:
+## Simple actions
 
-```javascript
-var pmx = require('pmx');
+Simple action allows to trigger a function from Keymetrics. The function takes a function as a parameter (reply here) and need to be called once the job is finished.
 
-pmx.emit('user:register', {
-  user : 'Alex registered',
-  email : 'thorustor@gmail.com'
-});
-```
-
-## Custom Action
-
-Trigger function from Keymetrics
-
-### Long running
+Example:
 
 ```javascript
 var pmx = require('pmx');
 
-pmx.action('db:clean', { comment : 'Description for this action' }, function(reply) {
+pmx.action('db:clean', function(reply) {
   clean.db(function() {
     /**
      * reply() must be called at the end of the action
@@ -72,24 +56,155 @@ pmx.action('db:clean', { comment : 'Description for this action' }, function(rep
 });
 ```
 
-## Errors
+## Scoped actions
 
-Catch uncaught exceptions:
-```javascript
-var pmx = require('pmx').init();
+Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
+
+Two arguments are passed to the function, data (optionnal data sent from Keymetrics) and res that allows to emit log data and to end the scoped action.
+
+Example:
+
+```
+pmx.scopedAction('long running lsof', function(data, res) {
+  var child = spawn('lsof', []);
+
+  child.stdout.on('data', function(chunk) {
+    chunk.toString().split('\n').forEach(function(line) {
+      res.send(line); // This send log to Keymetrics to be saved (for tracking)
+    });
+  });
+
+  child.stdout.on('end', function(chunk) {
+    res.end('end'); // This end the scoped action
+  });
+
+  child.on('error', function(e) {
+    res.error(e);  // This report an error to Keymetrics
+  });
+
+});
 ```
 
-Attach more data from errors that happens in Express:
+# Expose Metrics: Measure anything
+
+Keymetrics allows you to expose any metrics from you code to the Keymetrics Dashboard, in realtime. These metrics takes place in the main Keymetrics Dashboard page under the Custom Metrics section.
+
+4 helpers are available:
+
+- Simple metrics: Values that can be read instantly
+    - eg. Monitor variable value
+- Counter: Things that increment or decrement
+    - eg. Downloads being processed, user connected
+- Meter: Things that are measured as events / interval
+    - eg. Request per minute for a http server
+- Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
+    - eg. Monitor the mean of execution of a query into database
+
+## Metric: Simple value reporting
+
+This allow to expose values that can be read instantly.
+
 ```javascript
-var pmx = require('pmx');
+var probe = pmx.probe();
 
-app.get('/' ...);
-app.post(...);
+// Here the value function will be called each second to get the value
+var metric = probe.metric({
+  name    : 'Realtime user',
+  value   : function() {
+    return Object.keys(users).length;
+  }
+});
 
-app.use(pmx.expressErrorHandler());
+// Here we are going to call valvar.set() to set the new value
+var valvar = probe.metric({
+  name    : 'Realtime Value'
+});
+
+valvar.set(23);
 ```
 
-Trigger custom errors:
+## Counter: Sequential value change
+
+Things that increment or decrement.
+
+```javascript
+var probe = pmx.probe();
+
+// The counter will start at 0
+var counter = probe.counter({
+  name : 'Current req processed'
+});
+
+http.createServer(function(req, res) {
+  // Increment the counter, counter will eq 1
+  counter.inc();
+  req.on('end', function() {
+    // Decrement the counter, counter will eq 0
+    counter.dec();
+  });
+});
+```
+
+## Meter: Average calculated values
+
+Things that are measured as events / interval.
+
+```javascript
+var probe = pmx.probe();
+
+var meter = probe.meter({
+  name      : 'req/sec',
+  samples   : 1,
+  timeframe : 60
+});
+
+http.createServer(function(req, res) {
+  meter.mark();
+  res.end({success:true});
+});
+```
+
+### Options
+
+**samples** option is the rate unit. Defaults to **1** sec.
+
+**timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
+
+## Histogram
+
+Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
+
+```javascript
+var probe = pmx.probe();
+
+var histogram = probe.histogram({
+  name        : 'latency',
+  measurement : 'mean'
+});
+
+var latency = 0;
+
+setInterval(function() {
+  latency = Math.round(Math.random() * 100);
+  histogram.update(latency);
+}, 100);
+```
+
+## Common Custom Metrics options
+
+- `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
+- `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
+
+
+# Report Alerts: Errors / Uncaught Exceptions
+
+By default once PM2 is linked to Keymetrics, you will be alerted of any uncaught exception.
+These errors are accessible in the **Issue** tab of Keymetrics.
+
+## Custom alert notification
+
+If you need to alert about any critical errors you can do it programmatically:
+
 ```javascript
 var pmx = require('pmx');
 
@@ -100,12 +215,52 @@ pmx.notify('This is an error');
 pmx.notify(new Error('This is an error'));
 ```
 
-## TCP network usage monitoring
+## Add Verbosity to an Alert: Express Error handler
 
-If you enable the flag `network: true` when you init pmx it will show network usage datas (download and upload) in realtime.
+When an uncaught exception is happening you can track from which routes it has been thrown.
+To do that you have to attach the middleware `pmx.expressErrorHandler` at then end of your routes mounting:
 
-If you enable the flag `ports: true` when you init pmx it will show which ports your app is listenting on.
+```javascript
+var pmx = require('pmx');
 
+// All my routes
+app.get('/' ...);
+app.post(...);
+// All my routes
+
+// Here I attach the middleware to get more verbosity on exception thrown
+app.use(pmx.expressErrorHandler());
+```
+
+# Emit Events
+
+Emit events and get historical and statistics.
+This is available in the **Events** page of Keymetrics.
+
+```javascript
+var pmx = require('pmx');
+
+pmx.emit('user:register', {
+  user : 'Alex registered',
+  email : 'thorustor@gmail.com'
+});
+```
+
+## Application level network traffic monitoring / Display used ports
+
+You can monitor the network usage of a specific application by adding the option `network: true` when initializing PMX. If you enable the flag `ports: true` when you init pmx it will show which ports your app is listenting on.
+
+These metrics will be shown in the Keymetrics Dashboard in the Custom Metrics section.
+
+Example:
+
+```
+pmx.init({
+  [...]
+  network : true, // Allow application level network monitoring
+  ports   : true  // Display ports used by the application
+});
+```
 
 ## HTTP latency analysis
 
@@ -128,175 +283,6 @@ pmx.init({
   ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
 });
 ```
-
-**This module is enabled by default if you called pmx with the init() function.**
-
-## Measure
-
-Measure critical segments of you code thanks to 4 kind of probes:
-
-- Simple metrics: Values that can be read instantly
-    - Monitor variable value
-- Counter: Things that increment or decrement
-    - Downloads being processed, user connected
-- Meter: Things that are measured as events / interval
-    - Request per minute for a http server
-- Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
-    - Monitor the mean of execution of a query into database
-
-#### Common options
-
-- `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
-- `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
-
-
-### Metric
-
-Values that can be read instantly.
-
-```javascript
-var probe = pmx.probe();
-
-var metric = probe.metric({
-  name  : 'Realtime user',
-  agg_type: 'max',
-  value : function() {
-    return Object.keys(users).length;
-  }
-});
-```
-
-### Counter
-
-Things that increment or decrement.
-
-```javascript
-var probe = pmx.probe();
-
-var counter = probe.counter({
-  name : 'Downloads',
-  agg_type: 'sum'
-});
-
-http.createServer(function(req, res) {
-  counter.inc();
-  req.on('end', function() {
-    counter.dec();
-  });
-});
-```
-
-### Meter
-
-Things that are measured as events / interval.
-
-```javascript
-var probe = pmx.probe();
-
-var meter = probe.meter({
-  name      : 'req/sec',
-  samples   : 1,
-  timeframe : 60
-});
-
-http.createServer(function(req, res) {
-  meter.mark();
-  res.end({success:true});
-});
-```
-#### Options
-
-**samples** option is the rate unit. Defaults to **1** sec.
-
-**timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
-
-### Histogram
-
-Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
-
-```javascript
-var probe = pmx.probe();
-
-var histogram = probe.histogram({
-  name        : 'latency',
-  measurement : 'mean'
-});
-
-var latency = 0;
-
-setInterval(function() {
-  latency = Math.round(Math.random() * 100);
-  histogram.update(latency);
-}, 100);
-```
-
-#### Options
-
-**measurement** option can be:
-
-- min: The lowest observed value.
-- max: The highest observed value.
-- sum: The sum of all observed values.
-- variance: The variance of all observed values.
-- mean: The average of all observed values.
-- stddev: The stddev of all observed values.
-- count: The number of observed values.
-- median: 50% of all values in the resevoir are at or below this value.
-- p75: See median, 75% percentile.
-- p95: See median, 95% percentile.
-- p99: See median, 99% percentile.
-- p999: See median, 99.9% percentile.
-
-## Expose data (JSON object)
-
-```javascript
-pmx.transpose('variable name', function() { return my_data });
-
-// or
-
-pmx.tranpose({
-  name  : 'variable name',
-  value : function() { return my_data; }
-});
-```
-
-## Modules
-
-### Simple app
-
-```
-process.env.MODULE_DEBUG = true;
-
-var pmx  = require('pmx');
-
-var conf = pmx.initModule();
-```
-
-# Beta
-
-### Long running with data emitter (scoped action)
-
-A scoped action is an action that can emit logs related to this action.
-
-```javascript
-var pmx = require('pmx');
-
-pmx.scopedAction('scoped:action', function(options, res) {
-  var i = setInterval(function() {
-    // Emit progress data
-    if (error)
-      res.error('oops');
-    else
-      res.send('this is a chunk of data');
-  }, 1000);
-
-  setTimeout(function() {
-    clearInterval(i);
-    return res.end();
-  }, 8000);
-});
-```
-
 
 # License
 
