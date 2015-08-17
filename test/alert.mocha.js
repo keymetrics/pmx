@@ -9,7 +9,7 @@ describe('Alert Probe Checker', function() {
   it('should detect simple threshold', function(done) {
     var test1 = new Alert({
       mode  : 'threshold',
-      val   : 32,
+      value : 32,
       func  : function(){ done(); }
     });
     //Done when current_value > 32
@@ -22,7 +22,7 @@ describe('Alert Probe Checker', function() {
     var current_value = 20;
     var test2 = new Alert({
       mode  : 'threshold',
-      val   : 32,
+      value : 32,
       func  : function(){ done(); },
       cmp   : function(a,b){ return (a < b); }
     });
@@ -37,6 +37,27 @@ describe('Alert Probe Checker', function() {
     while (current_value > 20) {
       test2.tick(current_value);
       current_value--;
+    }
+  });
+  it('should detect exception when avg > 90', function(done) {
+    var current_value = 70;
+    var i = 0;
+    var test6 = new Alert({
+      mode  : 'threshold-avg',
+      value : 90,
+      func  : function(){ done(); }
+    });
+    test6.start = true;
+    //300 ticks at stable value == 5 mins of 1 sec ticks)
+    while (i < 300) {
+      test6.tick(current_value);
+      i++;
+    }
+    current_value = 99;
+    //ticks until detected (should be at 966)
+    while(i < 967) {
+      test6.tick(current_value);
+      i++;
     }
   });
   it('should not detect exception over constant 2% max variation', function(done) {
@@ -84,7 +105,7 @@ describe('Alert Probe Checker', function() {
       done();
     }, 1000);
   });
-  it('should detect 10 chained errors of 2 * value', function(done) {
+  it('should detect 20 chained errors of 2 * value', function(done) {
   var current_value = 100;
     var test5 = new Alert({
       mode  : 'smart',
@@ -104,7 +125,7 @@ describe('Alert Probe Checker', function() {
     
     //Error Plateau Timeout
     var error = setTimeout(function() {
-      for(var i = 0; i < 10; i++)
+      for(var i = 0; i < 20; i++)
         test5.tick(current_value * 2);
     }, 600)    
 
