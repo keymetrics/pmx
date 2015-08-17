@@ -33,11 +33,11 @@ var pmx = require('pmx').init({
 });
 ```
 
-# Expose Functions: Trigger Functions remotely
+## Expose Functions: Trigger Functions remotely
 
 Remotely trigger functions from Keymetrics. These metrics takes place in the main Keymetrics Dashboard page under the Custom Action section.
 
-## Simple actions
+### Simple actions
 
 Simple action allows to trigger a function from Keymetrics. The function takes a function as a parameter (reply here) and need to be called once the job is finished.
 
@@ -56,7 +56,7 @@ pmx.action('db:clean', function(reply) {
 });
 ```
 
-## Scoped actions
+### Scoped actions
 
 Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
 
@@ -85,7 +85,7 @@ pmx.scopedAction('long running lsof', function(data, res) {
 });
 ```
 
-# Expose Metrics: Measure anything
+## Expose Metrics: Measure anything
 
 Keymetrics allows you to expose any metrics from you code to the Keymetrics Dashboard, in realtime. These metrics takes place in the main Keymetrics Dashboard page under the Custom Metrics section.
 
@@ -100,7 +100,7 @@ Keymetrics allows you to expose any metrics from you code to the Keymetrics Dash
 - Histogram: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
     - eg. Monitor the mean of execution of a query into database
 
-## Metric: Simple value reporting
+### Metric: Simple value reporting
 
 This allow to expose values that can be read instantly.
 
@@ -123,7 +123,7 @@ var valvar = probe.metric({
 valvar.set(23);
 ```
 
-## Counter: Sequential value change
+### Counter: Sequential value change
 
 Things that increment or decrement.
 
@@ -145,7 +145,7 @@ http.createServer(function(req, res) {
 });
 ```
 
-## Meter: Average calculated values
+### Meter: Average calculated values
 
 Things that are measured as events / interval.
 
@@ -164,13 +164,13 @@ http.createServer(function(req, res) {
 });
 ```
 
-### Options
+#### Options
 
 **samples** option is the rate unit. Defaults to **1** sec.
 
 **timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
 
-## Histogram
+### Histogram
 
 Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution.
 
@@ -190,18 +190,18 @@ setInterval(function() {
 }, 100);
 ```
 
-## Common Custom Metrics options
+### Common Custom Metrics options
 
 - `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
 - `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
 
 
-# Report Alerts: Errors / Uncaught Exceptions
+## Report Alerts: Errors / Uncaught Exceptions
 
 By default once PM2 is linked to Keymetrics, you will be alerted of any uncaught exception.
 These errors are accessible in the **Issue** tab of Keymetrics.
 
-## Custom alert notification
+### Custom alert notification
 
 If you need to alert about any critical errors you can do it programmatically:
 
@@ -215,7 +215,7 @@ pmx.notify('This is an error');
 pmx.notify(new Error('This is an error'));
 ```
 
-## Add Verbosity to an Alert: Express Error handler
+### Add Verbosity to an Alert: Express Error handler
 
 When an uncaught exception is happening you can track from which routes it has been thrown.
 To do that you have to attach the middleware `pmx.expressErrorHandler` at then end of your routes mounting:
@@ -232,7 +232,7 @@ app.post(...);
 app.use(pmx.expressErrorHandler());
 ```
 
-# Emit Events
+## Emit Events
 
 Emit events and get historical and statistics.
 This is available in the **Events** page of Keymetrics.
@@ -284,6 +284,6 @@ pmx.init({
 });
 ```
 
-# License
+## License
 
 MIT
