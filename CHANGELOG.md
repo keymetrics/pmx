@@ -1,4 +1,10 @@
 
+# 0.3.29
+
+- Mode thresold-avg via binary heap
+- Alert system for counter
+- Better algorithm
+
 # 0.3.28
 
 - Allow not passing any value to Metric probe
