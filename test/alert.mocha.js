@@ -105,7 +105,7 @@ describe('Alert Probe Checker', function() {
       done();
     }, 1000);
   });
-  it.skip('should detect 10 chained errors of 2 * value', function(done) {
+  it('should detect 20 chained errors of 2 * value', function(done) {
   var current_value = 100;
     var test5 = new Alert({
       mode  : 'smart',
@@ -125,7 +125,7 @@ describe('Alert Probe Checker', function() {
     
     //Error Plateau Timeout
     var error = setTimeout(function() {
-      for(var i = 0; i < 10; i++)
+      for(var i = 0; i < 20; i++)
         test5.tick(current_value * 2);
     }, 600)    
 
