@@ -6,11 +6,11 @@
 PMX is a module that allows you to create advanced interactions with Keymetrics.
 
 It allows you to:
+
 - **Expose Functions** remotely triggerable from Keymetrics
 - **Expose Metrics** displayed in realtime and tracked over the time
 - **Report Alerts** like exceptions or critical issues
 - **Report Events** to inform about anything
-
 - **Monitor network traffic** at the application level and display used ports
 - Analyze HTTP latency
 
