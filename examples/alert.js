@@ -3,6 +3,10 @@
 
 var pmx = require('../index.js');
 
+pmx.initModule({
+  alert_enabled : false
+});
+
 var Probe = pmx.probe();
 
 // if null metric probe does not work
@@ -17,8 +21,7 @@ var dt = Probe.metric({
   name : 'test',
   alert : {
     mode     : 'threshold',
-    val      : 30,
-    //interval : 60, // seconds
-    msg      : 'val too hight'
+    value    : 30,
+    msg      : 'val too high'
   }
 });

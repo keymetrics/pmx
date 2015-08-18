@@ -30,6 +30,7 @@ var pmx = require('pmx').init({
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
   network       : true, // Network monitoring at the application level
   ports         : true  // Shows which ports your app is listening on (default: false)
+  alert_enabled : true  // Enable alert sub field in custom metrics   (default: false)
 });
 ```
 

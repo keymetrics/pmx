@@ -1,8 +1,9 @@
 
+
 var pmx = require('../../..');
 
 var conf = pmx.initModule({
-  alert_enabled : true
+  alert_enabled : false
 });
 
 var probe = pmx.probe();
@@ -12,7 +13,7 @@ var dt = probe.metric({
   name  : 'probe-test',
   alert : {
     mode     : 'threshold',
-    value    : 15,
+    value    : 30,
     msg      : 'val too high'
   }
 });

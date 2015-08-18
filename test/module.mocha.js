@@ -37,10 +37,10 @@ describe('PMX module', function() {
       /**
        * Options set
        */
-      dt.data.show_module_meta.should.exists;
       dt.data.description.should.eql('comment');
       dt.data.module_version.should.eql('1.0.0');
       dt.data.module_name.should.eql('module');
+      dt.data.alert_enabled.should.be.true;
 
       /**
        * Configuration succesfully passed
@@ -52,6 +52,7 @@ describe('PMX module', function() {
        * attribute (for keymetrics purposes)
        */
       dt.data.module_conf.initial.should.eql('init-val');
+      app.kill();
       done();
     });
   });
@@ -70,7 +71,6 @@ describe('PMX module', function() {
       /**
        * Options set
        */
-      dt.data.show_module_meta.should.exists;
       dt.data.description.should.eql('comment');
       dt.data.module_version.should.eql('1.0.0');
       dt.data.module_name.should.eql('module');
@@ -89,6 +89,7 @@ describe('PMX module', function() {
       dt.data.module_conf.option1.should.eql('value1');
       dt.data.module_conf.option2.should.eql('value2');
       dt.data.module_conf.initial.should.eql('over');
+      app.kill();
       done();
     });
   });

@@ -1,4 +1,8 @@
 
+# 0.3.30
+
+- add alert_enabled field for .init() / .initModule()
+
 # 0.3.29
 
 - Mode thresold-avg via binary heap
