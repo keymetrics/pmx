@@ -215,7 +215,7 @@ var metric = probe.metric({
       console.error('Detected over 95% CPU usage');
     },
     cmp   : function(value, threshold) { //optional
-      return (parseFloat(value) < threshold); // default check
+      return (parseFloat(value) > threshold); // default check
     } 
   }
 });
