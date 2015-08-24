@@ -1,8 +1,8 @@
 
-var axm = require('..');
+var axm = require('../..');
 
 setInterval(function() {
-  axm.emit('test', {
+  axm.emit('is object', {
     user : 'toto',
     subobj : {
       subobj : {
@@ -10,4 +10,9 @@ setInterval(function() {
       }
     }
   });
+
+  axm.emit('is string', 'HEY!');
+
+  axm.emit('is bool', true);
+
 }, 100);
