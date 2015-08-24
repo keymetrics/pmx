@@ -194,7 +194,42 @@ setInterval(function() {
 
 - `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
 - `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
+- `alert` : For `Meter` and `Counter` probes. This param is optionnal. Creates an alert object (see below).
 
+### Alert System for Custom Metrics
+
+This alert system can monitor a Probe value and launch an exception when hitting a particular value.
+
+Example for a `cpu_usage` var:
+```javascript
+var metric = probe.metric({
+  name  : 'CPU usage',
+  value : function() {
+    return cpu_usage;
+  },
+  alert : {
+    mode  : 'threshold',
+    value : 95,
+    msg   : 'Detected over 95% CPU usage', // optional
+    func  : function() { //optional
+      console.error('Detected over 95% CPU usage');
+    },
+    cmp   : function(value, threshold) { //optional
+      return (parseFloat(value) > threshold); // default check
+    } 
+  }
+});
+```
+
+####Options:
+
+- `mode` : `threshold`, `threshold-avg`.
+- `value` : Value that will be used for the exception check.
+- `msg` : String used for the exception.
+- `func` :  **optional**. Function declenched when exception reached.
+- `cmp` : **optional**. Function used for exception check taking 2 arguments.
+- `interval` : **optional**, `threshold-avg` mode. Sample length for monitored value (180 seconds default).
+- `timeout` : **optional**, `threshold-avg` mode. Time after which mean comparison starts (30 000 milliseconds default).
 
 ## Report Alerts: Errors / Uncaught Exceptions
 
