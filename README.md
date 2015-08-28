@@ -225,7 +225,7 @@ var metric = probe.metric({
 - `value` : Value that will be used for the exception check.
 - `msg` : String used for the exception.
 - `func` :  **optional**. Function declenched when exception reached.
-- `cmp` : **optional**. `<`, `>`, `=`. Can also be a function used for exception check taking 2 arguments and returning true or false.
+- `cmp` : **optional**. If current Probe value is not `<`, `>`, `=` to Threshold value the exception is launched. Can also be a function used for exception check taking 2 arguments and returning a bool.
 - `interval` : **optional**, `threshold-avg` mode. Sample length for monitored value (180 seconds default).
 - `timeout` : **optional**, `threshold-avg` mode. Time after which mean comparison starts (30 000 milliseconds default).
 
