@@ -1,6 +1,7 @@
 
 var pmx = require('..');
 var should = require('should');
+var Plan        = require('./helpers/plan.js');
 
 function forkAlertedModule() {
   var app = require('child_process').fork(__dirname + '/fixtures/module/module.fixture.js', [], {
@@ -33,12 +34,21 @@ describe('Alert system', function() {
     });
 
     it('should receive notification threshold alert', function(done) {
+      var plan = new Plan(2, function() {
+        app.kill();
+        app.removeListener('message', processMsg);
+        done();
+      });
+
       function processMsg(dt) {
+        if (dt.type == 'axm:monitor') {
+          dt.data['probe-test'].alert.threshold.should.eql(15);
+          plan.ok(true);
+        }
+
         if (dt.type == 'process:exception') {
           should(dt.data.message).be.equal('val too high');
-          app.removeListener('message', processMsg);
-          app.kill();
-          done();
+          plan.ok(true);
         }
       }
 

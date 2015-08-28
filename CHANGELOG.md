@@ -1,4 +1,10 @@
 
+# 0.3.31
+
+- Do not force app keep alive when calling configureModule (already done when using probes)
+- alias action attribute to func in alert system + pass value
+- append alert configuration to probes (subfield alert, attaching value threshold and interval (for threshold-avg)
+
 # 0.3.30
 
 - add alert_enabled field for .init() / .initModule()
