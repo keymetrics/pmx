@@ -7,7 +7,10 @@
 - Add autocast object system for configuration
 - BUG FIX: pmx.notify JSON | STRING create separated alerts (before it was not working because the stack trace was the same, coming from `new Error in notify.js`
 
-Notes: for app, configuration is loaded depending on the application name declared in package.json
+Notes:
+- [X] for app, configuration is loaded depending on the application name declared in package.json
+- [ ] configuration must be injected into raw Node.js applications
+- [ ] uncomment Configuration.init(opts) in index.js for PMX.init
 
 # 0.3.30
 
