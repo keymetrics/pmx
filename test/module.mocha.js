@@ -13,7 +13,7 @@ function forkWithoutEnv() {
 function forkWithSpecificVar() {
   var app = require('child_process').fork(__dirname + '/fixtures/module/module.fixture.js', [], {
     env : {
-      'module' : '{ "option1" : "value1", "option2" : "value2", "initial" : "over" }'
+      'module' : '{ "option1" : "value1", "option2" : "value2", "initial" : "over", "password" : "1234s" }'
     }
   });
   return app;
@@ -91,6 +91,17 @@ describe('PMX module', function() {
       dt.data.module_conf.initial.should.eql('over');
       app.kill();
       done();
+    });
+  });
+
+  it('should hide password', function(done) {
+    app = forkWithSpecificVar();
+
+    app.once('message', function(dt) {
+      dt.data.alert_enabled.should.be.true;
+      dt.data.module_conf.password.should.eql('Password hidden');
+      done();
+      app.kill();
     });
   });
 

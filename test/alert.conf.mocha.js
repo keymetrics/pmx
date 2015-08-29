@@ -79,7 +79,6 @@ describe('Alert system configuration', function() {
     });
   });
 
-
   describe('Override declared alert values', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModuleWithAlertDeclared();
@@ -88,7 +87,6 @@ describe('Alert system configuration', function() {
         dt.data.alert_enabled.should.be.true;
         done();
       });
-
     });
 
     it('should alert take alert configuration from environment', function(done) {

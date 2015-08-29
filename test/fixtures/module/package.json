@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "config" : {
-    "initial" : "init-val"
+    "initial" : "init-val",
+    "password" : ""
   },
   "author": "strzel",
   "license": "ISC"
