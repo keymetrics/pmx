@@ -1,9 +1,13 @@
 
-# 0.3.31
+# 0.4.0
 
 - Do not force app keep alive when calling configureModule (already done when using probes)
 - alias action attribute to func in alert system + pass value
 - append alert configuration to probes (subfield alert, attaching value threshold and interval (for threshold-avg)
+- Add autocast object system for configuration
+- BUG FIX: pmx.notify JSON | STRING create separated alerts (before it was not working because the stack trace was the same, coming from `new Error in notify.js`
+
+Notes: for app, configuration is loaded depending on the application name declared in package.json
 
 # 0.3.30
 

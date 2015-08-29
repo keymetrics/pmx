@@ -38,8 +38,8 @@ describe('Notify exceptions', function() {
     should.exist(ret.stack);
     should.exist(ret.message);
 
-    ret.data.line.should.eql('ok');
-    ret.data.env.should.eql('sisi');
+    ret.stack.line.should.eql('ok');
+    ret.stack.env.should.eql('sisi');
     done();
   });
 
