@@ -1,10 +1,18 @@
 
-var pmx = require('..');
+var pmx    = require('..');
 var should = require('should');
-var Plan        = require('./helpers/plan.js');
+var Plan   = require('./helpers/plan.js');
 
 function forkAlertedModule() {
   var app = require('child_process').fork(__dirname + '/fixtures/module/module.fixture.js', [], {
+    env : {
+    }
+  });
+  return app;
+}
+
+function forkAlertedModuleThresholdAvg() {
+  var app = require('child_process').fork(__dirname + '/fixtures/module/module-avg.fixture.js', [], {
     env : {
     }
   });
@@ -42,7 +50,46 @@ describe('Alert system', function() {
 
       function processMsg(dt) {
         if (dt.type == 'axm:monitor') {
-          dt.data['probe-test'].alert.threshold.should.eql(15);
+          dt.data['probe-test'].alert.value.should.eql(15);
+          dt.data['probe-test'].alert.mode.should.eql('threshold');
+          dt.data['probe-test'].alert.cmp.should.eql('>');
+          plan.ok(true);
+        }
+
+        if (dt.type == 'process:exception') {
+          should(dt.data.message).startWith('val too high');
+          plan.ok(true);
+        }
+      }
+
+      app.on('message', processMsg);
+    });
+  });
+
+  describe('Alert threshold', function() {
+    it('should launch app', function(done) {
+      app = forkAlertedModuleThresholdAvg();
+
+      app.once('message', function(dt) {
+        dt.data.alert_enabled.should.be.true;
+        done();
+      });
+
+    });
+
+    it('should receive notification threshold alert', function(done) {
+      var plan = new Plan(2, function() {
+        app.kill();
+        app.removeListener('message', processMsg);
+        done();
+      });
+
+      function processMsg(dt) {
+        if (dt.type == 'axm:monitor') {
+          dt.data['probe-test'].alert.value.should.eql(15);
+          dt.data['probe-test'].alert.interval.should.eql(5);
+          dt.data['probe-test'].alert.mode.should.eql('threshold-avg');
+          dt.data['probe-test'].alert.cmp.should.eql('>');
           plan.ok(true);
         }
 
@@ -85,8 +132,5 @@ describe('Alert system', function() {
     });
 
   });
-
-
-
 
 });
