@@ -30,7 +30,7 @@ function forkNonAlertedModule() {
 describe('Alert system', function() {
   var app;
 
-  describe('With Alert', function() {
+  describe('(MODULE) With Alert', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModule();
 
@@ -66,7 +66,7 @@ describe('Alert system', function() {
     });
   });
 
-  describe('Alert threshold', function() {
+  describe('(MODULE) Alert threshold', function() {
     it('should launch app', function(done) {
       app = forkAlertedModuleThresholdAvg();
 
@@ -103,7 +103,7 @@ describe('Alert system', function() {
     });
   });
 
-  describe('Without Alert', function() {
+  describe('(MODULE) Without Alert', function() {
     it('should start module with alert activated', function(done) {
       app = forkNonAlertedModule();
 
@@ -114,8 +114,14 @@ describe('Alert system', function() {
 
     });
 
-    it('should receive notification threshold alert', function(done) {
+    it('should not receive notification threshold alert', function(done) {
       function processMsg(dt) {
+        if (dt.type == 'axm:monitor') {
+          // No alert but alert field should exist
+          dt.data['probe-test'].alert.should.exists;
+          Object.keys(dt.data['probe-test'].alert).length.should.eql(0);
+        }
+
         if (dt.type == 'process:exception') {
           done('ERROR EMITTED :/');
         }
@@ -132,5 +138,6 @@ describe('Alert system', function() {
     });
 
   });
+
 
 });

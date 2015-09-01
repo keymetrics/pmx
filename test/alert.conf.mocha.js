@@ -64,6 +64,26 @@ function forkVariousProbesOverrided() {
   return app;
 }
 
+function forkRawNodeApp() {
+  var module_env = JSON.stringify({
+    'probes' : {
+      'pmx:http:latency' : {
+        'value' : '20',
+        'mode' : 'threshold-avg',
+        'interval' : '10'
+      }
+    }
+  });
+
+  var app = require('child_process').fork(__dirname + '/fixtures/sample-app/http.js', [], {
+    env : {
+      'name' : 'http',
+      'http' : module_env
+    }
+  });
+  return app;
+}
+
 describe('Alert system configuration', function() {
   var app;
 
@@ -196,6 +216,47 @@ describe('Alert system configuration', function() {
 
           if (dt.data.message.indexOf('Probe Downloads has reached') > -1)
             plan.ok(true);
+        }
+      }
+
+      app.on('message', processMsg);
+    });
+
+  });
+
+  describe('(RAW APP) With overrided alerts', function() {
+    it('should start module with alert activated', function(done) {
+      app = forkRawNodeApp();
+
+      app.once('message', function(dt) {
+        done();
+      });
+
+    });
+
+    it('should not receive notification threshold alert', function(done) {
+      var plan = new Plan(3, function() {
+        app.kill();
+        app.removeListener('message', processMsg);
+        done();
+      });
+
+      function processMsg(dt) {
+        if (dt.type == 'axm:monitor' && dt.data['test-probe']) {
+          dt.data['test-probe'].alert.value.should.eql(20);
+          dt.data['test-probe'].alert.mode.should.eql('threshold');
+          plan.ok(true);
+        }
+
+        if (dt.type == 'axm:monitor' && dt.data['pmx:http:latency']) {
+          dt.data['pmx:http:latency'].alert.value.should.eql(20);
+          dt.data['pmx:http:latency'].alert.mode.should.eql('threshold-avg');
+          dt.data['pmx:http:latency'].alert.interval.should.eql(10);
+          plan.ok(true);
+        }
+
+        if (dt.type == 'process:exception') {
+          plan.ok(true);
         }
       }
 
