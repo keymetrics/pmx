@@ -149,7 +149,7 @@ describe('Alert system configuration', function() {
     });
 
     it('should alert take alert configuration from environment', function(done) {
-      var plan = new Plan(4, function() {
+      var plan = new Plan(5, function() {
         app.kill();
         app.removeListener('message', processMsg);
         done();
@@ -158,6 +158,7 @@ describe('Alert system configuration', function() {
       var delay = false;
       var downloads = false;
       var reqmin = false;
+      var probetest = false;
 
       function processMsg(dt) {
         if (dt.type == 'axm:monitor' && dt.data['delay'] && !delay) {
@@ -173,6 +174,13 @@ describe('Alert system configuration', function() {
           dt.data['Downloads'].alert.value.should.eql(10);
           dt.data['Downloads'].alert.mode.should.eql('threshold');
           dt.data['Downloads'].alert.cmp.should.eql('>');
+          plan.ok(true);
+        }
+
+        if (dt.type == 'axm:monitor' && dt.data['probe-test'] && !probetest) {
+          probetest = true;
+          dt.data['probe-test'].alert.value.should.eql(15);
+          dt.data['probe-test'].alert.mode.should.eql('threshold-avg');
           plan.ok(true);
         }
 

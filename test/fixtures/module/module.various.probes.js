@@ -8,6 +8,16 @@ var conf = pmx.initModule({
   var probe = pmx.probe();
   var slow_val = 0;
 
+  var dt = probe.metric({
+    name  : 'probe-test',
+    alert : {
+      mode     : 'threshold-avg',
+      value    : 15,
+      interval : 5,
+      msg      : 'val too high'
+    }
+  });
+
 
   var TIME_INTERVAL = 1000;
 

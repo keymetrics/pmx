@@ -4,6 +4,7 @@
 - Hide password once it's set
 - Do not force app keep alive when calling configureModule (already done when using probes)
 - alias action attribute to func in alert system + pass value
+- Attach auto alerts to all probes
 - append alert configuration to probes (subfield alert, attaching value threshold and interval (for threshold-avg)
 - Add autocast object system for configuration (WARNING!!! STRING WITH ONLY NUMBER WILL BE CAST TO INT)
 - BUG FIX: pmx.notify JSON | STRING create separated alerts (before it was not working because the stack trace was the same, coming from `new Error in notify.js`
