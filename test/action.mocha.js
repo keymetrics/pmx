@@ -25,16 +25,20 @@ describe('Action module', function() {
     it('should notify PM2 of a new action available', function(done) {
       app = forkApp();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (dt.type != 'axm:action') return;
+
         dt.type.should.eql('axm:action');
         dt.data.action_name.should.eql('test:nab');
         dt.data.opts.comment.should.eql('This is a test');
         dt.data.opts.display.should.eql(true);
-
         action_name = dt.data.action_name;
 
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
+
+      app.on('message', processMsg);
     });
 
     it('should trigger the action', function(done) {
@@ -81,12 +85,17 @@ describe('Action module', function() {
     it('should notify PM2 of a new action available', function(done) {
       app = forkAppWithOptions();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (dt.type != 'axm:action') return;
+
         dt.type.should.eql('axm:action');
         dt.data.action_name.should.eql('test:with:options');
         action_name = dt.data.action_name;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
+
+      app.on('message', processMsg);
     });
 
     it('should trigger the action without failing (2 args without option)', function(done) {
@@ -133,13 +142,15 @@ describe('Action module', function() {
     it('should notify PM2 of a new action available', function(done) {
       app = forkApp('/fixtures/scoped-action.fixture.js');
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (dt.type != 'axm:action') return;
         dt.type.should.eql('axm:action');
         dt.data.action_name.should.eql('scoped:action');
         dt.data.action_type.should.eql('scoped');
         action_name = dt.data.action_name;
         done();
-      });
+      }
+      app.on('message', processMsg);
     });
 
     it('should stream data', function(done) {

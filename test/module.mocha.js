@@ -27,8 +27,8 @@ describe('PMX module', function() {
     // 1 - It should emit an action
     app = forkWithoutEnv();
 
-    app.once('message', function(dt) {
-
+    function processMsg(dt) {
+      if (dt.type != 'axm:option:configuration') return;
       /**
        * Right event sent
        */
@@ -53,15 +53,18 @@ describe('PMX module', function() {
        */
       dt.data.module_conf.initial.should.eql('init-val');
       app.kill();
+      app.removeListener('message', processMsg);
       done();
-    });
+    }
+
+    app.on('message', processMsg);
   });
 
   it('should emit a new action', function(done) {
     // 1 - It should emit an action
     app = forkWithSpecificVar();
 
-    app.once('message', function(dt) {
+    function processMsg(dt) {
 
       /**
        * Right event sent
@@ -90,19 +93,25 @@ describe('PMX module', function() {
       dt.data.module_conf.option2.should.eql('value2');
       dt.data.module_conf.initial.should.eql('over');
       app.kill();
+      app.removeListener('message', processMsg);
       done();
-    });
+    }
+
+    app.on('message', processMsg);
   });
 
   it('should hide password', function(done) {
     app = forkWithSpecificVar();
 
-    app.once('message', function(dt) {
+    function processMsg(dt) {
       dt.data.alert_enabled.should.be.true;
       dt.data.module_conf.password.should.eql('Password hidden');
       done();
+      app.removeListener('message', processMsg);
       app.kill();
-    });
+    }
+
+    app.on('message', processMsg);
   });
 
   it('should find existing file', function(done) {

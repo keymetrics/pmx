@@ -34,11 +34,14 @@ describe('Alert system', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModule();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (!dt.data.alert_enabled) return;
         dt.data.alert_enabled.should.be.true;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
 
+      app.on('message', processMsg);
     });
 
     it('should receive notification threshold alert', function(done) {
@@ -70,11 +73,14 @@ describe('Alert system', function() {
     it('should launch app', function(done) {
       app = forkAlertedModuleThresholdAvg();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (!dt.data.alert_enabled) return;
         dt.data.alert_enabled.should.be.true;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
 
+      app.on('message', processMsg);
     });
 
     it('should receive notification threshold alert', function(done) {

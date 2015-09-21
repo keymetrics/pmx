@@ -91,11 +91,14 @@ describe('Alert system configuration', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModule();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (!dt.data.alert_enabled) return;
         dt.data.alert_enabled.should.be.true;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
 
+      app.on('message', processMsg);
     });
 
     it('should alert take alert configuration from environment', function(done) {
@@ -127,10 +130,14 @@ describe('Alert system configuration', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModuleWithAlertDeclared();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (!dt.data.alert_enabled) return;
         dt.data.alert_enabled.should.be.true;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
+
+      app.on('message', processMsg);
     });
 
     it('should alert take alert configuration from environment', function(done) {
@@ -162,10 +169,14 @@ describe('Alert system configuration', function() {
     it('should start module', function(done) {
       app = forkVariousProbesOverrided();
 
-      app.once('message', function(dt) {
+      function processMsg(dt) {
+        if (!dt.data.alert_enabled) return;
         dt.data.alert_enabled.should.be.true;
+        app.removeListener('message', processMsg);
         done();
-      });
+      }
+
+      app.on('message', processMsg);
     });
 
     it('should alert take alert configuration from environment', function(done) {
