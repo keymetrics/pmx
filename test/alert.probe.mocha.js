@@ -103,7 +103,7 @@ describe('Alert system', function() {
     });
   });
 
-  describe('(MODULE) Without Alert', function() {
+  describe.skip('(MODULE) Without Alert', function() {
     it('should start module with alert activated', function(done) {
       app = forkNonAlertedModule();
 
