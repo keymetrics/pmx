@@ -1,4 +1,9 @@
 
+# 0.5.0
+
+- Auto initialize Configuration
+- Enable alerts by default
+
 # 0.4.0
 
 - Hide password once it's set
