@@ -1,4 +1,9 @@
 
+# 0.5.3
+
+- Fix alert system
+- Change <>
+
 # 0.5.0
 
 - Auto initialize Configuration
