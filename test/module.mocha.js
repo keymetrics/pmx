@@ -1,6 +1,7 @@
 
 var pmx = require('..');
 var should = require('should');
+var pkg = require('../package.json');
 
 function forkWithoutEnv() {
   var app = require('child_process').fork(__dirname + '/fixtures/module/module.fixture.js', [], {
@@ -39,6 +40,7 @@ describe('PMX module', function() {
        */
       dt.data.description.should.eql('comment');
       dt.data.module_version.should.eql('1.0.0');
+      should(dt.data.pmx_version).eql(null);
       dt.data.module_name.should.eql('module');
       dt.data.alert_enabled.should.be.true;
 
