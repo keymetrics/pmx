@@ -1,4 +1,8 @@
 
+# 0.5.4
+
+- axm_options now has PMX version (but only the value in the package.json)
+
 # 0.5.3
 
 - Fix alert system
