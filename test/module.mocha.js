@@ -107,6 +107,7 @@ describe('PMX module', function() {
 
     function processMsg(dt) {
       dt.data.alert_enabled.should.be.true;
+      dt.data.password.should.eql('1234s');
       dt.data.module_conf.password.should.eql('Password hidden');
       done();
       app.removeListener('message', processMsg);
