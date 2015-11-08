@@ -39,7 +39,7 @@ describe('PMX module', function() {
        * Options set
        */
       dt.data.description.should.eql('comment');
-      dt.data.module_version.should.eql('1.0.0');
+      dt.data.module_version.should.eql('1.0.5');
       should(dt.data.pmx_version).eql(null);
       dt.data.module_name.should.eql('module');
       dt.data.alert_enabled.should.be.true;
@@ -77,7 +77,7 @@ describe('PMX module', function() {
        * Options set
        */
       dt.data.description.should.eql('comment');
-      dt.data.module_version.should.eql('1.0.0');
+      dt.data.module_version.should.eql('1.0.5');
       dt.data.module_name.should.eql('module');
 
       /**
