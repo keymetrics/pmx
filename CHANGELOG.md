@@ -2,6 +2,7 @@
 # 0.5.6
 
 - right pmx version injected into module
+- if pmx cannot find package.json in current folder, try to require in parent folder
 
 # 0.5.4
 
