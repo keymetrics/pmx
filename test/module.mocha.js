@@ -110,7 +110,6 @@ describe('PMX module', function() {
       app = forkWithSpecificVarSubFile();
 
       function processMsg(dt) {
-
         /**
          * Right event sent
          */
