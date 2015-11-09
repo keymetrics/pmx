@@ -50,7 +50,7 @@ describe('PMX module', function() {
          */
         dt.data.description.should.eql('comment');
         dt.data.module_version.should.eql('1.0.5');
-        should(dt.data.pmx_version).eql(null);
+        should(dt.data.pmx_version).eql(pkg.version);
         dt.data.module_name.should.eql('module');
         dt.data.alert_enabled.should.be.true;
 
@@ -89,6 +89,7 @@ describe('PMX module', function() {
         dt.data.option1.should.eql('value1');
         dt.data.option2.should.eql('value2');
         dt.data.initial.should.eql('over');
+        should(dt.data.pmx_version).eql(pkg.version);
 
         /**
          * Should configuration variable be mirrored into module_conf
@@ -122,6 +123,7 @@ describe('PMX module', function() {
         dt.data.option1.should.eql('value1');
         dt.data.option2.should.eql('value2');
         dt.data.initial.should.eql('over');
+        should(dt.data.pmx_version).eql(pkg.version);
 
         /**
          * Should configuration variable be mirrored into module_conf
