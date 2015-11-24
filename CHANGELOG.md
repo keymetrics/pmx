@@ -1,6 +1,7 @@
 
 # 0.5.6
 
+- stop all intervals if we get killing signals
 - right pmx version injected into module
 - if pmx cannot find package.json in current folder, try to require in parent folder
 - hide some error messages
