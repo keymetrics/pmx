@@ -1,9 +1,10 @@
 
 # 0.5.6
 
+- Don't mess with incoming error #37
 - right pmx version injected into module
 - if pmx cannot find package.json in current folder, try to require in parent folder
-- hide some error messages
+- disable some error messages
 
 # 0.5.4
 
