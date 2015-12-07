@@ -1,7 +1,8 @@
 
 # 0.5.6
 
-- Don't mess with incoming error #37
+- [#58] Clear all intervals when receiving kill signal from PM2 to free event loop
+- [#37] Don't mess with incoming error
 - right pmx version injected into module
 - if pmx cannot find package.json in current folder, try to require in parent folder
 - disable some error messages
