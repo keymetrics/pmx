@@ -1,11 +1,11 @@
 {
   "name": "pmx",
   "version": "0.5.8",
-  "description": "Keymetrics++ and PM2 adapter",
+  "description": "Advanced programmatic interface for Keymetrics",
   "main": "index.js",
   "dependencies": {
-    "debug"               : "*",
-    "json-stringify-safe" : "*"
+    "debug"               : "^2.2",
+    "json-stringify-safe" : "^5.0"
   },
   "devDependencies": {
     "express" : "*",
