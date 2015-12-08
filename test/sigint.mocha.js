@@ -28,6 +28,8 @@ describe('SIGINT handling', function() {
 
     app.on('exit', function(code, signal) {
       if (signal == 'SIGTERM') return done();
+      // Avoid shit with node 0.10.x
+      if (code == 143) return done();
       done(new Error('should not enter here'));
     });
 
