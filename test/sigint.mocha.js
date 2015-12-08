@@ -9,6 +9,10 @@ function forkWithHandler() {
   return require('child_process').fork(__dirname + '/fixtures/sigint/sigint-handler.js', []);
 }
 
+function forkBeforeExit() {
+  return require('child_process').fork(__dirname + '/fixtures/sigint/beforeExit.js', []);
+}
+
 describe('SIGINT handling', function() {
 
   it('should kill app via SIGINT', function(done) {
@@ -39,6 +43,22 @@ describe('SIGINT handling', function() {
       setTimeout(function() {
         app.kill('SIGTERM');
       }, 1000);
+    }, 500);
+  });
+
+  it('should test with beforeExit and get right code', function(done) {
+    if (!(process.version.match(/^v(\d+\.\d+)/)[1].indexOf('0.10') == -1)) return done();
+
+    var app = forkBeforeExit();
+
+    app.on('exit', function(code, signal) {
+      if (code == 42) return done();
+      console.log(arguments);
+      done(new Error('should not enter here'));
+    });
+
+    setTimeout(function() {
+      app.kill('SIGINT');
     }, 500);
   });
 
