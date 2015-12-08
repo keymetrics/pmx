@@ -17,7 +17,6 @@
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
   },
-  ,
   "keywords": [
     "cli",
     "fault tolerant",
