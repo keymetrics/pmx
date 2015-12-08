@@ -1,18 +1,18 @@
 {
   "name": "pmx",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Keymetrics++ and PM2 adapter",
   "main": "index.js",
   "dependencies": {
-    "debug": "*",
-    "json-stringify-safe": "*"
+    "debug"               : "*",
+    "json-stringify-safe" : "*"
   },
   "devDependencies": {
-    "express": "*",
-    "request": "*",
-    "should": "*",
-    "mocha": "*",
-    "shelljs": "*"
+    "express" : "*",
+    "request" : "*",
+    "should"  : "*",
+    "mocha"   : "*",
+    "shelljs" : "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
