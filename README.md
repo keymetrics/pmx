@@ -1,6 +1,7 @@
 # Keymetrics Driver
 
 ![Keymetrics](https://keymetrics.io/assets/images/application-demo.png)
+[![bitHound Overalll Score](https://www.bithound.io/github/keymetrics/pmx/badges/score.svg)](https://www.bithound.io/github/keymetrics/pmx)
 ![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
 
 PMX is a module that allows you to create advanced interactions with Keymetrics.
