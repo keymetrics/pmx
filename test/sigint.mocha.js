@@ -28,8 +28,7 @@ describe('SIGINT handling', function() {
 
     app.on('exit', function(code, signal) {
       if (signal == 'SIGTERM') return done();
-      signal.should.not.eql('SIGINT');
-      done();
+      done(new Error('should not enter here'));
     });
 
     setTimeout(function() {
