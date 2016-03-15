@@ -28,7 +28,7 @@ var pmx = require('pmx').init({
   http          : true, // HTTP routes logging (default: false)
   http_latency  : 200,  // Limit of acceptable latency
   http_code     : 500,  // Error code to track'
-  alert_enabled : true  // Enable alerts (If you add alert subfield in custom it's going to be enabled)
+  alert_enabled : true,  // Enable alerts (If you add alert subfield in custom it's going to be enabled)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (default: [])
   errors        : true, // Exceptions loggin (default: true)
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
