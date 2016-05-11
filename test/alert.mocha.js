@@ -135,4 +135,24 @@ describe('Alert Probe Checker', function() {
       done(new Error('Smart checker did not detect'));
     }, 1000);
   });
+  it('should not error when value is null less than 10 times in a row', function(done) {
+    var test7 = new Alert({
+      mode  : 'threshold',
+      value : 32,
+      func  : function(){ done(new Error('Should not be called')); }
+    });
+    test7.start = true;
+    //Done when current_value > 32
+    var i = 0;
+    while (i++ < 10) {
+      test7.tick(12);
+    }
+    while (i++ < 15) {
+      test7.tick(null);
+    }
+    while (i++ < 30) {
+      test7.tick(12);
+    }
+    done();
+  });
 });
