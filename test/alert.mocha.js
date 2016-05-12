@@ -80,19 +80,23 @@ describe('Alert Probe Checker', function() {
       done();
     }, 1000);
   });
-  it('should not detect (2 * value) spike every 30 values', function(done){
+  it('should not detect (1.5 * value) spike every 30 values', function(done) {
     var current_value = 100;
     var i = 0;
     var test4 = new Alert({
       mode  : 'smart',
-      func  : function() { done(new Error('Should not be called')); }
+      func  : function() {
+        clearInterval(interval2);
+        clearTimeout(timeout);
+        done(new Error('Should not be called'));
+      }
     });
     //Force instant start of data verification
     test4.start = true;
     
-    var interval = setInterval(function() {
+    var interval2 = setInterval(function() {
       if (i % 30 == 29)
-        test4.tick(2 * current_value)
+        test4.tick(1.5 * current_value)
       else
         test4.tick(current_value);
       //2% max deviation each step
@@ -100,8 +104,8 @@ describe('Alert Probe Checker', function() {
       i++;
     }, 10);
     
-    setTimeout(function() {
-      clearInterval(interval);
+    var timeout = setTimeout(function() {
+      clearInterval(interval2);
       done();
     }, 1000);
   });
@@ -111,7 +115,7 @@ describe('Alert Probe Checker', function() {
       mode  : 'smart',
       func  : function() {
         //clear all, error was detected
-        clearInterval(interval);
+        clearInterval(interval3);
         clearTimeout(timeout);
         done();
       }
@@ -119,7 +123,7 @@ describe('Alert Probe Checker', function() {
     //Force instant start of data verification
     test5.start = true;
     
-    var interval = setInterval(function() {
+    var interval3 = setInterval(function() {
       test5.tick(current_value);
     }, 10);
     
@@ -127,7 +131,7 @@ describe('Alert Probe Checker', function() {
     var error = setTimeout(function() {
       for(var i = 0; i < 20; i++)
         test5.tick(current_value * 2);
-    }, 600)    
+    }, 600)
 
     var timeout = setTimeout(function() {
       //Failed to detect the error plateau
@@ -142,7 +146,6 @@ describe('Alert Probe Checker', function() {
       func  : function(){ done(new Error('Should not be called')); }
     });
     test7.start = true;
-    //Done when current_value > 32
     var i = 0;
     while (i++ < 10) {
       test7.tick(12);
