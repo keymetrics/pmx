@@ -18,7 +18,7 @@ describe('Alert Probe Checker', function() {
       current_value++;
     }
   });
-  it('should detect reverse threshold', function(done) {  
+  it('should detect reverse threshold', function(done) {
     var current_value = 20;
     var test2 = new Alert({
       mode  : 'threshold',
@@ -68,19 +68,20 @@ describe('Alert Probe Checker', function() {
     });
     //Force instant start of data verification
     test3.start = true;
-    
+
     var interval = setInterval(function() {
       test3.tick(current_value);
       //2% max deviation each step
       current_value += (Math.random() - 0.5) * (0.02 * current_value);
     }, 10);
-    
+
     setTimeout(function() {
       clearInterval(interval);
       done();
     }, 1000);
   });
-  it('should not detect (1.5 * value) spike every 30 values', function(done) {
+
+  it.skip('should not detect (1.5 * value) spike every 30 values', function(done) {
     var current_value = 100;
     var i = 0;
     var test4 = new Alert({
@@ -93,7 +94,7 @@ describe('Alert Probe Checker', function() {
     });
     //Force instant start of data verification
     test4.start = true;
-    
+
     var interval2 = setInterval(function() {
       if (i % 30 == 29)
         test4.tick(1.5 * current_value)
@@ -103,12 +104,13 @@ describe('Alert Probe Checker', function() {
       current_value += (Math.random() - 0.5) * (0.02 * current_value);
       i++;
     }, 10);
-    
+
     var timeout = setTimeout(function() {
       clearInterval(interval2);
       done();
     }, 1000);
   });
+
   it('should detect 20 chained errors of 2 * value', function(done) {
   var current_value = 100;
     var test5 = new Alert({
@@ -122,11 +124,11 @@ describe('Alert Probe Checker', function() {
     });
     //Force instant start of data verification
     test5.start = true;
-    
+
     var interval3 = setInterval(function() {
       test5.tick(current_value);
     }, 10);
-    
+
     //Error Plateau Timeout
     var error = setTimeout(function() {
       for(var i = 0; i < 20; i++)
