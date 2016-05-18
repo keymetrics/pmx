@@ -4,6 +4,10 @@ var Profiling = require('../lib/probes/profiling.js');
 var should = require('should');
 var shelljs = require('shelljs');
 
+function fork() {
+  return require('child_process').fork(__dirname + '/fixtures/module/module.async.require.js', []);
+}
+
 describe('Profiling', function() {
   it('should have right properties', function(done) {
     pmx.should.have.property('v8Profiling');
@@ -11,6 +15,16 @@ describe('Profiling', function() {
     Profiling.should.have.property('exposeProfiling');
     Profiling.should.have.property('v8Profiling');
     done();
+  });
+
+  it("should not break 'require' if v8-profiler is not present", function(done) {
+    fork().on('exit', function(n) {
+        if (n) {
+            done(new Error("Process exited with a non-zero code"));
+        } else {
+            done();
+        }
+    });
   });
 
   it.skip('should return error as v8-profiler not present', function(done) {
