@@ -1,4 +1,11 @@
 
+# 0.6.2
+
+- [#68] Add unref to all background jobs to free the event loop
+- [#67] Stop clearing main module's path
+- New smart probe algorithm
+- Smart probes fixed (no null value anymore)
+
 # 0.5.6
 
 - [#58] Clear all intervals when receiving kill signal from PM2 to free event loop
