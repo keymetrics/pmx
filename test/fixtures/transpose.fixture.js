@@ -31,6 +31,6 @@ probe.transpose('style_1_docker_config', function doSomething() {
   return config_example;
 });
 
-setTimeout(function() {
+setInterval(function() {
   config_example.val = 'new value';
 }, 1100);
