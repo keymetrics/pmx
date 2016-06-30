@@ -323,3 +323,5 @@ pmx.init({
 ## License
 
 MIT
+
+[![GA](https://ga-beacon.appspot.com/UA-51122580-2/pmx/readme?pixel&useReferer)](https://github.com/igrigorik/ga-beacon)
