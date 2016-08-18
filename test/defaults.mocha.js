@@ -28,8 +28,7 @@ describe('Default Metrics and Actions', function() {
       }
 
       if (dt.type == 'axm:monitor' &&
-          dt.data['Loop delay'] &&
-          dt.data['Modules']) {
+          dt.data['Loop delay']) {
         plan.ok(true);
       }
     }
