@@ -1,4 +1,8 @@
 
+# 0.6.3
+
+- Add defaut custom action getEnv (display process environment variables)
+
 # 0.6.2
 
 - [#68] Add unref to all background jobs to free the event loop
