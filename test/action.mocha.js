@@ -3,12 +3,12 @@
 var pmx = require('..');
 
 function forkApp(script) {
-  var app = require('child_process').fork(__dirname + (script || '/proc.mock.js'), []);
+  var app = require('child_process').fork(__dirname + '/fixtures' + (script || '/proc.mock.js'), []);
   return app;
 }
 
 function forkAppWithOptions() {
-  var app = require('child_process').fork(__dirname + '/proc-option.mock.js', []);
+  var app = require('child_process').fork(__dirname + '/fixtures/proc-option.mock.js', []);
   return app;
 }
 
@@ -140,7 +140,7 @@ describe('Action module', function() {
     });
 
     it('should notify PM2 of a new action available', function(done) {
-      app = forkApp('/fixtures/scoped-action.fixture.js');
+      app = forkApp('/scoped-action.fixture.js');
 
       function processMsg(dt) {
         if (dt.type != 'axm:action') return;
