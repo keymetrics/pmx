@@ -23,9 +23,9 @@ describe('Default Metrics and Actions', function() {
     app = forkApp();
 
     function processMsg(dt) {
-      if (dt.type == 'axm:action' && dt.action_name == 'getEnv') {
-        plan.ok(true);
-      }
+      // if (dt.type == 'axm:action' && dt.action_name == 'getEnv') {
+      //   plan.ok(true);
+      // }
 
       if (dt.type == 'axm:monitor' &&
           dt.data['Loop delay']) {
