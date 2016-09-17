@@ -1,6 +1,6 @@
 {
   "name": "pmx",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Programmatic interface for Keymetrics.io",
   "main": "index.js",
   "dependencies": {
