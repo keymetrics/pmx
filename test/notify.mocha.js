@@ -4,7 +4,23 @@ var axm = require('..');
 var should = require('should');
 
 function forkCatch() {
-  var app = require('child_process').fork(__dirname + '/fixtures/notify_catch_all.mock.js', []);
+  var app = require('child_process').fork(__dirname + '/fixtures/notify_catch_all.mock.js', [], {
+    silent : true
+  });
+  return app;
+}
+
+function forkPromiseException() {
+  var app = require('child_process').fork(__dirname + '/fixtures/promise_error.mock.js', [], {
+    silent : true
+  });
+  return app;
+}
+
+function forkPromiseExceptionRebind() {
+  var app = require('child_process').fork(__dirname + '/fixtures/promise_error_bind.mock.js', [], {
+    silent : true
+  });
   return app;
 }
 
@@ -61,6 +77,33 @@ describe('Notify exceptions', function() {
     done();
   });
 
+  it('should catch unhandled promise', function(done) {
+    var app = forkPromiseException();
+
+    app.once('message', function(data) {
+      data.type.should.eql('axm:option:configuration');
+      app.once('message', function(data) {
+        data.type.should.eql('process:exception');
+        data.data.message.should.eql('fail');
+        process.kill(app.pid);
+        done();
+      });
+    });
+  });
+
+  it('should catch unhandled promise rebind', function(done) {
+    var app = forkPromiseExceptionRebind();
+
+    app.once('message', function(data) {
+      data.type.should.eql('axm:option:configuration');
+      app.once('message', function(data) {
+        data.type.should.eql('process:exception');
+        data.data.message.should.eql('fail');
+        process.kill(app.pid);
+        done();
+      });
+    });
+  });
 
   it('should catchAll exception in fork mode', function(done) {
     var app = forkCatch();
