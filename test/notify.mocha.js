@@ -77,7 +77,7 @@ describe('Notify exceptions', function() {
     done();
   });
 
-  it('should catch unhandled promise', function(done) {
+  it.skip('should catch unhandled promise', function(done) {
     if (process.version.indexOf('v0') > -1) return done()
 
     var app = forkPromiseException();
@@ -93,7 +93,7 @@ describe('Notify exceptions', function() {
     });
   });
 
-  it('should catch unhandled promise rebind', function(done) {
+  it.skip('should catch unhandled promise rebind', function(done) {
     if (process.version.indexOf('v0') > -1) return done()
 
     var app = forkPromiseExceptionRebind();
