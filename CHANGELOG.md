@@ -1,4 +1,8 @@
 
+# 0.6.8
+
+- Final unhandledRejection warning message
+
 # 0.6.3
 
 - Add defaut custom action getEnv (display process environment variables)

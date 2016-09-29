@@ -17,6 +17,20 @@ function forkPromiseException() {
   return app;
 }
 
+function forkPromiseEmptyException() {
+  var app = require('child_process').fork(__dirname + '/fixtures/promise_empty.js', [], {
+    silent : true
+  });
+  return app;
+}
+
+function forkPromiseRejectError() {
+  var app = require('child_process').fork(__dirname + '/fixtures/promise_reject_error.js', [], {
+    silent : true
+  });
+  return app;
+}
+
 function forkPromiseExceptionRebind() {
   var app = require('child_process').fork(__dirname + '/fixtures/promise_error_bind.mock.js', [], {
     silent : true
@@ -77,7 +91,7 @@ describe('Notify exceptions', function() {
     done();
   });
 
-  it.skip('should catch unhandled promise', function(done) {
+  it('should catch unhandled promise', function(done) {
     if (process.version.indexOf('v0') > -1) return done()
 
     var app = forkPromiseException();
@@ -93,7 +107,39 @@ describe('Notify exceptions', function() {
     });
   });
 
-  it.skip('should catch unhandled promise rebind', function(done) {
+  it('should catch empty unhandled promise', function(done) {
+    if (process.version.indexOf('v0') > -1) return done()
+
+    var app = forkPromiseEmptyException();
+
+    app.once('message', function(data) {
+      data.type.should.eql('axm:option:configuration');
+      app.once('message', function(data) {
+        data.type.should.eql('process:exception');
+        data.data.message.should.eql('No error but unhandledRejection was caught!');
+        process.kill(app.pid);
+        done();
+      });
+    });
+  });
+
+  it('should catch unhandled promise', function(done) {
+    if (process.version.indexOf('v0') > -1) return done()
+
+    var app = forkPromiseRejectError();
+
+    app.once('message', function(data) {
+      data.type.should.eql('axm:option:configuration');
+      app.once('message', function(data) {
+        data.type.should.eql('process:exception');
+        data.data.message.should.eql('ok');
+        process.kill(app.pid);
+        done();
+      });
+    });
+  });
+
+  it('should catch unhandled promise rebind', function(done) {
     if (process.version.indexOf('v0') > -1) return done()
 
     var app = forkPromiseExceptionRebind();
