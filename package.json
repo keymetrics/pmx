@@ -4,15 +4,16 @@
   "description": "Programmatic interface for Keymetrics.io",
   "main": "index.js",
   "dependencies": {
-    "debug"               : "^2.2",
-    "json-stringify-safe" : "^5.0"
+    "debug": "^2.2",
+    "json-stringify-safe": "^5.0",
+    "km-trace": "0.0.1"
   },
   "devDependencies": {
-    "express" : "*",
-    "request" : "*",
-    "should"  : "*",
-    "mocha"   : "*",
-    "shelljs" : "*"
+    "express": "*",
+    "request": "*",
+    "should": "*",
+    "mocha": "*",
+    "shelljs": "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
