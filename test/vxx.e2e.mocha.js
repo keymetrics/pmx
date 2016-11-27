@@ -36,10 +36,8 @@ describe('Programmatically test interactor', function() {
           cwd        : __dirname + '/fixtures/vxx-e2e'
         });
 
-        pm2.kill(function() {
-          pm2.connect(function() {
-            done();
-          });
+        pm2.connect(function() {
+          done();
         });
       });
     });
