@@ -13,7 +13,11 @@
     "request": "*",
     "should": "*",
     "mocha": "*",
-    "shelljs": "*"
+    "shelljs": "*",
+    "pm2" : "Unitech/pm2#lazer",
+    "pm2-axon" : "*",
+    "nssocket" : "*",
+    "mongoose" : "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"

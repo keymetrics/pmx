@@ -2,6 +2,7 @@
 # 1.0.0-beta1
 
 - Include transaction tracing system
+- Test on Node v7
 
 # 0.6.8
 
