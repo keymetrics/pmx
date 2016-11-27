@@ -1,4 +1,8 @@
 
+# 1.0.0-beta1
+
+- Include transaction tracing system
+
 # 0.6.8
 
 - Final unhandledRejection warning message

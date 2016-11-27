@@ -1,7 +1,7 @@
 {
   "name": "pmx",
-  "version": "0.6.8",
-  "description": "Programmatic interface for Keymetrics.io",
+  "version": "1.0.0-beta1",
+  "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
     "debug": "^2.2",
@@ -52,6 +52,10 @@
     "forever",
     "profiling",
     "probes",
+    "process-metrics",
+    "process metrics",
+    "metrics",
+    "custom actions",
     "forever-monitor",
     "keep process alive",
     "process configuration",
