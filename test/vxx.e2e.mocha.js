@@ -91,7 +91,7 @@ describe('Programmatically test interactor', function() {
         });
       })()
 
-      pm2.triggerCustomAction('API', 'launchMock');
+      pm2.trigger('API', 'launchMock');
     });
 
     it('should get database transaction trace (save)', function(done) {
@@ -107,8 +107,8 @@ describe('Programmatically test interactor', function() {
             // Should count 10 transactions
             packet.data['axm:transaction'][0].data.routes['/db1/save'][0].count.should.eql(10);
             //console.log(packet.data['axm:transaction'][0].data.routes['/db1/save']);
-            tracing.child.length.should.eql(1);
-            tracing.child[0].name.should.eql('mongo-insert');
+            tracing.length.should.eql(2);
+            tracing[1].name.should.eql('mongo-insert');
             done();
           }
           else
@@ -116,7 +116,7 @@ describe('Programmatically test interactor', function() {
         });
       })()
 
-      pm2.triggerCustomAction('API', 'launchQueryToDbRoutes');
+      pm2.trigger('API', 'launchQueryToDbRoutes');
     });
 
     it('should get simple database transaction trace (find)', function(done) {
@@ -125,11 +125,12 @@ describe('Programmatically test interactor', function() {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
+            console.log(packet.data['axm:transaction']);
             // Should now route summary contains 5 routes
             Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(5);
 
             // @bug: should contain only 1 transaction not 2 (only find)
-            packet.data['axm:transaction'][0].data.routes['/db1/get'][0].spans.child.length.should.eql(2);
+            packet.data['axm:transaction'][0].data.routes['/db1/get'][0].spans.length.should.eql(3);
 
             done();
           }
@@ -138,7 +139,7 @@ describe('Programmatically test interactor', function() {
         });
       })()
 
-      pm2.triggerCustomAction('API', 'db1get');
+      pm2.trigger('API', 'db1get');
     });
 
     it('should get multi database transaction trace (find + findOne)', function(done) {
@@ -151,7 +152,7 @@ describe('Programmatically test interactor', function() {
             Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(6);
 
             // @bug: should contain only 2 transactions not 3 (find + findOne)
-            packet.data['axm:transaction'][0].data.routes['/db1/multi'][0].spans.child.length.should.eql(3);
+            packet.data['axm:transaction'][0].data.routes['/db1/multi'][0].spans.length.should.eql(4);
 
             done();
           }
@@ -160,7 +161,7 @@ describe('Programmatically test interactor', function() {
         });
       })()
 
-      pm2.triggerCustomAction('API', 'db1multi');
+      pm2.trigger('API', 'db1multi');
     });
 
 
