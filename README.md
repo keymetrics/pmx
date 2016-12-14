@@ -32,7 +32,15 @@ var pmx = require('pmx').init({
   errors        : true, // Exceptions loggin (default: true)
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
   network       : true, // Network monitoring at the application level (default: false)
-  ports         : true  // Shows which ports your app is listening on (default: false)
+  ports         : true  // Shows which ports your app is listening on (default: false),
+
+  // Transaction system configuration
+  ignoreFilter: {
+    'url': [],
+    'method': ['OPTIONS']
+  },
+  // 'express', 'hapi', 'http', 'restify'
+  excludedHooks: []
 });
 ```
 
