@@ -15,21 +15,12 @@ describe('Default Metrics and Actions', function() {
   });
 
   it('should fork app', function(done) {
-    var plan = new Plan(2, function() {
-      app.removeListener('message', processMsg);
-      done();
-    });
-
     app = forkApp();
 
     function processMsg(dt) {
-      // if (dt.type == 'axm:action' && dt.action_name == 'getEnv') {
-      //   plan.ok(true);
-      // }
-
-      if (dt.type == 'axm:monitor' &&
-          dt.data['Loop delay']) {
-        plan.ok(true);
+      if (dt.type == 'axm:option:configuration')  {
+        app.removeListener('message', processMsg);
+        done();
       }
     }
 

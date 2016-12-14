@@ -1,18 +1,23 @@
 {
   "name": "pmx",
-  "version": "0.6.8",
-  "description": "Programmatic interface for Keymetrics.io",
+  "version": "1.0.0-beta1",
+  "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
-    "debug"               : "^2.2",
-    "json-stringify-safe" : "^5.0"
+    "debug": "^2.2",
+    "json-stringify-safe": "^5.0",
+    "vxx": "^0.6.0"
   },
   "devDependencies": {
-    "express" : "*",
-    "request" : "*",
-    "should"  : "*",
-    "mocha"   : "*",
-    "shelljs" : "*"
+    "express": "*",
+    "request": "*",
+    "should": "*",
+    "mocha": "*",
+    "shelljs": "*",
+    "pm2" : "Unitech/pm2#lazer",
+    "pm2-axon" : "*",
+    "nssocket" : "*",
+    "mongoose" : "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
@@ -51,6 +56,10 @@
     "forever",
     "profiling",
     "probes",
+    "process-metrics",
+    "process metrics",
+    "metrics",
+    "custom actions",
     "forever-monitor",
     "keep process alive",
     "process configuration",
