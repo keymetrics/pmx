@@ -14,7 +14,7 @@
     "should": "*",
     "mocha": "*",
     "shelljs": "*",
-    "pm2" : "Unitech/pm2#lazer",
+    "pm2" : "Unitech/pm2#development",
     "pm2-axon" : "*",
     "nssocket" : "*",
     "mongoose" : "*"

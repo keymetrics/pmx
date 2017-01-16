@@ -34,67 +34,16 @@ var pmx = require('pmx').init({
   errors        : true, // Exceptions loggin (default: true)
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
   network       : true, // Network monitoring at the application level (default: false)
-  ports         : true  // Shows which ports your app is listening on (default: false),
+  ports         : true, // Shows which ports your app is listening on (default: false),
 
   // Transaction system configuration
+  transactions  : true  // Enable transaction tracing (default: false)
   ignoreFilter: {
     'url': [],
     'method': ['OPTIONS']
   },
-  // 'express', 'hapi', 'http', 'restify'
+  // can be 'express', 'hapi', 'http', 'restify'
   excludedHooks: []
-});
-```
-
-## Expose Functions: Trigger Functions remotely
-
-Remotely trigger functions from Keymetrics. These metrics takes place in the main Keymetrics Dashboard page under the Custom Action section.
-
-### Simple actions
-
-Simple action allows to trigger a function from Keymetrics. The function takes a function as a parameter (reply here) and need to be called once the job is finished.
-
-Example:
-
-```javascript
-var pmx = require('pmx');
-
-pmx.action('db:clean', function(reply) {
-  clean.db(function() {
-    /**
-     * reply() must be called at the end of the action
-     */
-     reply({success : true});
-  });
-});
-```
-
-### Scoped actions
-
-Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
-
-Two arguments are passed to the function, data (optionnal data sent from Keymetrics) and res that allows to emit log data and to end the scoped action.
-
-Example:
-
-```javascript
-pmx.scopedAction('long running lsof', function(data, res) {
-  var child = spawn('lsof', []);
-
-  child.stdout.on('data', function(chunk) {
-    chunk.toString().split('\n').forEach(function(line) {
-      res.send(line); // This send log to Keymetrics to be saved (for tracking)
-    });
-  });
-
-  child.stdout.on('end', function(chunk) {
-    res.end('end'); // This end the scoped action
-  });
-
-  child.on('error', function(e) {
-    res.error(e);  // This report an error to Keymetrics
-  });
-
 });
 ```
 
@@ -241,6 +190,58 @@ var metric = probe.metric({
 - `interval` : **optional**, `threshold-avg` mode. Sample length for monitored value (180 seconds default).
 - `timeout` : **optional**, `threshold-avg` mode. Time after which mean comparison starts (30 000 milliseconds default).
 
+## Expose Functions: Trigger Functions remotely
+
+Remotely trigger functions from Keymetrics. These metrics takes place in the main Keymetrics Dashboard page under the Custom Action section.
+
+### Simple actions
+
+Simple action allows to trigger a function from Keymetrics. The function takes a function as a parameter (reply here) and need to be called once the job is finished.
+
+Example:
+
+```javascript
+var pmx = require('pmx');
+
+pmx.action('db:clean', function(reply) {
+  clean.db(function() {
+    /**
+     * reply() must be called at the end of the action
+     */
+     reply({success : true});
+  });
+});
+```
+
+### Scoped actions
+
+Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
+
+Two arguments are passed to the function, data (optionnal data sent from Keymetrics) and res that allows to emit log data and to end the scoped action.
+
+Example:
+
+```javascript
+pmx.scopedAction('long running lsof', function(data, res) {
+  var child = spawn('lsof', []);
+
+  child.stdout.on('data', function(chunk) {
+    chunk.toString().split('\n').forEach(function(line) {
+      res.send(line); // This send log to Keymetrics to be saved (for tracking)
+    });
+  });
+
+  child.stdout.on('end', function(chunk) {
+    res.end('end'); // This end the scoped action
+  });
+
+  child.on('error', function(e) {
+    res.error(e);  // This report an error to Keymetrics
+  });
+
+});
+```
+
 ## Report Alerts: Errors / Uncaught Exceptions
 
 By default once PM2 is linked to Keymetrics, you will be alerted of any uncaught exception.
@@ -299,7 +300,7 @@ These metrics will be shown in the Keymetrics Dashboard in the Custom Metrics se
 
 Example:
 
-```
+```javascript
 pmx.init({
   [...]
   network : true, // Allow application level network monitoring
