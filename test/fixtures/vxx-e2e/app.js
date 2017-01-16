@@ -1,10 +1,6 @@
 
 var pmx = require('../../..');
 
-pmx.init({
-  transactions : true
-});
-
 global._db = {};
 
 var mongoose = require('mongoose');
@@ -71,7 +67,7 @@ function connectToMongoDB(cb) {
 app.get('/db1/save', function(req, res) {
   var user = new _db.User({
     username : 'yolo',
-    phone : '06'
+    phone    : '06'
   });
 
   user.save(function() {
@@ -150,7 +146,7 @@ pmx.action('launchQueryToDbRoutes', function(reply) {
 });
 
 pmx.action('db1get', function(reply) {
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 1; i++) {
     doQuery('/db1/get');
   }
   reply('launched');

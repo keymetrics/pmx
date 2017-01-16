@@ -1,12 +1,12 @@
 {
   "name": "pmx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
     "debug": "^2.6",
     "json-stringify-safe": "^5.0",
-    "vxx": "^1.0.0"
+    "vxx": "^1.0.3"
   },
   "devDependencies": {
     "express": "*",
