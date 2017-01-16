@@ -2,6 +2,8 @@
 
 [![bitHound Overalll Score](https://www.bithound.io/github/keymetrics/pmx/badges/score.svg)](https://www.bithound.io/github/keymetrics/pmx)
 ![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
+[![Package Quality](http://npm.packagequality.com/badge/pmx.png)](http://packagequality.com/#?package=pmx)
+[![npm version](https://badge.fury.io/js/pmx.svg)](https://badge.fury.io/js/pmx)
 
 PMX is a module that allows you to create advanced interactions with Keymetrics.
 
