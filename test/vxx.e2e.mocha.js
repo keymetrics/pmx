@@ -62,7 +62,10 @@ describe('Programmatically test interactor', function() {
 
       pm2.start({
         script : 'app.js',
-        name   : 'API'
+        name   : 'API',
+        env: {
+          "DEBUG": "*"
+        }
       }, function(err, data) {
 
       });
@@ -77,11 +80,13 @@ describe('Programmatically test interactor', function() {
 
             // Only one app
             packet.data['axm:transaction'].length.should.eql(1);
+            var data = packet.data['axm:transaction'][0].data;
 
             // Should only find 3 different routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(3);
-
-            var route = packet.data['axm:transaction'][0].data.routes['/'][0];
+            Object.keys(data.routes).length.should.eql(3);
+            data.routes[0].should.have.properties(['meta', 'variances', 'path']);
+            data.routes[0].meta.should.have.properties(['min', 'max', 'mean', 'count']);
+            var route = data.routes[0].variances[0];
 
             // Right property keys
             route.should.have.properties(['min', 'max', 'mean', 'meter', 'count', 'spans']);
@@ -100,15 +105,18 @@ describe('Programmatically test interactor', function() {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
+            var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 4 routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(4);
-            // @question: Why extra .spans at the end?
-            var tracing = packet.data['axm:transaction'][0].data.routes['/db1/save'][0].spans;
+            Object.keys(data.routes).length.should.eql(4);
+
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/save';
+            })[0];
             // Should count 10 transactions
-            packet.data['axm:transaction'][0].data.routes['/db1/save'][0].count.should.eql(10);
+            route.variances[0].count.should.eql(10);
             //console.log(packet.data['axm:transaction'][0].data.routes['/db1/save']);
-            tracing.length.should.eql(2);
-            tracing[1].name.should.eql('mongo-insert');
+            route.variances[0].spans.length.should.eql(2);
+            route.variances[0].spans[1].name.should.eql('mongo-insert');
             done();
           }
           else
@@ -125,12 +133,16 @@ describe('Programmatically test interactor', function() {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
-            console.log(packet.data['axm:transaction']);
+            var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 5 routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(5);
+            Object.keys(data.routes).length.should.eql(5);
+
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/get';
+            })[0];
 
             // @bug: should contain only 1 transaction not 2 (only find)
-            packet.data['axm:transaction'][0].data.routes['/db1/get'][0].spans.length.should.eql(3);
+            route.variances[0].spans.length.should.eql(2);
 
             done();
           }
@@ -148,11 +160,16 @@ describe('Programmatically test interactor', function() {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
+            var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 5 routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(6);
+            Object.keys(data.routes).length.should.eql(6);
+
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/multi';
+            })[0];
 
             // @bug: should contain only 2 transactions not 3 (find + findOne)
-            packet.data['axm:transaction'][0].data.routes['/db1/multi'][0].spans.length.should.eql(4);
+            route.variances[0].spans.length.should.eql(3);
 
             done();
           }
