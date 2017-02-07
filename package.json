@@ -1,10 +1,11 @@
 {
   "name": "pmx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
     "debug": "^2.6",
+    "error-callsites": "^1.0.1",
     "json-stringify-safe": "^5.0",
     "vxx": "^1.0.0"
   },
@@ -14,10 +15,10 @@
     "should": "*",
     "mocha": "*",
     "shelljs": "*",
-    "pm2" : "Unitech/pm2#lazer",
-    "pm2-axon" : "*",
-    "nssocket" : "*",
-    "mongoose" : "*"
+    "pm2": "Unitech/pm2#lazer",
+    "pm2-axon": "*",
+    "nssocket": "*",
+    "mongoose": "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
