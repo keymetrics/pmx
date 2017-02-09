@@ -5,7 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "debug": "^2.6",
-    "error-callsites": "^1.0.1",
     "json-stringify-safe": "^5.0",
     "vxx": "^1.0.0"
   },
