@@ -11,7 +11,7 @@ PMX is a module that allows you to create advanced interactions with Keymetrics.
 
 - [**Expose Custom Metrics**](https://github.com/keymetrics/pmx#expose-metrics-measure-anything)
 - [**Expose Triggerable Runtime Functions**](https://github.com/keymetrics/pmx#expose-functions-trigger-functions-remotely)
-- [**Report Alerts**](https://github.com/keymetrics/pmx#alert-system-for-custom-metrics) like exceptions or critical issues
+- [**Report Exceptions and Alerts**](https://github.com/keymetrics/pmx#alert-system-for-custom-metrics)
 - [**Report Custom Events**](https://github.com/keymetrics/pmx#emit-events)
 - [**Monitor network traffic**](https://github.com/keymetrics/pmx#application-level-network-traffic-monitoring--display-used-ports)
 
