@@ -27,11 +27,7 @@ $ npm install pmx --save
 ```javascript
 var pmx = require('pmx').init({
   http          : true, // HTTP routes logging (default: false)
-  http_latency  : 200,  // Limit of acceptable latency
-  http_code     : 500,  // Error code to track'
-  alert_enabled : true,  // Enable alerts (If you add alert subfield in custom it's going to be enabled)
   ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (default: [])
-  errors        : true, // Exceptions loggin (default: true)
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
   network       : true, // Network monitoring at the application level (default: false)
   ports         : true, // Shows which ports your app is listening on (default: false),
@@ -85,6 +81,11 @@ var valvar = probe.metric({
 valvar.set(23);
 ```
 
+#### Options
+
+- **name**: Probe name
+- **value**: (optionnal) function that allows to monitor a global variable
+
 ### Counter: Sequential value change
 
 Things that increment or decrement.
@@ -107,6 +108,10 @@ http.createServer(function(req, res) {
 });
 ```
 
+#### Options
+
+- **name**: Probe name
+
 ### Meter: Average calculated values
 
 Things that are measured as events / interval.
@@ -115,9 +120,8 @@ Things that are measured as events / interval.
 var probe = pmx.probe();
 
 var meter = probe.meter({
-  name      : 'req/min',
-  samples   : 1,
-  timeframe : 60
+  name      : 'req/sec',
+  samples   : 1  // This is per second. To get per min set this value to 60
 });
 
 http.createServer(function(req, res) {
@@ -128,8 +132,9 @@ http.createServer(function(req, res) {
 
 #### Options
 
-**samples** option is the rate unit. Defaults to **1** sec.
-**timeframe** option is the timeframe over which events will be analyzed. Defaults to **60** sec.
+- **name**: Probe name
+- **samples**: rate unit. Defaults to **1** sec.
+- **timeframe**: timeframe over which events will be analyzed. Defaults to **60** sec.
 
 ### Histogram
 
@@ -151,11 +156,11 @@ setInterval(function() {
 }, 100);
 ```
 
-### Common Custom Metrics options
+#### Options
 
-- `name` : The probe name as is will be displayed on the **Keymetrics** dashboard
-- `agg_type` : This param is optionnal, it can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
-- `alert` : For `Meter` and `Counter` probes. This param is optionnal. Creates an alert object (see below).
+- **name**: Probe name
+- **agg_type** : (optionnal) Can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
+- **alert** : (optionnal) For `Meter` and `Counter` probes.  Creates an alert object (see below).
 
 ### Alert System for Custom Metrics
 
@@ -180,7 +185,7 @@ var metric = probe.metric({
 });
 ```
 
-####Options:
+#### Options
 
 - `mode` : `threshold`, `threshold-avg`.
 - `value` : Value that will be used for the exception check.
@@ -213,7 +218,7 @@ pmx.action('db:clean', function(reply) {
 });
 ```
 
-### Scoped actions
+### Scoped actions (beta)
 
 Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
 
@@ -305,28 +310,6 @@ pmx.init({
   [...]
   network : true, // Allow application level network monitoring
   ports   : true  // Display ports used by the application
-});
-```
-
-## HTTP latency analysis
-
-Monitor routes, latency and codes. REST compliant.
-
-```javascript
-pmx.http(); // You must do this BEFORE any require('http')
-```
-Ignore some routes by passing a list of regular expressions.
-```javascript
-pmx.http({
-  http          : true, // (Default: true)
-  ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
-});
-```
-This can also be done via pmx.init()
-```javascript
-pmx.init({
-  http          : true, // (Default: true)
-  ignore_routes : [/socket\.io/, /notFound/] // Ignore http routes with this pattern (Default: [])
 });
 ```
 
