@@ -7,46 +7,27 @@
 
 PMX is a module that allows you to create advanced interactions with Keymetrics.
 
-It allows you to:
+# Table of Contents
 
-- **Expose Functions** remotely triggerable from PM2 CLI or Keymetrics
-- **Expose Metrics** displayed in realtime and tracked over the time
-- **Report Alerts** like exceptions or critical issues
-- **Report Events** to inform about anything
-- **Monitor network traffic** at the application level and display used ports
-- Analyze HTTP latency
+- [**Expose Custom Metrics**](https://github.com/keymetrics/pmx#expose-metrics-measure-anything)
+- [**Expose Triggerable Runtime Functions**](https://github.com/keymetrics/pmx#expose-functions-trigger-functions-remotely)
+- [**Report Alerts**](https://github.com/keymetrics/pmx#alert-system-for-custom-metrics) like exceptions or critical issues
+- [**Report Custom Events**](https://github.com/keymetrics/pmx#emit-events)
+- [**Monitor network traffic**](https://github.com/keymetrics/pmx#application-level-network-traffic-monitoring--display-used-ports)
 
 # Installation
 
-Install PMX and add it to your package.json with:
+Install pmx with npm:
 
 ```bash
 $ npm install pmx --save
 ```
 
-```javascript
-var pmx = require('pmx').init({
-  http          : true, // (default: true) HTTP routes logging 
-  custom_probes : true, // (default: true) Auto expose JS Loop Latency and HTTP req/s as custom metrics 
-  network       : true, // (default: false) Network monitoring at the application level 
-  ports         : true, // (default: false) Shows which ports your app is listening on
-
-  // Transaction Tracing system configuration
-  transactions  : true  // (default: false) Enable transaction tracing 
-  ignoreFilter: {
-    'url': [],
-    'method': ['OPTIONS']
-  },
-  // can be 'express', 'hapi', 'http', 'restify'
-  excludedHooks: []
-});
-```
-
 ## Expose Metrics: Measure anything
 
-PMX allows you to expose any metrics from you code to the PM2 monit command or the Keymetrics Dashboard, in realtime and over time.
+PMX allows you to expose code metrics from your code to the PM2 monit command or the Keymetrics Dashboard, in realtime and over time.
 
-4 measurement are available:
+4 measurements are available:
 
 - **Simple metrics**: Values that can be read instantly
     - eg. Monitor variable value
@@ -84,7 +65,7 @@ metric_2.set(23);
 #### Options
 
 - **name**: Probe name
-- **value**: (optionnal) function that allows to monitor a global variable
+- **value**: (optional) function that allows to monitor a global variable
 
 ### Counter: Sequential value change
 
@@ -133,8 +114,8 @@ http.createServer(function(req, res) {
 #### Options
 
 - **name**: Probe name
-- **samples**: rate unit. Defaults to **1** sec.
-- **timeframe**: timeframe over which events will be analyzed. Defaults to **60** sec.
+- **samples**: (optional)(default: 1) Rate unit. Defaults to **1** sec.
+- **timeframe**: (optional)(default: 60) timeframe over which events will be analyzed. Defaults to **60** sec.
 
 ### Histogram
 
@@ -159,41 +140,8 @@ setInterval(function() {
 #### Options
 
 - **name**: Probe name
-- **agg_type** : (optionnal) Can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
-- **alert** : (optionnal) For `Meter` and `Counter` probes.  Creates an alert object (see below).
-
-### Alert System for Custom Metrics
-
-This alert system can monitor a Probe value and launch an exception when hitting a particular value.
-
-Example for a `cpu_usage` var:
-```javascript
-var metric = probe.metric({
-  name  : 'CPU usage',
-  value : function() {
-    return cpu_usage;
-  },
-  alert : {
-    mode  : 'threshold',
-    value : 95,
-    msg   : 'Detected over 95% CPU usage', // optional
-    func  : function() { //optional
-      console.error('Detected over 95% CPU usage');
-    },
-    cmp   : "<" // optional
-  }
-});
-```
-
-#### Options
-
-- `mode` : `threshold`, `threshold-avg`.
-- `value` : Value that will be used for the exception check.
-- `msg` : String used for the exception.
-- `func` :  **optional**. Function declenched when exception reached.
-- `cmp` : **optional**. If current Probe value is not `<`, `>`, `=` to Threshold value the exception is launched. Can also be a function used for exception check taking 2 arguments and returning a bool.
-- `interval` : **optional**, `threshold-avg` mode. Sample length for monitored value (180 seconds default).
-- `timeout` : **optional**, `threshold-avg` mode. Time after which mean comparison starts (30 000 milliseconds default).
+- **agg_type** : (optional)(default: none) Can be `sum`, `max`, `min`, `avg` (default) or `none`. It will impact the way the probe data are aggregated within the **Keymetrics** backend. Use `none` if this is irrelevant (eg: constant or string value).
+- **alert** : (optional)(default: null) For `Meter` and `Counter` probes.  Creates an alert object (see below).
 
 ## Expose Functions: Trigger Functions remotely
 
@@ -222,7 +170,7 @@ pmx.action('db:clean', function(reply) {
 
 Scoped Actions are advanced remote actions that can be also triggered from Keymetrics.
 
-Two arguments are passed to the function, data (optionnal data sent from Keymetrics) and res that allows to emit log data and to end the scoped action.
+Two arguments are passed to the function, data (optional data sent from Keymetrics) and res that allows to emit log data and to end the scoped action.
 
 Example:
 
@@ -247,7 +195,45 @@ pmx.scopedAction('long running lsof', function(data, res) {
 });
 ```
 
+### Alert System for Custom Metrics
+
+**(Specific to Keymetrics)**
+
+This alert system can monitor a Probe value and launch an exception when hitting a particular value.
+
+Example for a `cpu_usage` variable:
+
+```javascript
+var metric = probe.metric({
+  name  : 'CPU usage',
+  value : function() {
+    return cpu_usage;
+  },
+  alert : {
+    mode  : 'threshold',
+    value : 95,
+    msg   : 'Detected over 95% CPU usage', // optional
+    func  : function() { //optional
+      console.error('Detected over 95% CPU usage');
+    },
+    cmp   : "<" // optional
+  }
+});
+```
+
+#### Options
+
+- **mode** : `threshold`, `threshold-avg`.
+- **value** : Value that will be used for the exception check.
+- **msg** : String used for the exception.
+- **func** :  **optional**. Function declenched when exception reached.
+- **cmp** : **optional**. If current Probe value is not `<`, `>`, `=` to Threshold value the exception is launched. Can also be a function used for exception check taking 2 arguments and returning a bool.
+- **interval** : **optional**, `threshold-avg` mode. Sample length for monitored value (180 seconds default).
+- **timeout** : **optional**, `threshold-avg` mode. Time after which mean comparison starts (30 000 milliseconds default).
+
 ## Report Alerts: Errors / Uncaught Exceptions
+
+**(Specific to Keymetrics)**
 
 By default once PM2 is linked to Keymetrics, you will be alerted of any uncaught exception.
 These errors are accessible in the **Issue** tab of Keymetrics.
@@ -310,6 +296,27 @@ pmx.init({
   [...]
   network : true, // Allow application level network monitoring
   ports   : true  // Display ports used by the application
+});
+```
+
+## Advanced PMX configuration
+
+
+```javascript
+var pmx = require('pmx').init({
+  http          : true, // (default: true) HTTP routes logging
+  custom_probes : true, // (default: true) Auto expose JS Loop Latency and HTTP req/s as custom metrics
+  network       : true, // (default: false) Network monitoring at the application level
+  ports         : true, // (default: false) Shows which ports your app is listening on
+
+  // Transaction Tracing system configuration
+  transactions  : true  // (default: false) Enable transaction tracing
+  ignoreFilter: {
+    'url': [],
+    'method': ['OPTIONS']
+  },
+  // can be 'express', 'hapi', 'http', 'restify'
+  excludedHooks: []
 });
 ```
 
