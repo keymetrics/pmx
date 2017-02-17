@@ -26,14 +26,13 @@ $ npm install pmx --save
 
 ```javascript
 var pmx = require('pmx').init({
-  http          : true, // HTTP routes logging (default: false)
-  ignore_routes : [/socket\.io/, /notFound/], // Ignore http routes with this pattern (default: [])
-  custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
-  network       : true, // Network monitoring at the application level (default: false)
-  ports         : true, // Shows which ports your app is listening on (default: false),
+  http          : true, // (default: true) HTTP routes logging 
+  custom_probes : true, // (default: true) Auto expose JS Loop Latency and HTTP req/s as custom metrics 
+  network       : true, // (default: false) Network monitoring at the application level 
+  ports         : true, // (default: false) Shows which ports your app is listening on
 
-  // Transaction system configuration
-  transactions  : true  // Enable transaction tracing (default: false)
+  // Transaction Tracing system configuration
+  transactions  : true  // (default: false) Enable transaction tracing 
   ignoreFilter: {
     'url': [],
     'method': ['OPTIONS']
@@ -45,9 +44,9 @@ var pmx = require('pmx').init({
 
 ## Expose Metrics: Measure anything
 
-Keymetrics allows you to expose any metrics from you code to the Keymetrics Dashboard, in realtime. These metrics takes place in the main Keymetrics Dashboard page under the Custom Metrics section.
+PMX allows you to expose any metrics from you code to the PM2 monit command or the Keymetrics Dashboard, in realtime and over time.
 
-4 helpers are available:
+4 measurement are available:
 
 - **Simple metrics**: Values that can be read instantly
     - eg. Monitor variable value
@@ -55,7 +54,7 @@ Keymetrics allows you to expose any metrics from you code to the Keymetrics Dash
     - eg. Downloads being processed, user connected
 - **Meter**: Things that are measured as events / interval
     - eg. Request per minute for a http server
-- **Histogram**: Keeps a resevoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
+- **Histogram**: Keeps a reservoir of statistically relevant values biased towards the last 5 minutes to explore their distribution
     - eg. Monitor the mean of execution of a query into database
 
 ### Metric: Simple value reporting
@@ -66,6 +65,7 @@ This allow to expose values that can be read instantly.
 var probe = pmx.probe();
 
 // Here the value function will be called each second to get the value
+// returned by Object.keys(users).length
 var metric = probe.metric({
   name    : 'Realtime user',
   value   : function() {
@@ -74,11 +74,11 @@ var metric = probe.metric({
 });
 
 // Here we are going to call valvar.set() to set the new value
-var valvar = probe.metric({
+var metric_2 = probe.metric({
   name    : 'Realtime Value'
 });
 
-valvar.set(23);
+metric_2.set(23);
 ```
 
 #### Options
