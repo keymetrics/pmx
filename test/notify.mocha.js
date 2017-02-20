@@ -67,7 +67,6 @@ describe('Notify exceptions', function() {
 
     should.exist(ret.stack);
     should.exist(ret.message);
-
     ret.stack.line.should.eql('ok');
     ret.stack.env.should.eql('sisi');
     done();
@@ -87,7 +86,6 @@ describe('Notify exceptions', function() {
 
     should.exist(ret.stack);
     should.exist(ret.message);
-
     done();
   });
 
@@ -161,6 +159,9 @@ describe('Notify exceptions', function() {
     app.once('message', function(data) {
       data.type.should.eql('axm:option:configuration');
       app.once('message', function(data) {
+        should.exist(data.data.stackframes);
+        should.exist(data.data.stackframes[0].file_name);
+        should.exist(data.data.stackframes[0].line_number);
         data.type.should.eql('process:exception');
         data.data.message.should.eql('global error');
         process.kill(app.pid);

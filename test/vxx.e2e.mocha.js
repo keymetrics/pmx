@@ -48,6 +48,11 @@ describe('Programmatically test interactor', function() {
   });
 
   describe('application testing', function() {
+    afterEach(function() {
+      //console.log(sub);
+      //sub.unsubscribe();
+    });
+
     it('should start test application', function(done) {
       sub.once('message', function(data) {
         var packet = JSON.parse(data);
@@ -58,15 +63,15 @@ describe('Programmatically test interactor', function() {
       pm2.start({
         script : 'app.js',
         name   : 'API',
-        trace  : true
+        env: {
+          "DEBUG": "*"
+        }
       }, function(err, data) {
-        if (err) done(err);
+
       });
     });
 
     it('should get transaction trace via interactor output', function(done) {
-      pm2.trigger('API', 'launchMock');
-
       (function callAgain() {
         sub.once('message', function(data) {
           var packet = JSON.parse(data);
@@ -75,78 +80,78 @@ describe('Programmatically test interactor', function() {
 
             // Only one app
             packet.data['axm:transaction'].length.should.eql(1);
+            var data = packet.data['axm:transaction'][0].data;
 
             // Should only find 3 different routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(3);
+            Object.keys(data.routes).length.should.eql(3);
+            data.routes[0].should.have.properties(['meta', 'variances', 'path']);
+            data.routes[0].meta.should.have.properties(['min', 'max', 'mean', 'count']);
+            var route = data.routes[0].variances[0];
 
-            var route;
-
-            packet.data['axm:transaction'][0].data.routes.forEach(function(_route) {
-              if (_route.path == '/')
-                route = _route;
-            });
-
-            route.meta.should.have.properties(['mean', 'max', 'min', 'count']);
-            route.variances.length.should.eql(1);
+            // Right property keys
+            route.should.have.properties(['min', 'max', 'mean', 'meter', 'count', 'spans']);
             done();
           }
           else callAgain();
         });
       })()
+
+      pm2.trigger('API', 'launchMock');
     });
 
     it('should get database transaction trace (save)', function(done) {
-      pm2.trigger('API', 'launchQueryToDbRoutes');
-
       (function callAgain() {
         sub.once('message', function(data) {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
-            packet.data['axm:transaction'][0].data.routes.length.should.eql(4);
+            var data = packet.data['axm:transaction'][0].data;
+            // Should now route summary contains 4 routes
+            Object.keys(data.routes).length.should.eql(4);
 
-            packet.data['axm:transaction'][0].data.routes.forEach(function(_route) {
-              if (_route.path == '/db1/save') {
-                _route.variances.length.should.eql(1);
-                _route.meta.should.have.properties(['mean', 'max', 'min', 'count']);
-                _route.variances[0].spans[1].name.should.eql('mongo-insert');
-              }
-            });
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/save';
+            })[0];
+            // Should count 10 transactions
+            route.variances[0].count.should.eql(10);
+            //console.log(packet.data['axm:transaction'][0].data.routes['/db1/save']);
+            route.variances[0].spans.length.should.eql(2);
+            route.variances[0].spans[1].name.should.eql('mongo-insert');
             done();
           }
           else
             callAgain();
         });
       })()
+
+      pm2.trigger('API', 'launchQueryToDbRoutes');
     });
 
     it('should get simple database transaction trace (find)', function(done) {
+      (function callAgain() {
+        sub.once('message', function(data) {
+          var packet = JSON.parse(data);
+
+          if (packet.data['axm:transaction']) {
+            var data = packet.data['axm:transaction'][0].data;
+            // Should now route summary contains 5 routes
+            Object.keys(data.routes).length.should.eql(5);
+
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/get';
+            })[0];
+
+            // @bug: should contain only 1 transaction not 2 (only find)
+            route.variances[0].spans.length.should.eql(2);
+
+            done();
+          }
+          else
+            callAgain();
+        });
+      })()
+
       pm2.trigger('API', 'db1get');
-
-      setTimeout(function() {
-        (function callAgain() {
-          sub.once('message', function(data) {
-            var packet = JSON.parse(data);
-
-            if (packet.data['axm:transaction']) {
-              // Should now route summary contains 5 routes
-              Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(5);
-
-              // @bug: should contain only 1 transaction not 2 (only find)
-              packet.data['axm:transaction'][0].data.routes.forEach(function(_route) {
-                if (_route.path == '/db1/get') {
-                  _route.variances.forEach(function(vari) {
-                    vari.spans.length.should.eql(2);
-                  });
-                }
-              });
-              done();
-            }
-            else
-              callAgain();
-          });
-        })()
-      }, 1000);
     });
 
     it('should get multi database transaction trace (find + findOne)', function(done) {
@@ -155,17 +160,16 @@ describe('Programmatically test interactor', function() {
           var packet = JSON.parse(data);
 
           if (packet.data['axm:transaction']) {
+            var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 5 routes
-            Object.keys(packet.data['axm:transaction'][0].data.routes).length.should.eql(6);
+            Object.keys(data.routes).length.should.eql(6);
 
-            // @bug: should contain only 1 transaction not 2 (only find)
-            packet.data['axm:transaction'][0].data.routes.forEach(function(_route) {
-              if (_route.path == '/db1/multi') {
-                _route.variances.forEach(function(vari) {
-                  vari.spans.length.should.eql(3);
-                });
-              }
-            });
+            var route = data.routes.filter(function (route) {
+              return route.path === '/db1/multi';
+            })[0];
+
+            // @bug: should contain only 2 transactions not 3 (find + findOne)
+            route.variances[0].spans.length.should.eql(3);
 
             done();
           }
