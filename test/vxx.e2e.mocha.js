@@ -76,6 +76,9 @@ describe('Programmatically test interactor', function() {
             packet.data['axm:transaction'].length.should.eql(1);
             var data = packet.data['axm:transaction'][0].data;
 
+            if (Object.keys(data.routes).length != 3)
+              return callAgain();
+
             // Should only find 3 different routes
             Object.keys(data.routes).length.should.eql(3);
             data.routes[0].should.have.properties(['meta', 'variances', 'path']);
