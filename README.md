@@ -5,7 +5,7 @@
 [![Package Quality](http://npm.packagequality.com/shield/pmx.svg)](http://packagequality.com/#?package=pmx)
 [![npm version](https://badge.fury.io/js/pmx.svg)](https://badge.fury.io/js/pmx)
 
-PMX is a module that allows you to create advanced interactions with Keymetrics.
+PMX allows you to create advanced interactions with [PM2](https://github.com/Unitech/pm2) and [Keymetrics.io](https://app.keymetrics.io/).
 
 # Table of Contents
 
