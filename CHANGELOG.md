@@ -1,5 +1,9 @@
 
-# 1.0.0-beta1
+# 1.0.2
+
+- add stackframe to exception
+
+# 1.0.1
 
 - Include transaction tracing system
 - Test on Node v7
