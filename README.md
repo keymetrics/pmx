@@ -9,6 +9,7 @@ PMX allows you to create advanced interactions with [PM2](https://github.com/Uni
 
 # Table of Contents
 
+- [**Installation**](https://github.com/keymetrics/pmx/blob/master/README.md#installation)
 - [**Expose Custom Metrics**](https://github.com/keymetrics/pmx#expose-metrics-measure-anything)
 - [**Expose Triggerable Runtime Functions**](https://github.com/keymetrics/pmx#expose-functions-trigger-functions-remotely)
 - [**Report Exceptions and Alerts**](https://github.com/keymetrics/pmx#alert-system-for-custom-metrics)
