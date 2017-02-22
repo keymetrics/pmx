@@ -23,7 +23,7 @@ function listenRev(cb) {
 }
 
 describe('Programmatically test interactor', function() {
-  this.timeout(8000);
+  this.timeout(3000);
   var pm2;
 
   before(function(done) {
@@ -48,11 +48,6 @@ describe('Programmatically test interactor', function() {
   });
 
   describe('application testing', function() {
-    afterEach(function() {
-      //console.log(sub);
-      //sub.unsubscribe();
-    });
-
     it('should start test application', function(done) {
       sub.once('message', function(data) {
         var packet = JSON.parse(data);
@@ -63,11 +58,10 @@ describe('Programmatically test interactor', function() {
       pm2.start({
         script : 'app.js',
         name   : 'API',
-        env: {
-          "DEBUG": "*"
-        }
+        trace : true
       }, function(err, data) {
-
+        if (err)
+          console.error(err);
       });
     });
 
@@ -107,14 +101,16 @@ describe('Programmatically test interactor', function() {
           if (packet.data['axm:transaction']) {
             var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 4 routes
-            Object.keys(data.routes).length.should.eql(4);
+            // Object.keys(data.routes).length.should.eql(3);
 
             var route = data.routes.filter(function (route) {
               return route.path === '/db1/save';
             })[0];
+
+            if (!route) return callAgain();
+
             // Should count 10 transactions
             route.variances[0].count.should.eql(10);
-            //console.log(packet.data['axm:transaction'][0].data.routes['/db1/save']);
             route.variances[0].spans.length.should.eql(2);
             route.variances[0].spans[1].name.should.eql('mongo-insert');
             done();
@@ -134,12 +130,15 @@ describe('Programmatically test interactor', function() {
 
           if (packet.data['axm:transaction']) {
             var data = packet.data['axm:transaction'][0].data;
-            // Should now route summary contains 5 routes
-            Object.keys(data.routes).length.should.eql(5);
 
             var route = data.routes.filter(function (route) {
               return route.path === '/db1/get';
             })[0];
+
+            if (!route) return callAgain();
+
+            // Should now route summary contains 5 routes
+            Object.keys(data.routes).length.should.eql(5);
 
             // @bug: should contain only 1 transaction not 2 (only find)
             route.variances[0].spans.length.should.eql(2);
@@ -180,7 +179,6 @@ describe('Programmatically test interactor', function() {
 
       pm2.trigger('API', 'db1multi');
     });
-
 
   });
 
