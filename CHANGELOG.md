@@ -1,4 +1,9 @@
 
+# 1.0.3
+
+- alias samples to seconds
+- Http probe req/s -> req/min
+
 # 1.0.2
 
 - add stackframe to exception
