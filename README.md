@@ -5,11 +5,20 @@
   </a>
   <br/>
   <b><a href="https://github.com/Unitech/pm2">PM2</a> programmatic integration</b>
+  <br/>
+  <br/>
+  <a href="https://www.bithound.io/github/keymetrics/pmx">
+<img src="https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
+  </a>
+  <a href="https://travis-ci.org/keymetrics/pmx">
+<img src="https://api.travis-ci.org/keymetrics/pmx.png?branch=master"/>
+  </a>
+  <a href="https://badge.fury.io/js/pmx">
+<img src=""https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
+  </a>
+
 </div>
 
-[![bitHound Overalll Score](https://www.bithound.io/github/keymetrics/pmx/badges/score.svg)](https://www.bithound.io/github/keymetrics/pmx)
-![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
-[![npm version](https://badge.fury.io/js/pmx.svg)](https://badge.fury.io/js/pmx)
 
 PMX allows you to create advanced interactions with [PM2](https://github.com/Unitech/pm2) and [Keymetrics.io](https://app.keymetrics.io/).
 
