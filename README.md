@@ -14,7 +14,7 @@
 <img src="https://api.travis-ci.org/keymetrics/pmx.png?branch=master"/>
   </a>
   <a href="https://badge.fury.io/js/pmx">
-<img src=""https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
+<img src="https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
   </a>
 
 </div>
