@@ -1,8 +1,14 @@
-# PM2 programmatic integration
+
+<div align="center">
+  <a href="http://pm2.keymetrics.io">
+    <img width=411px src="https://raw.githubusercontent.com/keymetrics/pmx/master/pres/logo.png">
+  </a>
+  <br/>
+  <b><a href="https://github.com/Unitech/pm2">PM2</a> programmatic integration</b>
+</div>
 
 [![bitHound Overalll Score](https://www.bithound.io/github/keymetrics/pmx/badges/score.svg)](https://www.bithound.io/github/keymetrics/pmx)
 ![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
-[![Package Quality](http://npm.packagequality.com/shield/pmx.svg)](http://packagequality.com/#?package=pmx)
 [![npm version](https://badge.fury.io/js/pmx.svg)](https://badge.fury.io/js/pmx)
 
 PMX allows you to create advanced interactions with [PM2](https://github.com/Unitech/pm2) and [Keymetrics.io](https://app.keymetrics.io/).
