@@ -1,5 +1,14 @@
 
-# 1.0.0-beta1
+# 1.0.3
+
+- alias samples to seconds
+- Http probe req/s -> req/min
+
+# 1.0.2
+
+- add stackframe to exception
+
+# 1.0.1
 
 - Include transaction tracing system
 - Test on Node v7

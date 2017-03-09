@@ -1,14 +1,31 @@
-# PM2 programmatic integration
 
-[![bitHound Overalll Score](https://www.bithound.io/github/keymetrics/pmx/badges/score.svg)](https://www.bithound.io/github/keymetrics/pmx)
-![Build Status](https://api.travis-ci.org/keymetrics/pmx.png?branch=master)
-[![Package Quality](http://npm.packagequality.com/shield/pmx.svg)](http://packagequality.com/#?package=pmx)
-[![npm version](https://badge.fury.io/js/pmx.svg)](https://badge.fury.io/js/pmx)
+<div align="center">
+  <a href="http://pm2.keymetrics.io">
+    <img width=411px src="https://raw.githubusercontent.com/keymetrics/pmx/master/pres/logo.png">
+  </a>
+  <br/>
+  <b><a href="https://github.com/Unitech/pm2">PM2</a> programmatic integration</b>
+  <br/>
+  <br/>
+  <a href="https://www.bithound.io/github/keymetrics/pmx">
+<img src="https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
+  </a>
+  <a href="https://travis-ci.org/keymetrics/pmx">
+<img src="https://api.travis-ci.org/keymetrics/pmx.png?branch=master"/>
+  </a>
+  <a href="https://badge.fury.io/js/pmx">
+<img src="https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
+  </a>
+<br/>
+<br/>
+</div>
 
-PMX is a module that allows you to create advanced interactions with Keymetrics.
+
+PMX allows you to create advanced interactions with [PM2](https://github.com/Unitech/pm2) and [Keymetrics.io](https://app.keymetrics.io/).
 
 # Table of Contents
 
+- [**Installation**](https://github.com/keymetrics/pmx/blob/master/README.md#installation)
 - [**Expose Custom Metrics**](https://github.com/keymetrics/pmx#expose-metrics-measure-anything)
 - [**Expose Triggerable Runtime Functions**](https://github.com/keymetrics/pmx#expose-functions-trigger-functions-remotely)
 - [**Report Exceptions and Alerts**](https://github.com/keymetrics/pmx#alert-system-for-custom-metrics)
