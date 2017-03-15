@@ -19,5 +19,13 @@ describe('PMX driver', function() {
       done();
     });
 
+    it('should init with network', function(done) {
+      var PMX = pmx.init({
+        network : true,
+        port : true
+      });
+      done();
+    });
+
   });
 });
