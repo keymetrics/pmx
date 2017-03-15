@@ -22,7 +22,7 @@ function listenRev(cb) {
   });
 }
 
-describe('Programmatically test interactor', function() {
+describe.skip('Programmatically test interactor', function() {
   this.timeout(8000);
   var pm2;
 
@@ -36,8 +36,10 @@ describe('Programmatically test interactor', function() {
           cwd        : __dirname + '/fixtures/vxx-e2e'
         });
 
-        pm2.connect(function() {
-          done();
+        pm2.kill(function() {
+          pm2.connect(function() {
+            done();
+          });
         });
       });
     });

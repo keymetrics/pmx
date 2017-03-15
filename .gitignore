@@ -6,3 +6,4 @@ test/child
 .idea/**
 sample/pmx-server-stats
 test/xeon/data.json
+coverage/

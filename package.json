@@ -9,18 +9,23 @@
     "vxx": "^1.0.3"
   },
   "devDependencies": {
+    "coveralls": "^2.12.0",
     "express": "*",
-    "request": "*",
-    "should": "*",
+    "istanbul": "^0.4.5",
     "mocha": "*",
+    "mocha-lcov-reporter": "^1.3.0",
+    "mongoose": "*",
+    "nssocket": "*",
+    "pm2": "*",
+    "pm2-axon": "*",
+    "request": "*",
     "shelljs": "*",
-    "pm2" : "*",
-    "pm2-axon" : "*",
-    "nssocket" : "*",
-    "mongoose" : "*"
+    "should": "*"
   },
   "scripts": {
-    "test": "DEBUG='axm:*' mocha test/*.mocha.js"
+    "test": "DEBUG='axm:*' mocha test/*.mocha.js",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "cli",
