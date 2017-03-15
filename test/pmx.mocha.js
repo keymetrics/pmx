@@ -14,5 +14,10 @@ describe('PMX driver', function() {
       done();
     });
 
+    it('should init', function(done) {
+      var PMX = pmx.init();
+      done();
+    });
+
   });
 });
