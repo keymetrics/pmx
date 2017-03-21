@@ -327,7 +327,7 @@ var pmx = require('pmx').init({
   ports         : true, // (default: false) Shows which ports your app is listening on
 
   // Transaction Tracing system configuration
-  transactions  : true  // (default: false) Enable transaction tracing
+  transactions  : true, // (default: false) Enable transaction tracing
   ignoreFilter: {
     'url': [],
     'method': ['OPTIONS']
