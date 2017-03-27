@@ -6,7 +6,7 @@
   "dependencies": {
     "debug": "^2.6",
     "json-stringify-safe": "^5.0",
-    "vxx": "^1.0.3"
+    "vxx": "keymetrics/vxx"
   },
   "devDependencies": {
     "express": "*",
