@@ -82,11 +82,12 @@ describe('Programmatically test interactor', function() {
             // Should only find 3 different routes
             Object.keys(data.routes).length.should.eql(3);
             data.routes[0].should.have.properties(['meta', 'variances', 'path']);
-            data.routes[0].meta.should.have.properties(['min', 'max', 'mean', 'count']);
-            var route = data.routes[0].variances[0];
+            data.routes[0].meta.should.have.properties(['min', 'max', 'median', 'count']);
+            var route = data.routes[0];
 
             // Right property keys
-            route.should.have.properties(['min', 'max', 'mean', 'meter', 'count', 'spans']);
+            route.meta.should.have.properties(['min', 'max', 'median', 'meter', 'count']);
+            route.variances[0].should.have.properties(['min', 'max', 'median', 'count']);
             done();
           }
           else callAgain();
