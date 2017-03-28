@@ -83,6 +83,13 @@ app.get('/db1/get', function(req, res) {
   });
 });
 
+app.get('/db1/inquisitor', function(req, res) {
+  var time = req.query.timeout || Math.floor(Math.random() * (1000 - 100)) + 100;
+  setTimeout(function () {
+    res.send(200);
+  }, time);
+});
+
 app.get('/db1/multi', function(req, res) {
   process.nextTick(function() {
     var q = _db.User.find();
@@ -148,6 +155,20 @@ pmx.action('launchQueryToDbRoutes', function(reply) {
 pmx.action('db1get', function(reply) {
   for (var i = 0; i < 1; i++) {
     doQuery('/db1/get');
+  }
+  reply('launched');
+});
+
+pmx.action('Inquistor', function(reply) {
+  for (var i = 0; i < 10; i++) {
+    doQuery('/db1/inquisitor');
+  }
+  reply('launched');
+});
+
+pmx.action('triggerInquisitor', function(reply) {
+  for (var i = 0; i < 10; i++) {
+    doQuery('/db1/inquisitor?time=9000');
   }
   reply('launched');
 });
