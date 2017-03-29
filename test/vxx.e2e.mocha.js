@@ -188,8 +188,8 @@ describe('Programmatically test interactor', function() {
       (function callAgain() {
         sub.once('message', function(data) {
           var packet = JSON.parse(data);
-          if (!packet.data['axm:transaction:inquisitor']) return callAgain();
-          var data = packet.data['axm:transaction:inquisitor'][0];
+          if (!packet.data['axm:transaction:outlier']) return callAgain();
+          var data = packet.data['axm:transaction:outlier'][0];
           data.meta.value.should.be.above(data.meta.percentiles[0.95]);
           data.process.name.should.be.eql('API');
           done();
