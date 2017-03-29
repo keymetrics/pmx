@@ -37,7 +37,11 @@ describe('Programmatically test interactor', function() {
         });
 
         pm2.connect(function() {
-          done();
+          pm2.kill(function() {
+            pm2.connect(function() {
+              done();
+            })
+          });
         });
       });
     });
@@ -61,7 +65,7 @@ describe('Programmatically test interactor', function() {
         trace : true
       }, function(err, data) {
         if (err)
-          console.error(err);
+          done(err);
       });
     });
 
@@ -82,12 +86,14 @@ describe('Programmatically test interactor', function() {
             // Should only find 3 different routes
             Object.keys(data.routes).length.should.eql(3);
             data.routes[0].should.have.properties(['meta', 'variances', 'path']);
-            data.routes[0].meta.should.have.properties(['min', 'max', 'median', 'count']);
+            data.routes[0].meta.should.have.properties(['min', 'max', 'median', 'count', 'p95']);
             var route = data.routes[0];
 
             // Right property keys
-            route.meta.should.have.properties(['min', 'max', 'median', 'meter', 'count']);
-            route.variances[0].should.have.properties(['min', 'max', 'median', 'count']);
+            route.meta.should.have.properties(['min', 'max', 'median', 'meter', 'count', 'p95']);
+            route.variances[0].should.have.properties(['min', 'max', 'median', 'count', 'p95']);
+            route.variances[0].spans[0].should.have.properties(['min', 'max', 'median', 'kind', 'labels', 'name']);
+
             done();
           }
           else callAgain();
@@ -105,7 +111,7 @@ describe('Programmatically test interactor', function() {
           if (packet.data['axm:transaction']) {
             var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 4 routes
-            // Object.keys(data.routes).length.should.eql(3);
+            Object.keys(data.routes).length.should.eql(4);
 
             var route = data.routes.filter(function (route) {
               return route.path === '/db1/save';
@@ -171,9 +177,9 @@ describe('Programmatically test interactor', function() {
 
             if (!route) return callAgain();
 
-            // @bug: should contain only 2 transactions not 3 (find + findOne)
+            // Should now route summary contains 6 routes
+            Object.keys(data.routes).length.should.eql(6);
             route.variances[0].spans.length.should.eql(3);
-
             done();
           }
           else
