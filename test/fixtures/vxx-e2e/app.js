@@ -8,6 +8,8 @@ var Schema   = mongoose.Schema, ObjectID = Schema.ObjectId;
 var express = require('express');
 var app = express();
 var http = require('http');
+var pmx = require('../../..').init({ transactions: true });
+
 // What the other option to ignore stuff on vxx?
 
 /**

@@ -6,7 +6,7 @@
   "dependencies": {
     "debug": "^2.6",
     "json-stringify-safe": "^5.0",
-    "vxx": "^1.1.1"
+    "vxx": "^1.2.0"
   },
   "devDependencies": {
     "express": "*",
@@ -14,7 +14,7 @@
     "should": "*",
     "mocha": "*",
     "shelljs": "*",
-    "pm2" : "Unitech/pm2#development",
+    "pm2" : "*",
     "pm2-axon" : "*",
     "nssocket" : "*",
     "mongoose" : "*"
