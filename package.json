@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "debug": "^2.6",
-    "json-stringify-safe": "^5.0",
+    "fclone": "^1.0.11",
     "vxx": "^1.2.0"
   },
   "devDependencies": {
