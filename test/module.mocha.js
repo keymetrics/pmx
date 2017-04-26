@@ -157,30 +157,6 @@ describe('PMX module', function() {
 
       app.on('message', processMsg);
     });
-
-    it('should find existing file', function(done) {
-      var content = pmx.resolvePidPaths([
-        'asdasdsad',
-        'asdasd',
-        'lolilol',
-        __dirname + '/fixtures/file.pid'
-      ]);
-
-      content.should.eql(1456);
-      done();
-    });
-
-    it('should return null', function(done) {
-      var content = pmx.resolvePidPaths([
-        'asdasdsad',
-        'asdasd',
-        'lolilol'
-      ]);
-
-      should(content).be.null;
-      done();
-    });
-
   });
 
 
