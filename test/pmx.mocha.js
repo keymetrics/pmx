@@ -2,17 +2,31 @@
 var pmx = require('..');
 
 describe('PMX driver', function() {
-  it('should have the right properties', function(done) {
-    pmx.should.have.property('emit');
-    pmx.should.have.property('action');
-    done();
+  it('should have the right properties', function() {
+    pmx.should.have.properties([
+      'emit',
+      'action',
+      'scopedAction',
+      'catchAll',
+      'reportError',
+      'notify',
+      'getPID',
+      'initConf',
+      'resolvePidPaths',
+      'probe',
+      'Probe',
+      'exposeProfiling',
+      'detectV8Profiler',
+      'v8Profiling',
+      'tracing'
+    ]);
   });
 
-  describe('Event module', function() {
-    it('should not hang if process not forked', function(done) {
-      pmx.emit('testo', { data : 'ok' });
-      done();
-    });
+  it('should init APP pmx', function() {
+    pmx.init();
+  });
 
+  it('should init MODULE pmx', function() {
+    pmx.initModule();
   });
 });
