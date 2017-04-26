@@ -18,7 +18,7 @@ describe('NET Wrapper', function() {
 
   it('should create server and client', function(done) {
     var ok = false;
-    server = net.createServer((socket) => {
+    server = net.createServer(function(socket) {
       socket.on('data', function(data) {
         if (ok == false) {
           ok = true;
@@ -30,7 +30,7 @@ describe('NET Wrapper', function() {
     server.listen(9876, function() {
     });
 
-    client = net.connect({port: 9876}, () => {
+    client = net.connect({port: 9876}, function() {
       setInterval(function() {
         client.write('world!\r\n');
       }, 100);
