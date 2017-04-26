@@ -1,2 +1,2 @@
 
-module.exports = exports = require("./lib/pmx");
+module.exports = exports = require('./lib/');

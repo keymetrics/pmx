@@ -1,6 +1,6 @@
 
 var pmx       = require('..');
-var Profiling = require('../lib/probes/profiling.js');
+var Profiling = require('../lib/Profiling.js');
 var should = require('should');
 var shelljs = require('shelljs');
 

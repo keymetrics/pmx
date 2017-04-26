@@ -1,30 +1,19 @@
 
-
-var axm = require('..');
+var pmx = require('../..');
 var request = require('request');
 var should = require('should');
+var fork = require('child_process').fork;
+var Plan = require('../helpers/plan');
 
-var Plan = require('./helpers/plan');
-
-function fork() {
-  return require('child_process').fork(__dirname + '/transaction/app.mock.auto.js', []);
-}
-
-describe('Automatic transaction', function() {
-  it('should have right properties', function(done) {
-    axm.should.have.property('http');
-    done();
-  });
-
+describe('HTTP Wrapper', function() {
   var app;
-
 
   after(function() {
     process.kill(app.pid);
   });
 
   it('should receive configuration flag', function(done) {
-    app = fork();
+    app = fork(__dirname + '/../fixtures/transaction/app.mock.auto.js', []);;
 
     app.once('message', function(data) {
       data.type.should.eql('axm:option:configuration');

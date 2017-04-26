@@ -20,7 +20,7 @@
     "mongoose" : "*"
   },
   "scripts": {
-    "test": "DEBUG='axm:*' mocha test/*.mocha.js"
+    "test": "DEBUG='axm:*' mocha test/*.mocha.js test/wrappers/*.mocha.js"
   },
   "keywords": [
     "cli",

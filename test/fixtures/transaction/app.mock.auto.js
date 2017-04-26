@@ -1,5 +1,5 @@
 
-require('../..').init({
+require('../../..').init({
   ignore_routes : [/\/socket\.io.*/]
 });
 
@@ -7,7 +7,7 @@ var express = require('express');
 var app = express();
 
 app.get('/', function(req, res) {
-  res.send(202, {success:true});
+  res.send({success:true});
 });
 
 app.get('/nothing', function(req, res) {
