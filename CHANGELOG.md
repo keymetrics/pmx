@@ -1,4 +1,9 @@
 
+# 2.0.0
+
+- Deep refactor (avoid NS collision + centralize Wrapping)
+- Monitor getActiveRequests() + getActiveHandles() by default
+
 # 1.1.0
 
 - new tracing system
