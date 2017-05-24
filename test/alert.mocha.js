@@ -62,6 +62,7 @@ describe('Alert Probe Checker', function() {
   });
   it('should not detect exception over constant 2% max variation', function(done) {
     var current_value = 100;
+    var i = 0;
     var test3 = new Alert({
       mode  : 'smart',
       func  : function() { done(new Error('Should not be called')); }
@@ -70,9 +71,14 @@ describe('Alert Probe Checker', function() {
     test3.start = true;
 
     var interval = setInterval(function() {
+      //Force start of data verification at 30
+      if (i === 30) {
+        test3.start = true;
+      }
       test3.tick(current_value);
       //2% max deviation each step
       current_value += (Math.random() - 0.5) * (0.02 * current_value);
+      i++;
     }, 10);
 
     setTimeout(function() {
