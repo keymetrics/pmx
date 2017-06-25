@@ -1,4 +1,8 @@
 
+# 1.2.0
+
+- allow to pmx.emit without data
+
 # 1.1.0
 
 - new tracing system
