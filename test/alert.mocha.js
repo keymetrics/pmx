@@ -67,12 +67,10 @@ describe('Alert Probe Checker', function() {
       mode  : 'smart',
       func  : function() { done(new Error('Should not be called')); }
     });
-    //Force instant start of data verification
-    test3.start = true;
 
     var interval = setInterval(function() {
       //Force start of data verification at 30
-      if (i === 30) {
+      if (i === 90) {
         test3.start = true;
       }
       test3.tick(current_value);
@@ -87,7 +85,7 @@ describe('Alert Probe Checker', function() {
     }, 1000);
   });
 
-  it.skip('should not detect (1.5 * value) spike every 30 values', function(done) {
+  it('should not detect (1.5 * value) spike every 30 values', function(done) {
     var current_value = 100;
     var i = 0;
     var test4 = new Alert({
@@ -98,14 +96,16 @@ describe('Alert Probe Checker', function() {
         done(new Error('Should not be called'));
       }
     });
-    //Force instant start of data verification
-    test4.start = true;
+
+    test4.start = false;
 
     var interval2 = setInterval(function() {
       if (i % 30 == 29)
         test4.tick(1.5 * current_value)
       else
         test4.tick(current_value);
+      if (i === 90)
+        test4.start = true;
       //2% max deviation each step
       current_value += (Math.random() - 0.5) * (0.02 * current_value);
       i++;
@@ -128,24 +128,26 @@ describe('Alert Probe Checker', function() {
         done();
       }
     });
-    //Force instant start of data verification
-    test5.start = true;
+    var i = 0;
 
     var interval3 = setInterval(function() {
+      if (i === 90)
+        test5.start = true;
       test5.tick(current_value);
+      i++;
     }, 10);
 
     //Error Plateau Timeout
     var error = setTimeout(function() {
       for(var i = 0; i < 20; i++)
         test5.tick(current_value * 2);
-    }, 600)
+    }, 1000)
 
     var timeout = setTimeout(function() {
       //Failed to detect the error plateau
-      clearInterval(interval);
+      clearInterval(interval3);
       done(new Error('Smart checker did not detect'));
-    }, 1000);
+    }, 2000);
   });
   it('should not error when value is null less than 10 times in a row', function(done) {
     var test7 = new Alert({
