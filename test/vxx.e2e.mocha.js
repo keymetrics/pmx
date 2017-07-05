@@ -1,5 +1,6 @@
 
 process.env.NODE_ENV = 'local_test';
+process.env.PM2_DEBUG = true;
 process.env.KM_URL_REFRESH_RATE = 1000;
 
 var axon = require('pm2-axon');
@@ -190,7 +191,11 @@ describe('Programmatically test interactor', function() {
       pm2.trigger('API', 'db1multi');
     });
 
-    it('should trigger inquisitor', function(done) {
+    it('should wait 3s', function (done) {
+      return setTimeout(done, 3000);
+    })
+
+    it('should trigger outlier', function(done) {
       (function callAgain() {
         sub.once('message', function(data) {
           var packet = JSON.parse(data);

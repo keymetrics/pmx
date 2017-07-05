@@ -9,18 +9,18 @@
     "vxx": "^1.2.0"
   },
   "devDependencies": {
-    "coveralls" : "^2.12.0",
-    "istanbul" : "^0.4.5",
-    "mocha-lcov-reporter": "^1.3.0",
+    "coveralls": "^2.12.0",
     "express": "*",
-    "request": "*",
-    "should": "*",
+    "istanbul": "^0.4.5",
     "mocha": "*",
+    "mocha-lcov-reporter": "^1.3.0",
+    "mongoose": "*",
+    "nssocket": "*",
+    "pm2": "github:Unitech/pm2#development",
+    "pm2-axon": "*",
+    "request": "*",
     "shelljs": "*",
-    "pm2" : "*",
-    "pm2-axon" : "*",
-    "nssocket" : "*",
-    "mongoose" : "*"
+    "should": "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js test/wrappers/*.mocha.js",
