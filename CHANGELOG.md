@@ -3,6 +3,11 @@
 
 - Deep refactor (avoid NS collision + centralize Wrapping)
 - Monitor getActiveRequests() + getActiveHandles() by default
+- Harden ports discovery
+- Harden bandwith monitoring
+- Drop Proxy wrapping and switch to shimmer
+- Drop deprecated slow route broadcasting
+- Rename Loop Delay by Event Loop Latency
 
 # 1.1.0
 
