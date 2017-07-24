@@ -7,6 +7,8 @@
 - Harden bandwith monitoring
 - Drop Proxy wrapping and switch to shimmer
 - Drop deprecated slow route broadcasting
+- Drop callsites in pmx
+- Add error level (fatal for exception/unhandled rejection - error for .notify())
 - Rename Loop Delay by Event Loop Latency
 - New method on pmx.init({ new_port : 20000 }) // it replaces the base port with the new one and broadcast to pm2 the base port ('lb:listening:port') // lib/wrapper/net_wrapper.js
 

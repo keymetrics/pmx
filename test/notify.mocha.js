@@ -99,6 +99,7 @@ describe('Notify exceptions', function() {
       app.once('message', function(data) {
         data.type.should.eql('process:exception');
         data.data.message.should.eql('fail');
+        data.data.level.should.eql('fatal');
         process.kill(app.pid);
         done();
       });
@@ -114,6 +115,7 @@ describe('Notify exceptions', function() {
       data.type.should.eql('axm:option:configuration');
       app.once('message', function(data) {
         data.type.should.eql('process:exception');
+        data.data.level.should.eql('fatal');
         data.data.message.should.eql('No error but unhandledRejection was caught!');
         process.kill(app.pid);
         done();
@@ -130,6 +132,7 @@ describe('Notify exceptions', function() {
       data.type.should.eql('axm:option:configuration');
       app.once('message', function(data) {
         data.type.should.eql('process:exception');
+        data.data.level.should.eql('fatal');
         data.data.message.should.eql('ok');
         process.kill(app.pid);
         done();
@@ -159,9 +162,6 @@ describe('Notify exceptions', function() {
     app.once('message', function(data) {
       data.type.should.eql('axm:option:configuration');
       app.once('message', function(data) {
-        should.exist(data.data.stackframes);
-        should.exist(data.data.stackframes[0].file_name);
-        should.exist(data.data.stackframes[0].line_number);
         data.type.should.eql('process:exception');
         data.data.message.should.eql('global error');
         process.kill(app.pid);
@@ -176,6 +176,7 @@ describe('Notify exceptions', function() {
     app.once('message', function(data) {
       data.type.should.eql('process:exception');
       data.data.message.should.eql('hey');
+      data.data.level.should.eql('error');
       process.kill(app.pid);
       done();
     });
