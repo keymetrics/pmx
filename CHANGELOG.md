@@ -8,6 +8,7 @@
 - Drop Proxy wrapping and switch to shimmer
 - Drop deprecated slow route broadcasting
 - Rename Loop Delay by Event Loop Latency
+- New method on pmx.init({ new_port : 20000 }) // it replaces the base port with the new one and broadcast to pm2 the base port ('lb:listening:port') // lib/wrapper/net_wrapper.js
 
 # 1.1.0
 
