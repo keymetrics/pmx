@@ -1,5 +1,5 @@
 
-# 2.0.0
+# 1.2.1
 
 - Deep refactor (avoid NS collision + centralize Wrapping)
 - Monitor getActiveRequests() + getActiveHandles() by default
