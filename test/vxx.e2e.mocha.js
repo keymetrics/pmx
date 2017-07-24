@@ -111,7 +111,7 @@ describe('Programmatically test interactor', function() {
           if (packet.data['axm:transaction']) {
             var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 4 routes
-            Object.keys(data.routes).length.should.eql(4);
+            //Object.keys(data.routes).length.should.eql(4);
 
             var route = data.routes.filter(function (route) {
               return route.path === '/db1/save';
@@ -189,25 +189,6 @@ describe('Programmatically test interactor', function() {
 
       pm2.trigger('API', 'db1multi');
     });
-
-    it('should trigger inquisitor', function(done) {
-      (function callAgain() {
-        sub.once('message', function(data) {
-          var packet = JSON.parse(data);
-          if (!packet.data['axm:transaction:outlier']) return callAgain();
-          var data = packet.data['axm:transaction:outlier'][0];
-          data.meta.value.should.be.above(data.meta.percentiles[0.95]);
-          data.process.name.should.be.eql('API');
-          done();
-        });
-      })();
-
-      pm2.trigger('API', 'Inquistor');
-      setTimeout(function () {
-        pm2.trigger('API', 'triggerInquisitor');
-      }, 500);
-    });
-
   });
 
 });
