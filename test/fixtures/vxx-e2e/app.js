@@ -1,6 +1,4 @@
 
-var pmx = require('../../..');
-
 global._db = {};
 
 var mongoose = require('mongoose');
@@ -55,8 +53,9 @@ function connectToMongoDB(cb) {
 
   mongoose.connect('mongodb://localhost/test');
 
-  mongoDB.on('error', function cb() {
+  mongoDB.on('error', function cb(e) {
     console.log('Error when connecting to db ');
+    console.error(e);
   });
 
   mongoDB.once('open', function cb() {
