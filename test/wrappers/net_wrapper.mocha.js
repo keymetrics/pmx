@@ -6,7 +6,7 @@ var fork = require('child_process').fork;
 describe('NET Wrapper', function() {
   var client, server;
 
-  this.timeout(40000);
+  this.timeout(10000);
 
   describe('Monitor Net Traffic Bandwidth', function() {
     var app;
@@ -92,6 +92,16 @@ describe('NET Wrapper', function() {
     it('should start mock app with port option enabled', function(done) {
       app = fork(__dirname + '/../fixtures/wrapper_fixtures/port_discovery_replacement.mock.js', []);
 
+      var rcpt = function(packet) {
+        if (packet.type == 'lb:listening:port') {
+          should(packet.data.port).eql(9007);
+          should(packet.data.associated_port).eql(20000);
+          app.removeListener('message', rcpt);
+          done();
+        }
+      };
+
+      app.on('message', rcpt);
       app.once('message', function(data) {
         data.type.should.eql('axm:option:configuration');
         done();
@@ -100,9 +110,8 @@ describe('NET Wrapper', function() {
 
     it('should receive port which app is listening on', function(done) {
       var rcpt = function(packet) {
-        if (packet.type == 'lb:listening:port') {
+        if (packet.type == 'prev_listening_port') {
           should(packet.data.port).eql(9007);
-          should(packet.data.associated_port).eql(20000);
           app.removeListener('message', rcpt);
           done();
         }
