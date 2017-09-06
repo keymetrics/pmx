@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  mongodb:
+    image: mongo:3.4.2
+    volumes:
+      - ./volumes/mongodb:/data/db2
+    ports:
+      - "27017:27017"
+    environment:
+      AUTH: "no"
+  redis:
+    image: redis
+    volumes:
+      - ./volumes/redis/:/data
+    ports:
+      - "6379:6379"

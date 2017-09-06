@@ -31,6 +31,7 @@ describe('SIGINT handling', function() {
     var app = forkWithHandler();
 
     app.on('exit', function(code, signal) {
+      console.log(signal);
       if (signal == 'SIGTERM') return done();
       // Avoid shit with node 0.10.x
       if (code == 143) return done();
