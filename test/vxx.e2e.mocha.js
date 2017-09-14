@@ -190,7 +190,7 @@ describe('Programmatically test interactor', function() {
       pm2.trigger('API', 'db1multi');
     });
 
-    it('should trigger inquisitor', function(done) {
+    it.skip('should trigger inquisitor', function(done) {
       (function callAgain() {
         sub.once('message', function(data) {
           var packet = JSON.parse(data);
