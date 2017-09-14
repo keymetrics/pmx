@@ -1,4 +1,8 @@
 
+# 1.5.2
+
+Latest Stable Version
+
 # 1.1.0
 
 - new tracing system
