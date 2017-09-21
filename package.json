@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "express": "*",
-    "request": "*",
+    "request": "~2.81",
     "should": "*",
     "mocha": "*",
     "shelljs": "*",

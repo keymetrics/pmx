@@ -1,5 +1,4 @@
 
-
 var pmx = require('..');
 
 function forkApp(script) {
