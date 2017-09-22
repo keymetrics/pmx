@@ -1,4 +1,8 @@
 
+# 1.5.3
+
+Profiling fix
+
 # 1.5.2
 
 Latest Stable Version
