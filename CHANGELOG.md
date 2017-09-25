@@ -1,4 +1,8 @@
 
+# 1.5.5
+
+- Fix support for Node.js 0.10
+
 # 1.5.3
 
 Profiling fix
