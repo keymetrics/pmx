@@ -12,7 +12,7 @@
     "express": "*",
     "request": "~2.81",
     "should": "*",
-    "mocha": "*",
+    "mocha": "^3",
     "shelljs": "*",
     "pm2": "*",
     "pm2-axon": "*",
