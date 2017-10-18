@@ -1,4 +1,8 @@
 
+# 1.5.6
+
+- collect dependencies information + broadcast to pm2 via type : 'application:dependencies'
+
 # 1.5.5
 
 - Fix support for Node.js 0.10
