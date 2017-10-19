@@ -111,6 +111,9 @@ describe('Programmatically test interactor', function() {
           if (packet.data['axm:transaction']) {
             var data = packet.data['axm:transaction'][0].data;
             // Should now route summary contains 4 routes
+            if (Object.keys(data.routes).length < 4)
+              return callAgain();
+
             Object.keys(data.routes).length.should.eql(4);
 
             var route = data.routes.filter(function (route) {
