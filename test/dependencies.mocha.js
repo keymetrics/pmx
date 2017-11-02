@@ -10,7 +10,7 @@ function forkSampleApp() {
   return app;
 }
 
-describe('Dependencies check return', function() {
+describe.skip('Dependencies check return', function() {
   var app;
 
   after(function(done) {
