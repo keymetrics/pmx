@@ -10,8 +10,10 @@ function forkSampleApp() {
   return app;
 }
 
-describe.skip('Dependencies check return', function() {
+describe('Dependencies check return', function() {
   var app;
+
+  this.timeout(5000);
 
   after(function(done) {
     app.kill();
