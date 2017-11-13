@@ -1,9 +1,10 @@
 
-# 1.5.6
+# 1.5.5
 
+- [#101](https://github.com/keymetrics/pmx/pull/101) Initially suport es6 native modules @vpotseluyko
 - collect dependencies information + broadcast to pm2 via type : 'application:dependencies'
 
-# 1.5.5
+# 1.5.4
 
 - Fix support for Node.js 0.10
 
