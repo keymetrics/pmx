@@ -1,6 +1,7 @@
 
 # 1.5.5
 
+- Run test against node@9
 - [#101](https://github.com/keymetrics/pmx/pull/101) Initially suport es6 native modules @vpotseluyko
 - collect dependencies information + broadcast to pm2 via type : 'application:dependencies'
 
