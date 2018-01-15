@@ -2,7 +2,7 @@
 var pmx       = require('..');
 var Profiling = require('../lib/probes/profiling.js');
 var should = require('should');
-var shelljs = require('shelljs');
+var exec = require('child_process').exec
 var pm2 = require('pm2');
 
 function fork() {
@@ -21,11 +21,11 @@ describe('Profiling', function() {
   this.timeout(50000);
 
   before(function(done) {
-    shelljs.exec('npm uninstall ' + PROFILER_MODULE, done);
+    exec('npm uninstall ' + PROFILER_MODULE, done);
   });
 
   after(function(done) {
-    shelljs.exec('npm uninstall ' + PROFILER_MODULE, done);
+    exec('npm uninstall ' + PROFILER_MODULE, done);
   });
 
   describe('Basic tests', function() {
@@ -58,8 +58,8 @@ describe('Profiling', function() {
 
   describe('V8-profiler', function() {
     before(function(done) {
-      shelljs.exec('npm install ' + PROFILER_MODULE, function(code) {
-        should(code).eql(0);
+      exec('npm install ' + PROFILER_MODULE, function(err) {
+        should(err).be.null();
         setTimeout(done, 1000);
       });
     });
