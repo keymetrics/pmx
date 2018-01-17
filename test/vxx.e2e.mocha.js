@@ -4,6 +4,10 @@ process.env.KM_URL_REFRESH_RATE = 1000;
 
 var axon = require('pm2-axon');
 var PM2 = require('pm2');
+var semver = require('semver');
+
+if (!semver.satisfies(process.version, '>= 4.0.0'))
+  process.exit(0);
 
 var sub;
 

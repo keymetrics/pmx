@@ -16,7 +16,8 @@
     "pm2": "*",
     "pm2-axon": "*",
     "nssocket": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "semver": "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js"
