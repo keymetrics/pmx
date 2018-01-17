@@ -1,4 +1,9 @@
 
+# 1.5.6
+
+- add process._getActiveRequests() and process._getActiveHandles() custom metrics
+- avoid console windows popping up on Windows 10 #105
+
 # 1.5.5
 
 - Run test against node@9
