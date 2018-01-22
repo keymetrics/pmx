@@ -126,6 +126,7 @@ describe('Programmatically test interactor', function() {
 
             if (!route) return callAgain();
 
+            if (route.variances[0].spans.length < 2) return callAgain();
             // Should count 10 transactions
             route.variances[0].count.should.eql(10);
             console.log(route.variances[0].spans);
