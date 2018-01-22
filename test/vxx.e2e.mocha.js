@@ -128,7 +128,6 @@ describe('Programmatically test interactor', function() {
 
             // Should count 10 transactions
             route.variances[0].count.should.eql(10);
-            console.log(route.variances[0].spans);
             route.variances[0].spans.length.should.eql(2);
 
             route.variances[0].spans[1].name.should.eql('mongo-insert');
