@@ -55,15 +55,12 @@ describe('Probe V8', function () {
 });
 
 xdescribe('Probe V8 GC', function () {
-
-    this.timeout(50000);
-
     after(function (done) {
         exec('npm uninstall ' + GC_MODULE, done);
     });
 
     before(function (done) {
-        exec('npm install ' + GC_MODULE, function(err) {
+        exec('npm install ' + GC_MODULE, function (err) {
             should(err).be.null();
             setTimeout(done, 1000);
         });

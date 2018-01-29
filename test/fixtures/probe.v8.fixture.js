@@ -1,11 +1,11 @@
 
-var axm = require('../..');
+var axm     = require('../..');
+var http    = require('http');
+
 axm.init({
-  v8: true
+    v8: true
 });
 
-var http  = require('http');
-
-http.createServer(function(req, res) {
+http.createServer(function (req, res) {
     res.end('Thanks');
 }).listen(3400);
