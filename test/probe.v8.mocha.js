@@ -54,7 +54,9 @@ describe('Probe V8', function () {
     });
 });
 
-xdescribe('Probe V8 GC', function () {
+describe('Probe V8 GC', function () {
+
+    this.timeout(50000);
 
     after(function (done) {
         exec('npm uninstall ' + GC_MODULE, done);
