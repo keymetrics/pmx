@@ -1,6 +1,6 @@
 
 
-var axm = require('../..');
+var axm = require('../../..');
 
 var probe = axm.probe();
 
@@ -33,6 +33,7 @@ setInterval(function() {
 
 var h3 = probe.histogram({
   name : 'min',
+  historic : true,
   measurement : 'min',
   agg_type: 'min'
 });
