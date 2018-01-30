@@ -24,6 +24,11 @@ describe('Probe V8', function () {
                 pck.data.should.have.not.property('Code space used size');
                 pck.data.should.have.not.property('Large object space used size');
 
+                pck.data.should.have.not.property('Heap size');
+                pck.data.should.have.not.property('Heap size executable');
+                pck.data.should.have.not.property('Used heap size');
+                pck.data.should.have.not.property('Heap size limit');
+
                 app.kill();
                 done();
             }
@@ -41,11 +46,21 @@ describe('Probe V8', function () {
                 pck.data.should.have.property('Code space used size');
                 pck.data.should.have.property('Large object space used size');
 
+                pck.data.should.have.property('Heap size');
+                pck.data.should.have.property('Heap size executable');
+                pck.data.should.have.property('Used heap size');
+                pck.data.should.have.property('Heap size limit');
+
                 Number.isInteger(pck.data['New space used size'].value).should.be.true();
                 Number.isInteger(pck.data['Old space used size'].value).should.be.true();
                 Number.isInteger(pck.data['Map space used size'].value).should.be.true();
                 Number.isInteger(pck.data['Code space used size'].value).should.be.true();
                 Number.isInteger(pck.data['Large object space used size'].value).should.be.true();
+
+                Number.isInteger(pck.data['Heap size'].value).should.be.true();
+                Number.isInteger(pck.data['Heap size executable'].value).should.be.true();
+                Number.isInteger(pck.data['Used heap size'].value).should.be.true();
+                Number.isInteger(pck.data['Heap size limit'].value).should.be.true();
 
                 app.kill();
                 done();
@@ -71,17 +86,17 @@ xdescribe('Probe V8 GC', function () {
 
         app.on('message', function (pck) {
             if (pck.type === 'axm:monitor' && pck.data.hasOwnProperty('Heap size')) {
-                pck.data.should.have.property('Heap size');
-                pck.data.should.have.property('Used heap size');
-                pck.data.should.have.property('Executable heap size');
-                pck.data.should.have.property('Gc type');
-                pck.data.should.have.property('Pause');
+                pck.data.should.have.property('GC Heap size');
+                pck.data.should.have.property('GC Used heap size');
+                pck.data.should.have.property('GC Executable heap size');
+                pck.data.should.have.property('GC Type');
+                pck.data.should.have.property('GC Pause');
 
-                Number.isInteger(pck.data['Heap size'].value).should.be.true();
-                Number.isInteger(pck.data['Used heap size'].value).should.be.true();
-                Number.isInteger(pck.data['Executable heap size'].value).should.be.true();
-                Number.isInteger(pck.data['Pause'].value).should.be.true();
-                Number.isInteger(pck.data['Gc type'].value).should.be.true();
+                Number.isInteger(pck.data['GC Heap size'].value).should.be.true();
+                Number.isInteger(pck.data['GC Used heap size'].value).should.be.true();
+                Number.isInteger(pck.data['GC Executable heap size'].value).should.be.true();
+                Number.isInteger(pck.data['GC Pause'].value).should.be.true();
+                Number.isInteger(pck.data['GC Type'].value).should.be.true();
 
                 app.kill();
                 done();
