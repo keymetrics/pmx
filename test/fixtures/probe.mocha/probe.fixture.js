@@ -1,5 +1,5 @@
 
-var axm = require('../..');
+var axm = require('../../..');
 
 var probe = axm.probe();
 
