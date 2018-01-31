@@ -16,7 +16,7 @@
     "pm2": "*",
     "pm2-axon": "*",
     "nssocket": "*",
-    "mongoose": "4.x",
+    "mongoose": "4.*",
     "semver": "*"
   },
   "scripts": {
