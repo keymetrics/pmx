@@ -80,9 +80,11 @@ describe('Programmatically test interactor', function() {
 
           if (packet.data['axm:transaction']) {
 
+            var sp_c1 = packet.data['axm:transaction'].length;
             // Only one app
-            packet.data['axm:transaction'].length.should.eql(1);
-            var data = packet.data['axm:transaction'][0].data;
+            if (sp_c1 != 2 && sp_c1 != 1)
+              return done(new Error('not span received'))
+            data = packet.data['axm:transaction'][0].data;
 
             if (Object.keys(data.routes).length != 3)
               return callAgain();
