@@ -1,6 +1,6 @@
 {
   "name": "pmx",
-  "version": "1.5.6",
+  "version": "1.6.1-next",
   "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
@@ -20,7 +20,8 @@
     "semver": "*"
   },
   "scripts": {
-    "test": "DEBUG='axm:*' mocha test/*.mocha.js"
+    "test": "DEBUG='axm:*' mocha test/*.mocha.js",
+    "beta": "npm publish --tag next"
   },
   "keywords": [
     "cli",
