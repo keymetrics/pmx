@@ -15,6 +15,7 @@ var users = {
 var rt_users = probe.metric({
   name : 'Realtime user',
   historic : false,
+  unit : 'kb',
   type : 'v8/smthing',
   value : function() {
     return Object.keys(users).length;

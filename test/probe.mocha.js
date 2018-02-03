@@ -40,6 +40,7 @@ describe('Probe', function() {
     app.on('message', function(pck) {
       // Will iterate two times, metric change the value to false
       should(pck.data['Realtime user'].value).eql(2);
+      should(pck.data['Realtime user'].unit).eql('kb');
       should(pck.data['Realtime user'].historic).eql(false);
       should(pck.data['Realtime user'].type).eql('v8/smthing');
       app.kill()
