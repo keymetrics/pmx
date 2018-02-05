@@ -5,19 +5,20 @@
   "main": "index.js",
   "dependencies": {
     "debug": "^3",
+    "deep-metrics": "^0.0.1",
     "json-stringify-safe": "^5.0",
     "vxx": "^1.2.0"
   },
   "devDependencies": {
     "express": "*",
-    "request": "~2.81",
-    "should": "*",
     "mocha": "^3",
+    "mongoose": "4.*",
+    "nssocket": "*",
     "pm2": "*",
     "pm2-axon": "*",
-    "nssocket": "*",
-    "mongoose": "4.*",
-    "semver": "*"
+    "request": "~2.81",
+    "semver": "*",
+    "should": "*"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js",
