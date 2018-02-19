@@ -1,12 +1,13 @@
 {
   "name": "pmx",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
     "debug": "^3",
     "deep-metrics": "^0.0.1",
     "json-stringify-safe": "^5.0",
+    "semver": "5.*",
     "vxx": "^1.2.0"
   },
   "devDependencies": {
@@ -17,7 +18,6 @@
     "pm2": "*",
     "pm2-axon": "*",
     "request": "~2.81",
-    "semver": "*",
     "should": "*"
   },
   "scripts": {
