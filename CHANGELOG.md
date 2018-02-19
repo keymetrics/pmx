@@ -1,3 +1,9 @@
+# 1.6.3
+
+- feature : add deep metrics (mysql, mongo, mqtt, ws, ...)
+- feature : create probe only when receiving first data
+- fix : protect v8 module import, for old nodejs version
+- fix : add unit in probes
 
 # 1.5.6
 
