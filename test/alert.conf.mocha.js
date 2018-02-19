@@ -84,6 +84,8 @@ function forkRawNodeApp() {
   return app;
 }
 
+// Refactor - work in progress
+// New alert system expected to be delivered on april 18
 describe('Alert system configuration', function() {
   var app;
 
@@ -126,6 +128,7 @@ describe('Alert system configuration', function() {
     });
   });
 
+  // To be refactored by new alert system
   describe('Override declared alert values', function() {
     it('should start module with alert activated', function(done) {
       app = forkAlertedModuleWithAlertDeclared();

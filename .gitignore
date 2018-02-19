@@ -7,4 +7,4 @@ test/child
 sample/pmx-server-stats
 test/xeon/data.json
 package-lock.json
-volumes
+volumes/

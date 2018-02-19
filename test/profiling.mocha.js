@@ -1,9 +1,9 @@
 
 var pmx       = require('..');
 var Profiling = require('../lib/probes/profiling.js');
+var utils     = require('../lib/utils/module.js');
 var should = require('should');
-var exec = require('child_process').exec
-var pm2 = require('pm2');
+var exec = require('child_process').exec;
 
 function fork() {
   return require('child_process').fork(__dirname + '/fixtures/module/module.async.require.js', []);
@@ -13,7 +13,6 @@ function forkDumpableApp() {
   var app = require('child_process').fork(__dirname + '/fixtures/http.js', []);
   return app;
 }
-
 
 var PROFILER_MODULE = 'v8-profiler-node8';
 
@@ -31,7 +30,6 @@ describe('Profiling', function() {
   describe('Basic tests', function() {
     it('should have right properties', function(done) {
       pmx.should.have.property('v8Profiling');
-      Profiling.should.have.property('detectV8Profiler');
       Profiling.should.have.property('exposeProfiling');
       Profiling.should.have.property('v8Profiling');
       done();
@@ -48,7 +46,7 @@ describe('Profiling', function() {
     });
 
     it('should return error as v8-profiler not present', function(done) {
-      Profiling.detectV8Profiler(PROFILER_MODULE, function(err, data) {
+      utils.detectModule(PROFILER_MODULE, function(err, data) {
         should(err).not.be.null();
         should(data).be.undefined();
         done();
@@ -65,7 +63,7 @@ describe('Profiling', function() {
     });
 
     it('should detect v8 profiler', function(done) {
-      Profiling.detectV8Profiler(PROFILER_MODULE, function(err, data) {
+      utils.detectModule(PROFILER_MODULE, function(err, data) {
         should(err).be.null();
         done();
       });

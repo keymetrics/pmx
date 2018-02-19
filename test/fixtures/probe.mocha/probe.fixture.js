@@ -1,5 +1,5 @@
 
-var axm = require('../..');
+var axm = require('../../..');
 
 var probe = axm.probe();
 
@@ -14,6 +14,7 @@ var users = {
 var rt_users = probe.metric({
   name : 'Realtime user',
   agg_type: 'max',
+  unit : 'kb',
   value : function() {
     return Object.keys(users).length;
   }
