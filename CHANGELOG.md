@@ -1,3 +1,7 @@
+# 1.6.7
+
+- test : fix some testsa about dependencies
+
 # 1.6.6
 
 - hotfix : set collectDependencies to false by default

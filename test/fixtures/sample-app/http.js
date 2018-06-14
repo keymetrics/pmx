@@ -1,6 +1,8 @@
 
 var pmx = require('../../..');
-var conf = pmx.init();
+var conf = pmx.init({
+  collectDependencies: true
+});
 
 var http = require('http');
 
