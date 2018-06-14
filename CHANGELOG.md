@@ -1,3 +1,7 @@
+# 1.6.5
+
+- fix : allow to disable dependencies collection
+
 # 1.6.3
 
 - feature : add deep metrics (mysql, mongo, mqtt, ws, ...)
