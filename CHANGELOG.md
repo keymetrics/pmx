@@ -1,3 +1,7 @@
+# 1.6.6
+
+- hotfix : set collectDependencies to false by default
+
 # 1.6.5
 
 - fix : allow to disable dependencies collection
