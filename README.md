@@ -7,9 +7,6 @@
   <b><a href="https://github.com/Unitech/pm2">PM2</a> programmatic integration</b>
   <br/>
   <br/>
-  <a href="https://www.bithound.io/github/keymetrics/pmx">
-<img src="https://www.bithound.io/github/keymetrics/pmx/badges/score.svg"/>
-  </a>
   <a href="https://travis-ci.org/keymetrics/pmx">
 <img src="https://api.travis-ci.org/keymetrics/pmx.png?branch=master"/>
   </a>
