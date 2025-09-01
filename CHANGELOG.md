@@ -1,3 +1,7 @@
+# 1.6.8
+
+- upgrade deps, drop old features
+
 # 1.6.7
 
 - test : fix some testsa about dependencies
