@@ -4,21 +4,19 @@
   "description": "PM2/Keymetrics advanced API",
   "main": "index.js",
   "dependencies": {
-    "debug": "^3",
+    "debug": "^4.3.4",
     "deep-metrics": "^0.0.1",
-    "json-stringify-safe": "^5.0",
-    "semver": "5.*",
-    "vxx": "^1.2.0"
+    "json-stringify-safe": "^5.0.1",
+    "semver": "^7.6.3"
   },
   "devDependencies": {
-    "express": "*",
-    "mocha": "^3",
-    "mongoose": "4.*",
-    "nssocket": "*",
-    "pm2": "*",
-    "pm2-axon": "*",
-    "request": "~2.81",
-    "should": "*"
+    "express": "^4.21.1",
+    "mocha": "^10.7.3",
+    "mongoose": "^8.8.1",
+    "nssocket": "^0.6.0",
+    "pm2": "^6.0.9",
+    "pm2-axon": "^4.0.1",
+    "should": "^13.2.3"
   },
   "scripts": {
     "test": "DEBUG='axm:*' mocha test/*.mocha.js",
